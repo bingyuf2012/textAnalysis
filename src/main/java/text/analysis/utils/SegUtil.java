@@ -33,16 +33,25 @@ public class SegUtil {
 
 	public String parseText(String text) {
 		Result result = nlpAnalysis.parseStr(text);
-
 		StringBuffer parseResult = new StringBuffer();
-
 		Iterator<Term> wordIterator = result.iterator();
 		while (wordIterator.hasNext()) {
 			Term itemTerm = wordIterator.next();
-
 			parseResult.append(MessageFormat.format(ConstantUtil.WORD_FORMAT, itemTerm.getName(),
 					convertUtil.convertPos(itemTerm.getNatureStr())));
 
+			parseResult.append(ConstantUtil.WORD_SPLIT);
+		}
+
+		return parseResult.toString();
+	}
+
+	public String parseText(String text, boolean isContainPos) {
+		Result result = nlpAnalysis.parseStr(text);
+		StringBuffer parseResult = new StringBuffer();
+		Iterator<Term> wordIterator = result.iterator();
+		while (wordIterator.hasNext()) {
+			parseResult.append(wordIterator.next().getName());
 			parseResult.append(ConstantUtil.WORD_SPLIT);
 		}
 
