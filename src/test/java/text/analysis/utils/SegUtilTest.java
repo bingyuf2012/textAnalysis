@@ -20,12 +20,12 @@ public class SegUtilTest extends BaseTest {
 	@Test
 	public void testParseText() {
 		System.out.println(
-				segUtil.parseText("洪磊发表严正声明:钓鱼台是中国的!中国气象局预测北京将发生大暴雨！在汶川地震后，中国地震局建议人民在空旷地方，搭建帐篷，不要去高楼附近，以防发生意外。", true));
-		System.out.println(segUtil
-				.parseText("洪磊发表严正声明:钓鱼台是中国的!中国气象局预测北京将发生大暴雨！在汶川地震后，中国地震局建议人民在空旷地方，搭建帐篷，不要去高楼附近，以防发生意外。", false));
+				segUtil.segText("洪磊发表严正声明:钓鱼台是中国的!中国气象局预测北京将发生大暴雨！在汶川地震后，中国地震局建议人民在空旷地方，搭建帐篷，不要去高楼附近，以防发生意外。", true));
+		System.out.println(
+				segUtil.segText("洪磊发表严正声明:钓鱼台是中国的!中国气象局预测北京将发生大暴雨！在汶川地震后，中国地震局建议人民在空旷地方，搭建帐篷，不要去高楼附近，以防发生意外。", false));
 
-		System.out.println(segUtil.parseText(null, false));
-		System.out.println(segUtil.parseText("", false));
+		System.out.println(segUtil.segText(null, false));
+		System.out.println(segUtil.segText("", false));
 	}
 
 	@Test

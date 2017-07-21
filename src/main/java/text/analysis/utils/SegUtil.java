@@ -1,6 +1,7 @@
 package text.analysis.utils;
 
 import java.text.MessageFormat;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 
@@ -35,6 +36,14 @@ public class SegUtil {
 		nlpAnalysis = new NlpAnalysis();
 	}
 
+	public Result parseText(String text) {
+		if (GenericValidator.isBlankOrNull(text)) {
+			return new Result(new ArrayList<Term>());
+		}
+
+		return nlpAnalysis.parseStr(text);
+	}
+
 	/**
 	 * 
 	 * <li>文本分词</li>
@@ -45,12 +54,8 @@ public class SegUtil {
 	 *            是否返回词性
 	 * @return
 	 */
-	public String parseText(String text, boolean isContainPos) {
-		if (GenericValidator.isBlankOrNull(text)) {
-			return "";
-		}
-
-		Result result = nlpAnalysis.parseStr(text);
+	public String segText(String text, boolean isContainPos) {
+		Result result = parseText(text);
 		StringBuffer parseResult = new StringBuffer();
 		Iterator<Term> wordIterator = result.iterator();
 
@@ -105,5 +110,29 @@ public class SegUtil {
 		}
 
 		return resultBuffer.toString();
+	}
+
+	/**
+	 * 
+	 * <li>从文本中抽取地点</li>
+	 *
+	 * @param text
+	 * @return
+	 */
+	public String extraLOC(String text) {
+		Result result = parseText(text);
+		StringBuffer parseResult = new StringBuffer();
+		Iterator<Term> wordIterator = result.iterator();
+
+		while (wordIterator.hasNext()) {
+			Term itemTerm = wordIterator.next();
+
+			if ("ns".equals(itemTerm.getNatureStr())) {
+				parseResult.append(wordIterator.next().getName());
+				parseResult.append(ConstantUtil.WORD_SPLIT);
+			}
+		}
+
+		return parseResult.toString();
 	}
 }
