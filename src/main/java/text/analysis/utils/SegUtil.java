@@ -40,7 +40,7 @@ public class SegUtil {
 		if (GenericValidator.isBlankOrNull(text)) {
 			return new Result(new ArrayList<Term>());
 		}
-
+		
 		return nlpAnalysis.parseStr(text);
 	}
 

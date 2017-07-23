@@ -13,6 +13,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<spring.version>4.1.9.RELEASE</spring.version>
+		<JAVA_HOME>C:/Program Files/Java/jdk1.7.0_79</JAVA_HOME>
 	</properties>
 
 	<repositories>
@@ -95,9 +96,13 @@
 			<groupId>org.kohsuke.args4j</groupId>
 			<artifactId>args4j-maven-plugin</artifactId>
 			<version>2.33</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>tools</artifactId>
+					<groupId>jdk</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
-
-
 	</dependencies>
 
 	<build>

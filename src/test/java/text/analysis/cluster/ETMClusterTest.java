@@ -4,8 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import text.analysis.cluster.model.WebSearchResult;
+import com.alibaba.fastjson.JSONObject;
+
+import text.analyse.etmutility.ETMCluster;
+import text.analysis.core.BaseTest;
+import text.searchSDK.model.WebSearchResult;
 
 /**
  * @Copyright© 2017 doumi jz. All Rights Reserved. DO NOT ALTER OR REMOVE
@@ -15,7 +20,9 @@ import text.analysis.cluster.model.WebSearchResult;
  * @date 2017年7月17日 下午7:40:35
  */
 
-public class ETMClusterTest {
+public class ETMClusterTest extends BaseTest {
+	@Autowired
+	ETMCluster eTMCluster;
 
 	@Test
 	public void testRunLDA() {
@@ -64,7 +71,18 @@ public class ETMClusterTest {
 		w4.setWeights("1");
 
 		list.add(w4);
-		ETMCluster eTMCluster = new ETMCluster();
-		eTMCluster.runLDA("你好", list, "D:/abc/", 2, 5);
+		
+		WebSearchResult w5 = new WebSearchResult();
+		w5.setTitle("系统间通信（9）——RPC的基本概念");
+		w5.setContent(
+				"RPC（Remote Procedure Call Protocol）远程过程调用协议。一个通俗的描述是：客户端在不知道调用细节的情况下，调用存在于远程计算机上的某个对象，就像调用本地应用程序中的对象一样。比较正式的描述是：一种通过网络从远程计算机程序上请求服务，而不需要了解底层网络技术的协议。那么我们至少从这样的描述中挖掘出几个要点。");
+		w5.setTime("2017-07-17 19:44:00");
+		w5.setType("文字");
+		w5.setUrl("http://www.baidu.com");
+		w5.setWeights("1");
+
+		list.add(w5);
+		
+		System.out.println(JSONObject.toJSONString(eTMCluster.runLDA("你好", list, "D:/abc/", 1, 1)));
 	}
 }

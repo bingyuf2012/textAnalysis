@@ -25,7 +25,7 @@ public class SegUtilTest extends BaseTest {
 				segUtil.segText("洪磊发表严正声明:钓鱼台是中国的!中国气象局预测北京将发生大暴雨！在汶川地震后，中国地震局建议人民在空旷地方，搭建帐篷，不要去高楼附近，以防发生意外。", false));
 
 		System.out.println(segUtil.segText(null, false));
-		System.out.println(segUtil.segText("", false));
+		System.out.println(segUtil.segText("RPC的基本概念", false));
 	}
 
 	@Test
