@@ -34,7 +34,6 @@ import text.analyse.utility.Word;
 import text.analysis.utils.SegUtil;
 import text.searchSDK.model.WebSearchResult;
 import text.searchSDK.util.Constant;
-import text.searchSDK.util.HtmlSplit;
 import text.searchSDK.util.PrintConsole;
 import text.thu.keg.smartsearch.jgibbetm.ETM;
 import text.thu.keyword.ExtFactory;
@@ -213,10 +212,9 @@ public class ETMCluster {
 			pwTokens.write(list.size() + "\n");
 			for (int i = 0; i < list.size(); i++) {
 				NewsDetail newsDetail = new NewsDetail();
-				HtmlSplit htmlSplit = new HtmlSplit();
-				newsDetail.setTitle(htmlSplit.filterHtmlChar(list.get(i).getTitle()));
+				newsDetail.setTitle(list.get(i).getTitle());
 				newsDetail.setUrl(list.get(i).getUrl());
-				newsDetail.setContent(htmlSplit.filterHtmlChar(list.get(i).getContent()));
+				newsDetail.setContent(list.get(i).getContent());
 				newsDetail.setTime(list.get(i).getTime());
 				newsDetail.setType(list.get(i).getType());
 				newsDetail.setWeights(list.get(i).getWeights());

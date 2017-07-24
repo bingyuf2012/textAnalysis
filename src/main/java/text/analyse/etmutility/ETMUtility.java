@@ -23,6 +23,8 @@ import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.validator.GenericValidator;
+
 import text.analyse.common.utils.properties.SpringContextUtil;
 import text.analyse.struct.etm.TECountModel;
 import text.analyse.struct.lda.AllEntity;
@@ -42,7 +44,6 @@ import text.analyse.utility.Word;
 import text.analysis.utils.ConstantUtil;
 import text.searchSDK.util.CommonUtil;
 import text.searchSDK.util.Constant;
-import text.searchSDK.util.HtmlSplit;
 import text.searchSDK.util.PrintConsole;
 
 public class ETMUtility extends Utility {
@@ -52,12 +53,11 @@ public class ETMUtility extends Utility {
 		super(filename);
 	}
 
-	public String filexEAssignall = Constant.MODEL_NAME + Constant.SUFFIX_XEASSIGN;
+	/*public String filexEAssignall = Constant.MODEL_NAME + Constant.SUFFIX_XEASSIGN;*/
 	public String filetEAssignall = Constant.MODEL_NAME + Constant.SUFFIX_TEASSIGN;
 	public String filentityword = Constant.ENTITY_MAP;
 	public String filekesai = Constant.MODEL_NAME + Constant.SUFFIX_KESAI;
 	public String filephientityall = Constant.MODEL_NAME + Constant.SUFFIX_PHIENTITY;
-	// ArrayList<String> All_Entitys = new ArrayList<String>();
 	public String filetopwordsall = Constant.MODEL_NAME + Constant.SUFFIX_TWORDS;
 	public String filetheta = Constant.MODEL_NAME + Constant.SUFFIX_THETA;
 
@@ -186,18 +186,18 @@ public class ETMUtility extends Utility {
 			while ((line = br.readLine()) != null) {
 				if (line.equals("")) {
 					continue;
-				} else {
-					String[] entityarray = line.split(" ");
+				}
 
-					for (int i = 0; i < entityarray.length; i++) {
-						if (!entityarray[i].equals("")) {
-							String topiclabel = entityarray[i];
-							if (topicountMap.containsKey(topiclabel)) {
-								int count = Integer.parseInt(topicountMap.get(topiclabel).toString()) + 1;
-								topicountMap.put(topiclabel, count);
-							} else {
-								topicountMap.put(topiclabel, 1);
-							}
+				String[] entityarray = line.split(" ");
+
+				for (int i = 0; i < entityarray.length; i++) {
+					if (!entityarray[i].equals("")) {
+						String topiclabel = entityarray[i];
+						if (topicountMap.containsKey(topiclabel)) {
+							int count = Integer.parseInt(topicountMap.get(topiclabel).toString()) + 1;
+							topicountMap.put(topiclabel, count);
+						} else {
+							topicountMap.put(topiclabel, 1);
 						}
 					}
 				}
@@ -290,23 +290,22 @@ public class ETMUtility extends Utility {
 			while ((line = br.readLine()) != null) {
 				if (line.equals("") || line.split(" ").length != 2) {
 					continue;
+				}
+				String wordinfo = line.trim();
+				String type = wordinfo.split(" ")[0].split("/")[1].trim();
+				String keyword = wordinfo.split(" ")[0].split("/")[0].trim();
+				int id = Integer.parseInt(wordinfo.split(" ")[1].trim());
+
+				String pattern = "[0-9]+(.[0-9]+)?";
+				Pattern p = Pattern.compile(pattern);
+				Matcher m = p.matcher(keyword);
+				boolean b = m.matches();
+
+				if (b == false) {
+					Word word = new Word(id, keyword, type);
+					wordlist.add(word);
 				} else {
-					String wordinfo = line.trim();
-					String type = wordinfo.split(" ")[0].split("/")[1].trim();
-					String keyword = wordinfo.split(" ")[0].split("/")[0].trim();
-					int id = Integer.parseInt(wordinfo.split(" ")[1].trim());
-
-					String pattern = "[0-9]+(.[0-9]+)?";
-					Pattern p = Pattern.compile(pattern);
-					Matcher m = p.matcher(keyword);
-					boolean b = m.matches();
-
-					if (b == false) {
-						Word word = new Word(id, keyword, type);
-						wordlist.add(word);
-					} else {
-						continue;
-					}
+					continue;
 				}
 			}
 		} catch (FileNotFoundException e) {
@@ -693,40 +692,30 @@ public class ETMUtility extends Utility {
 				String tsngl = "Topic " + flag + "th:";
 				if (line.equals(tsngl)) {
 					continue;
-				} else {
-					// label += line.trim().split("/")[0] + " ";
-					if (line.trim().split(" ").length > 1) {
-						// label += line.trim().split(" ")[0] + "/"
-						// + line.trim().split(" ")[1] + " ";
-						label += line.trim().split(" ")[0] + " ";
-						// value += line.trim().split(" ")[1] + " ";
-						valueList.add(line.trim().split(" ")[1]);
-					}
+				}
 
-					num++;
-					if (num % commonUtil.getTopwords() == 0) {
-						TopWords topWords = new TopWords();
-						topWords.setTopicID(flag);
-						/* String labelsplit = split.splitString(label); */
-						/*
-						 * String labelsplit = new SegUtil().segText(label,
-						 * true);
-						 */
-						// PrintConsole.PrintLog("labelsplit", labelsplit);
-						PrintConsole.PrintLog("labelsplit.length()", label.split(ConstantUtil.WORD_SPLIT).length,
-								"valueList.size()", valueList.size(), "");
-						String[] lsArray = label.split(ConstantUtil.WORD_SPLIT);
-						int len = Math.min(lsArray.length, valueList.size());
-						String rslabel = "";
-						for (int i = 0; i < len; i++) {
-							rslabel += lsArray[i] + "/" + valueList.get(i) + " ";
-						}
-						topWords.setLabelWords(rslabel);
-						topwordslist.add(topWords);
-						flag++;
-						label = "";
-						valueList = new ArrayList<String>();
+				if (line.trim().split(" ").length > 1) {
+					label += line.trim().split(" ")[0] + " ";
+					valueList.add(line.trim().split(" ")[1]);
+				}
+
+				num++;
+				if (num % commonUtil.getTopwords() == 0) {
+					TopWords topWords = new TopWords();
+					topWords.setTopicID(flag);
+					PrintConsole.PrintLog("labelsplit.length()", label.split(ConstantUtil.WORD_SPLIT).length,
+							"valueList.size()", valueList.size(), "");
+					String[] lsArray = label.split(ConstantUtil.WORD_SPLIT);
+					int len = Math.min(lsArray.length, valueList.size());
+					String rslabel = "";
+					for (int i = 0; i < len; i++) {
+						rslabel += lsArray[i] + "/" + valueList.get(i) + " ";
 					}
+					topWords.setLabelWords(rslabel);
+					topwordslist.add(topWords);
+					flag++;
+					label = "";
+					valueList = new ArrayList<String>();
 				}
 			}
 		} catch (FileNotFoundException e) {
@@ -835,28 +824,24 @@ public class ETMUtility extends Utility {
 			int cc = 0;
 
 			while ((newLine = reader.readLine()) != null) {
-				if (!newLine.equals("")) {
-					String[] newsinfo = newLine.split("@@@@");
-					if (newsinfo.length > 2) {
-						NewsDetail newsDetail2 = new NewsDetail();
+				if (GenericValidator.isBlankOrNull(newLine)) {
+					continue;
+				}
 
-						HtmlSplit htmlSplit = new HtmlSplit();
-						newsDetail2.setTitle(htmlSplit.filterHtmlChar(newsinfo[0]));
-						newsDetail2.setContent(htmlSplit.filterHtmlChar(newsinfo[1]));
-						// newsDetail2.setTitle(CommonUtil
-						// .filterHtmlChar(newsinfo[0]));
-						// newsDetail2.setContent(CommonUtil
-						// .filterHtmlChar(newsinfo[1]));
-						newsDetail2.setUrl(newsinfo[2]);
-						newsDetail2.setTime(newsinfo[3]);
-						newsDetail2.setType(newsinfo[4]);
-						newsDetail2.setWeights(newsinfo[5]);
-						String fresh = newsDetail.get(cc).getFresh();
-						newsDetail2.setFresh(fresh);
-						// newDocuments[cc] = newLine;
-						newDocuments[cc] = newsDetail2;
-						cc++;
-					}
+				String[] newsinfo = newLine.split("@@@@");
+				if (newsinfo.length > 2) {
+					NewsDetail newsDetail2 = new NewsDetail();
+
+					newsDetail2.setTitle(newsinfo[0]);
+					newsDetail2.setContent(newsinfo[1]);
+					newsDetail2.setUrl(newsinfo[2]);
+					newsDetail2.setTime(newsinfo[3]);
+					newsDetail2.setType(newsinfo[4]);
+					newsDetail2.setWeights(newsinfo[5]);
+					String fresh = newsDetail.get(cc).getFresh();
+					newsDetail2.setFresh(fresh);
+					newDocuments[cc] = newsDetail2;
+					cc++;
 				}
 			}
 
@@ -879,26 +864,18 @@ public class ETMUtility extends Utility {
 				}
 				if (tdp.containsKey(topics[id])) {
 					tdp.get(topics[id]).put(id, max);
-					// System.out.println("t+id+max" + topics[id] + " " + id +
-					// " "
-					// + max);
 				} else {
 					Map<Integer, Double> tprob = new HashMap<Integer, Double>();
 					tprob.put(id, max);
 					tdp.put(topics[id], tprob);
-					// System.out.println("t+id+max" + topics[id] + " " + id +
-					// " "
-					// + max);
 				}
 				line = br.readLine();
 				id++;
 			}
-			// System.out.println(tdp);
 
 			linef = brf.readLine();
 			int index = 0;
 			while (linef != null) {
-				// System.out.println(index);
 				documents[index] = linef;
 				linef = brf.readLine();
 				index++;
@@ -927,17 +904,12 @@ public class ETMUtility extends Utility {
 				pw.write("Topic" + i + ":\n");
 				ArrayList<NewsDetail> tnewsDetail = new ArrayList<NewsDetail>();
 				for (int c = 0; c < list.size(); c++) {
-					// pw.write(newsDetail.get(c).title + "@@@@"
-					// + newsDetail.get(c).content + "\n");
 					pw.write(newDocuments[list.get(c).getKey()].title + "@@@@"
 							+ newDocuments[list.get(c).getKey()].content + "\n");
-					// tnewsDetail.add(newsDetail.get(c));
 					tnewsDetail.add(newDocuments[list.get(c).getKey()]);
 				}
 				pw.write("#####\n");
 				topicSet.setLabelName(i);
-				// ArrayList<WordStructSet> speIssueSet = getWordStructSet(
-				// outputdir, i);
 				ArrayList<WordStructSet> speIssueSet = worMap.get(i);
 				topicSet.setNewsDetail(tnewsDetail);
 				topicSet.setSpeIssueSet(speIssueSet);

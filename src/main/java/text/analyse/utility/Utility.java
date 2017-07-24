@@ -52,7 +52,6 @@ public class Utility {
 	 * @param args
 	 */
 	public Utility(String filename) {
-
 		wordset = new WordSet();
 
 		Entity_PER_Map = new HashMap<String, Integer>();
