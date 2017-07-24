@@ -23,6 +23,10 @@ import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import text.analyse.common.utils.properties.SpringContextUtil;
 import text.analyse.struct.etm.TECountModel;
 import text.analyse.struct.lda.AllEntity;
 import text.analyse.struct.lda.EEValue;
@@ -45,6 +49,8 @@ import text.searchSDK.util.HtmlSplit;
 import text.searchSDK.util.PrintConsole;
 
 public class ETMUtility extends Utility {
+	CommonUtil commonUtil = SpringContextUtil.getBean(CommonUtil.class);
+
 	public ETMUtility(String filename) {
 		super(filename);
 	}
@@ -57,7 +63,6 @@ public class ETMUtility extends Utility {
 	// ArrayList<String> All_Entitys = new ArrayList<String>();
 	public String filetopwordsall = Constant.MODEL_NAME + Constant.SUFFIX_TWORDS;
 	public String filetheta = Constant.MODEL_NAME + Constant.SUFFIX_THETA;
-	public static int TOP_WORD_NUM = CommonUtil.getTopwords();
 
 	public AllEntity GetEntityUsrDef(List entitylist) {
 		AllEntity entity = new AllEntity();
@@ -110,11 +115,11 @@ public class ETMUtility extends Utility {
 		List<RelationOrgTE> relOrgTe = new ArrayList<RelationOrgTE>();
 
 		Iterator<Entry<String, Integer>> topicCountMapIterator = topiccountMap.entrySet().iterator();
-		
+
 		while (topicCountMapIterator.hasNext()) {
 			Entry<String, Integer> itemEntry = topicCountMapIterator.next();
 			int topicnum = itemEntry.getValue();
-			
+
 			int lnum = 0, onum = 0, penum = 0;
 			for (int j = 0; j < entitylist.size(); j++) {
 				String et = entitylist.get(j).id + ":" + itemEntry.getKey();
@@ -159,7 +164,7 @@ public class ETMUtility extends Utility {
 				}
 			}
 		}
-		
+
 		/*for (int i = 0; i < topiccountMap.size(); i++) {
 			int lnum = 0, onum = 0, penum = 0;
 			int topicnum = Integer.parseInt(topiccountMap.get(i).toString());
@@ -167,11 +172,11 @@ public class ETMUtility extends Utility {
 				String et = entitylist.get(j).id + ":" + i;
 				if (entitycountMap.get(et) != null) {
 					int count = Integer.parseInt(entitycountMap.get(et).toString());
-
+		
 					double score1 = Double.parseDouble(count + "") / topicnum;
 					DecimalFormat df = new DecimalFormat("0.00000");
 					String values = df.format(score1);
-
+		
 					if (entitylist.get(j).type.equals("LOC") && lnum < 100) {
 						RelationLocTE locTE = new RelationLocTE();
 						locTE.setID(j);
@@ -740,7 +745,7 @@ public class ETMUtility extends Utility {
 					}
 
 					num++;
-					if (num % TOP_WORD_NUM == 0) {
+					if (num % commonUtil.getTopwords() == 0) {
 						TopWords topWords = new TopWords();
 						topWords.setTopicID(flag);
 						/* String labelsplit = split.splitString(label); */
@@ -819,7 +824,7 @@ public class ETMUtility extends Utility {
 						topwordslist.add(wordStructSet);
 					}
 
-					if (num % TOP_WORD_NUM == 0) {
+					if (num % commonUtil.getTopwords() == 0) {
 						wordstrMap.put(flag, topwordslist);
 						topwordslist = new ArrayList<WordStructSet>();
 						flag++;

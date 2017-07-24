@@ -11,15 +11,21 @@ import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import text.searchSDK.util.CommonUtil;
 import text.thu.keyword.dao.DAO;
 import text.thu.keyword.model.News;
 import text.thu.keyword.model.Token;
 
+@Component
 public class Extract {
+	@Autowired
+	CommonUtil commonUtil;
+	@Autowired
+	DAO dao;
 
-	// public static SpliterOperator ict = SpliterOperator.getInstance();
-	public static int KEYNUM = CommonUtil.getTopKeyWords();
 	public String id;
 	public String headLine;
 	public String content;
@@ -64,8 +70,7 @@ public class Extract {
 			String key = (String) e.nextElement();
 			Token t = (Token) ht.get(key);
 
-			if ((term.length() > 2) && term.contains(key) && (tf <= t.tf)
-					&& (key.length() > 2)) {
+			if ((term.length() > 2) && term.contains(key) && (tf <= t.tf) && (key.length() > 2)) {
 				completeness = true;
 				if (t.tf > 3) {
 					countTf(key, content);
@@ -73,8 +78,7 @@ public class Extract {
 				if (completeness)
 					return true;
 			}
-			if (key.contains(term) && !t.word.contains(term)
-					&& t.type.contains("ns_") && term.startsWith("国"))
+			if (key.contains(term) && !t.word.contains(term) && t.type.contains("ns_") && term.startsWith("国"))
 				return true;
 		}
 		return false;
@@ -99,8 +103,7 @@ public class Extract {
 			// System.out.println("klj;l");
 			if (key.contains(term.word))
 				return true;
-			if ((term.word.length() > 2) && term.word.contains(key)
-					&& (key.length() > 1)) {
+			if ((term.word.length() > 2) && term.word.contains(key) && (key.length() > 1)) {
 				if (key.length() > 2)
 					return true;
 				Token t = (Token) ht.get(key);
@@ -123,11 +126,10 @@ public class Extract {
 					int otherword = countTf(theOtherWord, content);
 
 					if (term.word.startsWith(key) || term.word.endsWith(key)) {
-						term.stability = (double) term.tf
-								/ (keytf + otherword + 2 * term.isHead - term.tf);
-						double tTf = Math.pow((double) term.tf + term.isHead
-								+ term.inQuotation * 3 + term.bonus
-								+ term.firstpara, 3.0);
+						term.stability = (double) term.tf / (keytf + otherword + 2 * term.isHead - term.tf);
+						double tTf = Math.pow(
+								(double) term.tf + term.isHead + term.inQuotation * 3 + term.bonus + term.firstpara,
+								3.0);
 						// System.out.println(term.word+"\t"+tTf+"\t"+term.stability+"\t"+tfSum+"\t"+tTf*term.stability/tfSum);
 						if ((double) tTf * t.stability / tfSum > 0.480) {
 							term.del = false;
@@ -135,10 +137,8 @@ public class Extract {
 						}
 					}
 
-					if ((!t.completeness || !completeness)
-							&& (theOtherWord.length() > 1)
-							&& (term.tf == otherword + 1)
-							&& !DAO.stop1Set.contains(theOtherWord)) {
+					if ((!t.completeness || !completeness) && (theOtherWord.length() > 1) && (term.tf == otherword + 1)
+							&& !dao.stop1Set.contains(theOtherWord)) {
 						term.del = false;
 						return false;
 					}
@@ -172,8 +172,7 @@ public class Extract {
 		}
 	}
 
-	public void addToHash(int isfirst, String key, String type, Hashtable ht,
-			int isHead) {
+	public void addToHash(int isfirst, String key, String type, Hashtable ht, int isHead) {
 		if (!ht.containsKey(key)) {
 			ht.put(key, new Token(key, type, isHead, isfirst));
 		} else {
@@ -189,8 +188,7 @@ public class Extract {
 		}
 	}
 
-	public void addToHash(int isfirst, String key1, String key2, String type,
-			Hashtable ht, int isHead) {
+	public void addToHash(int isfirst, String key1, String key2, String type, Hashtable ht, int isHead) {
 		if (!ht.containsKey(key1)) {
 			ht.put(key1, new Token(key2, type, isHead, isfirst));
 		} else {
@@ -220,15 +218,13 @@ public class Extract {
 			int clCount = 0, crCount = 0;
 			if (k > -1) {
 				cl = (k > 0) ? contentText.charAt(k - 1) : ' ';
-				cr = (k + key.length() < contentText.length()) ? contentText
-						.charAt(k + key.length()) : ' ';
+				cr = (k + key.length() < contentText.length()) ? contentText.charAt(k + key.length()) : ' ';
 			}
 			while (k > -1) {
 				tf++;
 				if ((k == 0) || contentText.charAt(k - 1) == cl)
 					clCount++;
-				if ((k + key.length() < contentText.length())
-						&& contentText.charAt(k + key.length()) == cr)
+				if ((k + key.length() < contentText.length()) && contentText.charAt(k + key.length()) == cr)
 					crCount++;
 				contentText = contentText.substring(k + key.length());
 				k = contentText.indexOf(key);
@@ -238,11 +234,9 @@ public class Extract {
 				if ((((cl == '的') || (cl == '在') || (cl == '，') || (cl == '。')) && (tf != crCount))
 						|| ((cr == '队') && (tf != clCount)))
 					completeness = true;
-				if (((cl == '“') && (tf == clCount))
-						&& ((cr == '”') && (tf == crCount)))
+				if (((cl == '“') && (tf == clCount)) && ((cr == '”') && (tf == crCount)))
 					completeness = true;
-				if (((cl == '《') && (tf == clCount))
-						&& ((cr == '》') && (tf == crCount)))
+				if (((cl == '《') && (tf == clCount)) && ((cr == '》') && (tf == crCount)))
 					completeness = true;
 				if ((cl == '“') && (tf == clCount) && (tf != crCount))
 					completeness = true;
@@ -278,11 +272,9 @@ public class Extract {
 				if ((((cl == '的') || (cl == '在') || (cl == '，') || (cl == '。')) && (tf != crCount))
 						|| ((cr == '队') && (tf != clCount)))
 					completeness = true;
-				if (((cl == '“') && (tf == clCount))
-						&& ((cr == '”') && (tf == crCount)))
+				if (((cl == '“') && (tf == clCount)) && ((cr == '”') && (tf == crCount)))
 					completeness = true;
-				if (((cl == '《') && (tf == clCount))
-						&& ((cr == '》') && (tf == crCount)))
+				if (((cl == '《') && (tf == clCount)) && ((cr == '》') && (tf == crCount)))
 					completeness = true;
 				if ((cl == '“') && (tf == clCount) && (tf != crCount))
 					completeness = true;
@@ -306,8 +298,7 @@ public class Extract {
 		int k = content.indexOf("\n");
 		while (k > -1) {
 			news.content += content.substring(0, k);
-			if ((k == 0)
-					|| (content.charAt(k - 1) == '。')
+			if ((k == 0) || (content.charAt(k - 1) == '。')
 					|| (content.charAt(k - 1) == '！' || content.charAt(k - 1) == '？')) {
 				news.content += "\n";
 			}
@@ -354,8 +345,7 @@ public class Extract {
 				byte[] b = texts[i].getBytes("GBK");
 				int han = 0;
 				for (int index = 0; index < b.length - 1; index++) {
-					if ((((b[index] > -88) && (b[index] < -1)) || (b[index] < -95))
-							&& (b[index] < 0)) {
+					if ((((b[index] > -88) && (b[index] < -1)) || (b[index] < -95)) && (b[index] < 0)) {
 						han += 2;
 						index++;
 					}
@@ -387,7 +377,7 @@ public class Extract {
 			// 如何不是标题则进行另外处理
 			if ((isHead == 0) && (fp == i))
 				isfirst = 1;
-			// String[] allWords = str.split("  ");
+			// String[] allWords = str.split(" ");
 			String[] allWords = str.split(" ");
 
 			for (int j = 0; j < allWords.length; j++) {
@@ -396,8 +386,7 @@ public class Extract {
 				// System.out.println(pos1+" "+pos2);
 				if (pos1 > 0) {
 					String type1 = allWords[j].substring(pos1 + 1).trim();
-					String key1 = allWords[j].substring(0, pos1).replaceAll(
-							" ", "").replaceAll("　", "").trim();
+					String key1 = allWords[j].substring(0, pos1).replaceAll(" ", "").replaceAll("　", "").trim();
 
 					int cut = key1.indexOf("/?");
 					if (cut > -1)
@@ -414,14 +403,13 @@ public class Extract {
 					if (type1.matches(".*n[^rg]*|b|ad|a|l|v|j|t|nr")) {
 						if (key1.matches("(\\d|[／１２３４５６７８９０]){1,}.*"))
 							continue;
-						if (type1.equals("nt") && key1.endsWith("队")
-								&& (key1.length() > 2)) {
+						if (type1.equals("nt") && key1.endsWith("队") && (key1.length() > 2)) {
 							key1 = key1.substring(0, key1.length() - 1).trim();
 						}
 
 						// 过滤不为名词的单字；过滤长度小于2的人名---------是否合适，可以以后进行修改
-						if (!((!type1.equals("n") && (key1.length() < 2)) || (type1
-								.equals("nr") && (key1.length() < 3)))) {
+						if (!((!type1.equals("n") && (key1.length() < 2))
+								|| (type1.equals("nr") && (key1.length() < 3)))) {
 							// 计算新闻中总的词数目？？？？？？？？？？？？
 							tfSum++;
 							// 加入一元文法候选词集中
@@ -434,59 +422,47 @@ public class Extract {
 					// if
 					// (type1.equals("a")&&(key1.equals("大"))&&(j>1)&&allWords[j-1].contains("/m"))
 					// {
-					if ((type1.equals("a")) && (j > 1)
-							&& (allWords[j - 1].contains("/m"))) {
-						String temp = allWords[j - 1].substring(0,
-								allWords[j - 1].indexOf("/"))
-								+ key1;
+					if ((type1.equals("a")) && (j > 1) && (allWords[j - 1].contains("/m"))) {
+						String temp = allWords[j - 1].substring(0, allWords[j - 1].indexOf("/")) + key1;
 						addToHash(isfirst, temp, type1, uniTokens, isHead);
 						continue;
 					}
 
 					if (!bigram)
 						continue; // 该语句应该是留给程序测试时使用，目前暂不起作用
-					int pos2 = (j + 1 < allWords.length) ? allWords[j + 1]
-							.lastIndexOf("/") : 0;
-					int pos3 = (j + 2 < allWords.length) ? allWords[j + 2]
-							.lastIndexOf("/") : 0;
+					int pos2 = (j + 1 < allWords.length) ? allWords[j + 1].lastIndexOf("/") : 0;
+					int pos3 = (j + 2 < allWords.length) ? allWords[j + 2].lastIndexOf("/") : 0;
 					if (pos2 > 0) {
 						String type2 = allWords[j + 1].substring(pos2 + 1);
-						String key2 = allWords[j + 1].substring(0, pos2)
-								.replaceAll(" ", "").replaceAll("　", "");
+						String key2 = allWords[j + 1].substring(0, pos2).replaceAll(" ", "").replaceAll("　", "");
 
-						if (key2.contains("..") || key2.contains("EQU")
-								|| key2.contains("/") || key2.contains("-")
+						if (key2.contains("..") || key2.contains("EQU") || key2.contains("/") || key2.contains("-")
 								|| key2.contains("LOC")) {
 							continue;
 						}
 
 						// 检查是否是停用词文本1中的词，是则进行过滤
-						if (DAO.stop1Set.contains(key2))
+						if (dao.stop1Set.contains(key2))
 							continue;
 						if (type2.matches("q") && (type1.matches("m|t"))) {
 							if (!delTokens.contains(key2))
 								delTokens.put(key2, type2);
 							continue;
 						}
-						if (type2.equals("nr") && !type1.equals("nr")
-								&& (key2.length() == 2)) {
-							if ((pos3 > 0)
-									&& !allWords[j + 2].substring(pos3 + 1)
-											.equals("nr")) {
+						if (type2.equals("nr") && !type1.equals("nr") && (key2.length() == 2)) {
+							if ((pos3 > 0) && !allWords[j + 2].substring(pos3 + 1).equals("nr")) {
 								tfSum++;
-								addToHash(isfirst, key2, type2, uniTokens,
-										isHead);
+								addToHash(isfirst, key2, type2, uniTokens, isHead);
 								continue;
 							}
 						}
 						String type = type1 + "_" + type2;
 						// if (key1.equals("漂流"))
 						// System.out.println("fdasfd");
-						if (type
-								.matches("(.*n[^rg]*|j|t|s|l)_(.*n[^r]*|j|t)|b_(.*n[^rg]*|j|t)|(a|ag|ad|v)_(vn|n|j)|(v|n)_vg|(vn|n|j|z|v)_(k|ng)|z_n|vd_(v|vn)|nr_nr|(n|v|vn|tg|d|a)_tg")) {
+						if (type.matches(
+								"(.*n[^rg]*|j|t|s|l)_(.*n[^r]*|j|t)|b_(.*n[^rg]*|j|t)|(a|ag|ad|v)_(vn|n|j)|(v|n)_vg|(vn|n|j|z|v)_(k|ng)|z_n|vd_(v|vn)|nr_nr|(n|v|vn|tg|d|a)_tg")) {
 							if (key1.matches("总|的|原|副|相关|一定|主要")
-									|| (key2.matches("队") && !(key1
-											.equals("国家") || (key1.length() == 1))))
+									|| (key2.matches("队") && !(key1.equals("国家") || (key1.length() == 1))))
 								continue;
 							if (type2.equals("ng") && key2.equals("时"))
 								continue;
@@ -494,83 +470,61 @@ public class Extract {
 								continue;
 							if (type.contains("v_j"))
 								continue;
-							if (type2.equals("t")
-									&& (key2
-											.matches("(\\d|[／１２３４５６７８９０]){1,}.*")))
+							if (type2.equals("t") && (key2.matches("(\\d|[／１２３４５６７８９０]){1,}.*")))
 								continue;
-							if ((key1.length() < 2)
-									&& type1.matches("j|n")
-									&& (!(type2.matches("vg|ng|k") || (key2
-											.equals("队")))))
+							if ((key1.length() < 2) && type1.matches("j|n")
+									&& (!(type2.matches("vg|ng|k") || (key2.equals("队")))))
 								continue;
 							if ((key2.length() < 2) && type2.matches("j|vn|t"))
 								continue;
 							// 进行词的合成操作
 							String key = key1 + key2;
-							if (type2.equals("k")
-									&& !key
-											.matches("(.*(症|化|员|式|器|品|家|率|仪|炎|儿|性))|.(业|界)"))
+							if (type2.equals("k") && !key.matches("(.*(症|化|员|式|器|品|家|率|仪|炎|儿|性))|.(业|界)"))
 								continue;
 							if (type2.equals("tg")) {
-								if (!((type1.matches("n|vn|v")
-										&& (key1.length() == 2) && key2
-										.matches("商|周")) || (key
-										.matches("春晚|极夜|平安夜|长春|黄金周"))))
+								if (!((type1.matches("n|vn|v") && (key1.length() == 2) && key2.matches("商|周"))
+										|| (key.matches("春晚|极夜|平安夜|长春|黄金周"))))
 									continue;
 								if (key.matches("春晚|极夜|平安夜|长春|黄金周")) {
 									type = "n";
-									addToHash(isfirst, key, type, uniTokens,
-											isHead);
+									addToHash(isfirst, key, type, uniTokens, isHead);
 									continue;
 								}
 							}
 							if (uniTokens.containsKey(key))
 								addToHash(isfirst, key, type, uniTokens, isHead);
 							else {
-								if (type.equals("nr_nr")
-										&& (key1.length() == 1)
-										&& (key2.length() < 3)) {
+								if (type.equals("nr_nr") && (key1.length() == 1) && (key2.length() < 3)) {
 									// 此处可以合成一些被分词器分开的人名，如：姚明，毛泽东，邓小平等
-									addToHash(isfirst, key, key, type,
-											biTokens, isHead);
+									addToHash(isfirst, key, key, type, biTokens, isHead);
 								} else
 									// 保存二元文法的组合词
-									addToHash(isfirst, key, key1 + "^" + key2,
-											type, biTokens, isHead);
+									addToHash(isfirst, key, key1 + "^" + key2, type, biTokens, isHead);
 							}
 
 							if ((pos3 > 0) && trigram) {
-								String type3 = allWords[j + 2]
-										.substring(pos3 + 1);
-								String key3 = allWords[j + 2]
-										.substring(0, pos3).replaceAll(" ", "")
-										.replaceAll("　", "");
+								String type3 = allWords[j + 2].substring(pos3 + 1);
+								String key3 = allWords[j + 2].substring(0, pos3).replaceAll(" ", "").replaceAll("　",
+										"");
 
-								if (key3.contains("..") || key3.contains("EQU")
-										|| key3.contains("/")
-										|| key3.contains("-")
-										|| key3.contains("LOC")) {
+								if (key3.contains("..") || key3.contains("EQU") || key3.contains("/")
+										|| key3.contains("-") || key3.contains("LOC")) {
 									continue;
 								}
 
-								if (DAO.stop1Set.contains(key3))
+								if (dao.stop1Set.contains(key3))
 									continue;
 								type = type1 + "_" + type2 + "_" + type3;
-								if (type
-										.matches("(.*n[^rg]*|j|t|s)_(.*n[^r]*|j|t)_(.*n[^r]*|j|t)|(b|a)_(.*n[^rg]*|j|t|s)_(.*n[^r]*|j|t)")) {
+								if (type.matches(
+										"(.*n[^rg]*|j|t|s)_(.*n[^r]*|j|t)_(.*n[^r]*|j|t)|(b|a)_(.*n[^rg]*|j|t|s)_(.*n[^r]*|j|t)")) {
 									if (type.contains("ng_ng"))
 										continue;
-									if (type3.equals("t")
-											&& (key3
-													.matches("(\\d|[／１２３４５６７８９０]){1,}.*")))
+									if (type3.equals("t") && (key3.matches("(\\d|[／１２３４５６７８９０]){1,}.*")))
 										continue;
-									if ((key3.length() < 2)
-											&& type3.equals("j"))
+									if ((key3.length() < 2) && type3.equals("j"))
 										continue;
 									key = key1 + key2 + key3;
-									addToHash(isfirst, key, key1 + "^" + key2
-											+ "^" + key3, type, triTokens,
-											isHead);
+									addToHash(isfirst, key, key1 + "^" + key2 + "^" + key3, type, triTokens, isHead);
 								}
 							}
 						}
@@ -616,8 +570,7 @@ public class Extract {
 				byte[] b = texts[i].getBytes("GBK");
 				int han = 0;
 				for (int index = 0; index < b.length - 1; index++) {
-					if ((((b[index] > -88) && (b[index] < -1)) || (b[index] < -95))
-							&& (b[index] < 0)) {
+					if ((((b[index] > -88) && (b[index] < -1)) || (b[index] < -95)) && (b[index] < 0)) {
 						han += 2;
 						index++;
 					}
@@ -656,8 +609,7 @@ public class Extract {
 				// System.out.println(pos1+" "+pos2);
 				if (pos1 > 0) {
 					String type1 = allWords[j].substring(pos1 + 1).trim();
-					String key1 = allWords[j].substring(0, pos1).replaceAll(
-							" ", "").replaceAll("　", "").trim();
+					String key1 = allWords[j].substring(0, pos1).replaceAll(" ", "").replaceAll("　", "").trim();
 
 					int cut = key1.indexOf("/?");
 					if (cut > -1)
@@ -674,14 +626,13 @@ public class Extract {
 					if (type1.matches(".*n[^rg]*|b|ad|a|l|v|j|t|nr")) {
 						if (key1.matches("(\\d|[／１２３４５６７８９０]){1,}.*"))
 							continue;
-						if (type1.equals("nt") && key1.endsWith("队")
-								&& (key1.length() > 2)) {
+						if (type1.equals("nt") && key1.endsWith("队") && (key1.length() > 2)) {
 							key1 = key1.substring(0, key1.length() - 1).trim();
 						}
 
 						// 过滤不为名词的单字；过滤长度小于2的人名---------是否合适，可以以后进行修改
-						if (!((!type1.equals("n") && (key1.length() < 2)) || (type1
-								.equals("nr") && (key1.length() < 3)))) {
+						if (!((!type1.equals("n") && (key1.length() < 2))
+								|| (type1.equals("nr") && (key1.length() < 3)))) {
 							// 计算新闻中总的词数目？？？？？？？？？？？？
 							tfSum++;
 							// 加入一元文法候选词集中
@@ -694,59 +645,47 @@ public class Extract {
 					// if
 					// (type1.equals("a")&&(key1.equals("大"))&&(j>1)&&allWords[j-1].contains("/m"))
 					// {
-					if ((type1.equals("a")) && (j > 1)
-							&& (allWords[j - 1].contains("/m"))) {
-						String temp = allWords[j - 1].substring(0,
-								allWords[j - 1].indexOf("/"))
-								+ key1;
+					if ((type1.equals("a")) && (j > 1) && (allWords[j - 1].contains("/m"))) {
+						String temp = allWords[j - 1].substring(0, allWords[j - 1].indexOf("/")) + key1;
 						addToHash(isfirst, temp, type1, uniTokens, isHead);
 						continue;
 					}
 
 					if (!bigram)
 						continue; // 该语句应该是留给程序测试时使用，目前暂不起作用
-					int pos2 = (j + 1 < allWords.length) ? allWords[j + 1]
-							.lastIndexOf("/") : 0;
-					int pos3 = (j + 2 < allWords.length) ? allWords[j + 2]
-							.lastIndexOf("/") : 0;
+					int pos2 = (j + 1 < allWords.length) ? allWords[j + 1].lastIndexOf("/") : 0;
+					int pos3 = (j + 2 < allWords.length) ? allWords[j + 2].lastIndexOf("/") : 0;
 					if (pos2 > 0) {
 						String type2 = allWords[j + 1].substring(pos2 + 1);
-						String key2 = allWords[j + 1].substring(0, pos2)
-								.replaceAll(" ", "").replaceAll("　", "");
+						String key2 = allWords[j + 1].substring(0, pos2).replaceAll(" ", "").replaceAll("　", "");
 
-						if (key2.contains("..") || key2.contains("EQU")
-								|| key2.contains("/") || key2.contains("-")
+						if (key2.contains("..") || key2.contains("EQU") || key2.contains("/") || key2.contains("-")
 								|| key2.contains("LOC")) {
 							continue;
 						}
 
 						// 检查是否是停用词文本1中的词，是则进行过滤
-						if (DAO.stop1Set.contains(key2))
+						if (dao.stop1Set.contains(key2))
 							continue;
 						if (type2.matches("q") && (type1.matches("m|t"))) {
 							if (!delTokens.contains(key2))
 								delTokens.put(key2, type2);
 							continue;
 						}
-						if (type2.equals("nr") && !type1.equals("nr")
-								&& (key2.length() == 2)) {
-							if ((pos3 > 0)
-									&& !allWords[j + 2].substring(pos3 + 1)
-											.equals("nr")) {
+						if (type2.equals("nr") && !type1.equals("nr") && (key2.length() == 2)) {
+							if ((pos3 > 0) && !allWords[j + 2].substring(pos3 + 1).equals("nr")) {
 								tfSum++;
-								addToHash(isfirst, key2, type2, uniTokens,
-										isHead);
+								addToHash(isfirst, key2, type2, uniTokens, isHead);
 								continue;
 							}
 						}
 						String type = type1 + "_" + type2;
 						// if (key1.equals("漂流"))
 						// System.out.println("fdasfd");
-						if (type
-								.matches("(.*n[^rg]*|j|t|s|l)_(.*n[^r]*|j|t)|b_(.*n[^rg]*|j|t)|(a|ag|ad|v)_(vn|n|j)|(v|n)_vg|(vn|n|j|z|v)_(k|ng)|z_n|vd_(v|vn)|nr_nr|(n|v|vn|tg|d|a)_tg")) {
+						if (type.matches(
+								"(.*n[^rg]*|j|t|s|l)_(.*n[^r]*|j|t)|b_(.*n[^rg]*|j|t)|(a|ag|ad|v)_(vn|n|j)|(v|n)_vg|(vn|n|j|z|v)_(k|ng)|z_n|vd_(v|vn)|nr_nr|(n|v|vn|tg|d|a)_tg")) {
 							if (key1.matches("总|的|原|副|相关|一定|主要")
-									|| (key2.matches("队") && !(key1
-											.equals("国家") || (key1.length() == 1))))
+									|| (key2.matches("队") && !(key1.equals("国家") || (key1.length() == 1))))
 								continue;
 							if (type2.equals("ng") && key2.equals("时"))
 								continue;
@@ -754,83 +693,61 @@ public class Extract {
 								continue;
 							if (type.contains("v_j"))
 								continue;
-							if (type2.equals("t")
-									&& (key2
-											.matches("(\\d|[／１２３４５６７８９０]){1,}.*")))
+							if (type2.equals("t") && (key2.matches("(\\d|[／１２３４５６７８９０]){1,}.*")))
 								continue;
-							if ((key1.length() < 2)
-									&& type1.matches("j|n")
-									&& (!(type2.matches("vg|ng|k") || (key2
-											.equals("队")))))
+							if ((key1.length() < 2) && type1.matches("j|n")
+									&& (!(type2.matches("vg|ng|k") || (key2.equals("队")))))
 								continue;
 							if ((key2.length() < 2) && type2.matches("j|vn|t"))
 								continue;
 							// 进行词的合成操作
 							String key = key1 + key2;
-							if (type2.equals("k")
-									&& !key
-											.matches("(.*(症|化|员|式|器|品|家|率|仪|炎|儿|性))|.(业|界)"))
+							if (type2.equals("k") && !key.matches("(.*(症|化|员|式|器|品|家|率|仪|炎|儿|性))|.(业|界)"))
 								continue;
 							if (type2.equals("tg")) {
-								if (!((type1.matches("n|vn|v")
-										&& (key1.length() == 2) && key2
-										.matches("商|周")) || (key
-										.matches("春晚|极夜|平安夜|长春|黄金周"))))
+								if (!((type1.matches("n|vn|v") && (key1.length() == 2) && key2.matches("商|周"))
+										|| (key.matches("春晚|极夜|平安夜|长春|黄金周"))))
 									continue;
 								if (key.matches("春晚|极夜|平安夜|长春|黄金周")) {
 									type = "n";
-									addToHash(isfirst, key, type, uniTokens,
-											isHead);
+									addToHash(isfirst, key, type, uniTokens, isHead);
 									continue;
 								}
 							}
 							if (uniTokens.containsKey(key))
 								addToHash(isfirst, key, type, uniTokens, isHead);
 							else {
-								if (type.equals("nr_nr")
-										&& (key1.length() == 1)
-										&& (key2.length() < 3)) {
+								if (type.equals("nr_nr") && (key1.length() == 1) && (key2.length() < 3)) {
 									// 此处可以合成一些被分词器分开的人名，如：姚明，毛泽东，邓小平等
-									addToHash(isfirst, key, key, type,
-											biTokens, isHead);
+									addToHash(isfirst, key, key, type, biTokens, isHead);
 								} else
 									// 保存二元文法的组合词
-									addToHash(isfirst, key, key1 + "^" + key2,
-											type, biTokens, isHead);
+									addToHash(isfirst, key, key1 + "^" + key2, type, biTokens, isHead);
 							}
 
 							if ((pos3 > 0) && trigram) {
-								String type3 = allWords[j + 2]
-										.substring(pos3 + 1);
-								String key3 = allWords[j + 2]
-										.substring(0, pos3).replaceAll(" ", "")
-										.replaceAll("　", "");
+								String type3 = allWords[j + 2].substring(pos3 + 1);
+								String key3 = allWords[j + 2].substring(0, pos3).replaceAll(" ", "").replaceAll("　",
+										"");
 
-								if (key3.contains("..") || key3.contains("EQU")
-										|| key3.contains("/")
-										|| key3.contains("-")
-										|| key3.contains("LOC")) {
+								if (key3.contains("..") || key3.contains("EQU") || key3.contains("/")
+										|| key3.contains("-") || key3.contains("LOC")) {
 									continue;
 								}
 
-								if (DAO.stop1Set.contains(key3))
+								if (dao.stop1Set.contains(key3))
 									continue;
 								type = type1 + "_" + type2 + "_" + type3;
-								if (type
-										.matches("(.*n[^rg]*|j|t|s)_(.*n[^r]*|j|t)_(.*n[^r]*|j|t)|(b|a)_(.*n[^rg]*|j|t|s)_(.*n[^r]*|j|t)")) {
+								if (type.matches(
+										"(.*n[^rg]*|j|t|s)_(.*n[^r]*|j|t)_(.*n[^r]*|j|t)|(b|a)_(.*n[^rg]*|j|t|s)_(.*n[^r]*|j|t)")) {
 									if (type.contains("ng_ng"))
 										continue;
-									if (type3.equals("t")
-											&& (key3
-													.matches("(\\d|[／１２３４５６７８９０]){1,}.*")))
+									if (type3.equals("t") && (key3.matches("(\\d|[／１２３４５６７８９０]){1,}.*")))
 										continue;
-									if ((key3.length() < 2)
-											&& type3.equals("j"))
+									if ((key3.length() < 2) && type3.equals("j"))
 										continue;
 									key = key1 + key2 + key3;
-									addToHash(isfirst, key, key1 + "^" + key2
-											+ "^" + key3, type, triTokens,
-											isHead);
+									addToHash(isfirst, key, key1 + "^" + key2 + "^" + key3, type, triTokens, isHead);
 								}
 							}
 						}
@@ -920,9 +837,8 @@ public class Extract {
 		int k = content.lastIndexOf(findWord + word);
 		char c = content.charAt(k - 1);
 		findWord = c + findWord;
-		while ((countTf(findWord + word, content) == (t.tf - t.isHead))
-				&& (c != '“') && (c != '／') && (c != '《') && (c != '　')
-				&& (c != ' ')) {
+		while ((countTf(findWord + word, content) == (t.tf - t.isHead)) && (c != '“') && (c != '／') && (c != '《')
+				&& (c != '　') && (c != ' ')) {
 			if (("" + c).matches("(\\d|[／１２３４５６７８９０]){1,}|。|！|：|；|，|、"))
 				break;
 			if (delTokens.containsKey("" + c))
@@ -930,16 +846,14 @@ public class Extract {
 			k--;
 			c = content.charAt(k - 1);
 			findWord = c + findWord;
-			if ((t.isHead == 0) && (findWord.length() > 1)
-					&& uniTokens.containsKey(findWord)) {
+			if ((t.isHead == 0) && (findWord.length() > 1) && uniTokens.containsKey(findWord)) {
 				findWord = "";
 				break;
 			}
 		}
 		if (findWord.equals("") || (findWord.length() < 2))
 			return null;
-		if ((t.isHead == 1) && (t.tf == 3)
-				&& (!headLine.contains(findWord.substring(1))))
+		if ((t.isHead == 1) && (t.tf == 3) && (!headLine.contains(findWord.substring(1))))
 			return null;
 		return findWord;
 	}
@@ -957,9 +871,8 @@ public class Extract {
 		char c = content.charAt(k);
 		findWord = findWord + c;
 
-		while ((countTf(word + findWord, content) == (t.tf - t.isHead))
-				&& (c != '”') && (c != '／') && (c != '》') && (c != '　')
-				&& (c != ' ')) {
+		while ((countTf(word + findWord, content) == (t.tf - t.isHead)) && (c != '”') && (c != '／') && (c != '》')
+				&& (c != '　') && (c != ' ')) {
 			if (("" + c).matches("(\\d|[／１２３４５６７８９０]){1,}|。|！|：|；|，|、"))
 				break;
 			if (delTokens.containsKey("" + c))
@@ -975,10 +888,7 @@ public class Extract {
 		}
 		if (findWord.equals("") || (findWord.length() < 2))
 			return null;
-		if ((t.isHead == 1)
-				&& (t.tf == 3)
-				&& (!headLine.contains(findWord.substring(0,
-						findWord.length() - 1))))
+		if ((t.isHead == 1) && (t.tf == 3) && (!headLine.contains(findWord.substring(0, findWord.length() - 1))))
 			return null;
 		return findWord;
 	}
@@ -1014,8 +924,7 @@ public class Extract {
 		char c1 = headLine.charAt(k1 - 1);
 		char c2 = content.charAt(k2 - 1);
 		String left = "";
-		while ((c1 == c2) && (c1 != '“') && (c1 != '／') && (c1 != '《')
-				&& (c1 != '　') && (c1 != ' ')) {
+		while ((c1 == c2) && (c1 != '“') && (c1 != '／') && (c1 != '《') && (c1 != '　') && (c1 != ' ')) {
 			if (("" + c1).matches("(\\d|[／１２３４５６７８９０]){1,}|。|！|：|；|，|、"))
 				break;
 			if (delTokens.containsKey("" + c1))
@@ -1043,8 +952,7 @@ public class Extract {
 		char c1 = headLine.charAt(k1);
 		char c2 = content.charAt(k2);
 		String right = "";
-		while ((c1 == c2) && (c1 != '”') && (c1 != '／') && (c1 != '》')
-				&& (c1 != '　') && (c1 != ' ')) {
+		while ((c1 == c2) && (c1 != '”') && (c1 != '／') && (c1 != '》') && (c1 != '　') && (c1 != ' ')) {
 			if (("" + c1).matches("(\\d|[／１２３４５６７８９０]){1,}|。|！|：|；|，|、"))
 				break;
 			if (delTokens.containsKey("" + c1))
@@ -1073,24 +981,18 @@ public class Extract {
 			t.completeness = completeness;
 		if ((!t.completeness) && (t.word.length() == 1))
 			return null;
-		if ((!t.completeness)
-				&& (t.tf - t.isHead > 0)
-				&& (!t.type.matches("j|l") && ((t.isHead == 1) || (t.type
-						.matches("n|nz|a|nr|v"))))) {
-			if ((t.tf - t.isHead > 2)
-					&& (!(t.type.contains("_") && (t.tf - t.isHead < 3)))
+		if ((!t.completeness) && (t.tf - t.isHead > 0)
+				&& (!t.type.matches("j|l") && ((t.isHead == 1) || (t.type.matches("n|nz|a|nr|v"))))) {
+			if ((t.tf - t.isHead > 2) && (!(t.type.contains("_") && (t.tf - t.isHead < 3)))
 					&& (!(t.type.matches("a|v") && (t.tf - t.isHead < 6)))) {
 				String left = wordleft(t);
 				String right = wordRight(t);
 
 				char c1 = ' ';
 				char c2 = ' ';
-				if ((left != null)
-						&& (!uniTokens.containsKey(left.substring(1)))
-						&& (left.length() < 5)) {
+				if ((left != null) && (!uniTokens.containsKey(left.substring(1))) && (left.length() < 5)) {
 					c1 = left.charAt(0);
-					if ((left.length() > 1)
-							&& (!((left.length() == 2) && (left.endsWith("国"))))) {
+					if ((left.length() > 1) && (!((left.length() == 2) && (left.endsWith("国"))))) {
 						left = left.substring(1);
 						Matcher m = Pattern.compile("\\p{P}").matcher(left);
 						if (!m.find()) {
@@ -1098,15 +1000,13 @@ public class Extract {
 						}
 					}
 				}
-				if ((right != null)
-						&& (!uniTokens.containsKey(right.substring(0, right
-								.length() - 1))) && (right.length() < 5)) {
+				if ((right != null) && (!uniTokens.containsKey(right.substring(0, right.length() - 1)))
+						&& (right.length() < 5)) {
 					c2 = right.charAt(right.length() - 1);
 					if (right.length() > 1) {
 						right = right.substring(0, right.length() - 1);
 						if (!right.equals("\n")) {
-							Matcher m = Pattern.compile("\\p{P}")
-									.matcher(right);
+							Matcher m = Pattern.compile("\\p{P}").matcher(right);
 							if (!m.find()) {
 								t.word = t.word + right;
 							}
@@ -1157,8 +1057,7 @@ public class Extract {
 			String key = (String) e.nextElement();
 			Token term = (Token) results.get(key);
 			if (key.contains(word0)) {// short after long
-				if ((term.inQuotation == 1) || (term.tf >= t.tf)
-						|| (word0.length() == 1) || (term.type.equals("ns"))
+				if ((term.inQuotation == 1) || (term.tf >= t.tf) || (word0.length() == 1) || (term.type.equals("ns"))
 						|| (term.type.contains("_"))) {
 					addToResult = false;
 					if (btTokens.containsKey(word0))
@@ -1167,14 +1066,9 @@ public class Extract {
 				}
 				// yao
 			} else if (word0.contains(key)) {// long after short
-				if ((key.length() == 1)
-						|| (t.inQuotation == 1)
-						|| (t.tf >= term.tf)
-						|| term.type.matches("v|ad|a|b")
-						|| term.type.contains("_")
-						|| ((t.isHead == 1) && (t.tf > 3) && (t.stability > 0.9))) {
-					if (!((term.tf > t.tf + 2) && (term.type
-							.matches("ns|nz|n|j|t")))) {
+				if ((key.length() == 1) || (t.inQuotation == 1) || (t.tf >= term.tf) || term.type.matches("v|ad|a|b")
+						|| term.type.contains("_") || ((t.isHead == 1) && (t.tf > 3) && (t.stability > 0.9))) {
+					if (!((term.tf > t.tf + 2) && (term.type.matches("ns|nz|n|j|t")))) {
 						removewordSize++;
 						removeword[removewordSize] = key;
 						if (btTokens.containsKey(key))
@@ -1183,8 +1077,7 @@ public class Extract {
 							newScore = term.score;
 					}
 				} else {
-					if (t.type.equals("newword") || t.type.matches(".*_.*_.*")
-							|| (t.del && (term.type.equals("ns")))) {
+					if (t.type.equals("newword") || t.type.matches(".*_.*_.*") || (t.del && (term.type.equals("ns")))) {
 						t.del = true;
 						addToResult = false;
 						break;
@@ -1214,7 +1107,7 @@ public class Extract {
 		Iterator j = biTs.iterator();
 		int count = 0;
 		// while (j.hasNext()&&(count<5)){
-		while (j.hasNext() && (count < KEYNUM)) {// modified by lijun
+		while (j.hasNext() && (count < commonUtil.getTopKeyWords())) {
 			count++;
 			Token tb = (Token) j.next();
 			String word1 = tb.word.replaceAll("\\^", "");
@@ -1224,27 +1117,23 @@ public class Extract {
 			if (word.length < 2)
 				continue;
 			if (results.containsKey(word[0]) && results.containsKey(word[1])) {
-				double tTf = Math.pow((double) tb.tf + tb.isHead
-						+ tb.inQuotation + tb.bonus + tb.firstpara, 3.0);
+				double tTf = Math.pow((double) tb.tf + tb.isHead + tb.inQuotation + tb.bonus + tb.firstpara, 3.0);
 				double temp = (double) tTf * tb.stability / tfSum;
 				// System.out.println(tb.word+"\t"+temp);
-				if ((tb.tf + tb.isHead > 2) && (temp - 0.3 > 0)
-						&& (tb.stability - 0.3 > 0)) {
+				if ((tb.tf + tb.isHead > 2) && (temp - 0.3 > 0) && (tb.stability - 0.3 > 0)) {
 					results.remove(word[0]);
 					results.remove(word[1]);
 					results.put(word1, tb);
 				} else {
 					Token tu1 = (Token) results.get(word[0]);
 					Token tu2 = (Token) results.get(word[1]);
-					if ((tb.tf + tb.isHead > 2) && (tu1.tf == tb.tf)
-							&& (tu2.tf > tb.tf)) {
+					if ((tb.tf + tb.isHead > 2) && (tu1.tf == tb.tf) && (tu2.tf > tb.tf)) {
 						tu1.word = tb.word;
 						tu1.type = tb.type;
 						results.remove(word[0]);
 						results.put(word1, tu1);
 					}
-					if ((tb.tf + tb.isHead > 2) && (tu2.tf == tb.tf)
-							&& (tu1.tf > tb.tf)) {
+					if ((tb.tf + tb.isHead > 2) && (tu2.tf == tb.tf) && (tu1.tf > tb.tf)) {
 						tu2.word = tb.word;
 						tu2.type = tb.type;
 						results.remove(word[1]);
@@ -1291,8 +1180,7 @@ public class Extract {
 			if (word.length == 2) {
 				if (results.containsKey(word[0] + word[1]))
 					continue;
-				if (results.containsKey(word[0])
-						&& results.containsKey(word[1]))
+				if (results.containsKey(word[0]) && results.containsKey(word[1]))
 					continue;
 				if (checkHashtable(word[0] + word[1], results))
 					continue;
@@ -1317,8 +1205,7 @@ public class Extract {
 				}
 				if (rs.contains(word[0]) || rs.contains(word[1]))
 					continue;
-				if (!results.containsKey(word[0])
-						&& !results.containsKey(word[1])) {
+				if (!results.containsKey(word[0]) && !results.containsKey(word[1])) {
 					if ((ta.isHead == 1) || (ta.tf > 4))
 						btTs.add(ta);
 				}
@@ -1326,9 +1213,7 @@ public class Extract {
 			if (word.length == 3) {
 				if (results.containsKey(word[0] + word[1] + word[2]))
 					continue;
-				if (results.containsKey(word[0])
-						&& results.containsKey(word[1])
-						&& results.containsKey(word[2]))
+				if (results.containsKey(word[0]) && results.containsKey(word[1]) && results.containsKey(word[2]))
 					continue;
 				if (checkHashtable(word[0] + word[1] + word[2], results))
 					continue;
@@ -1337,16 +1222,13 @@ public class Extract {
 					key = word[0] + word[1];
 				} else if (results.containsKey(word[1] + word[2])) {
 					key = word[1] + word[2];
-				} else if (results.containsKey(word[0])
-						&& !results.containsKey(word[1])
+				} else if (results.containsKey(word[0]) && !results.containsKey(word[1])
 						&& !results.containsKey(word[2])) {
 					key = word[0];
-				} else if (results.containsKey(word[1])
-						&& !results.containsKey(word[0])
+				} else if (results.containsKey(word[1]) && !results.containsKey(word[0])
 						&& !results.containsKey(word[2])) {
 					key = word[1];
-				} else if (results.containsKey(word[2])
-						&& !results.containsKey(word[1])
+				} else if (results.containsKey(word[2]) && !results.containsKey(word[1])
 						&& !results.containsKey(word[0])) {
 					key = word[2];
 				}
@@ -1363,12 +1245,9 @@ public class Extract {
 					}
 					continue;
 				}
-				if (rs.contains(word[0]) || rs.contains(word[1])
-						|| rs.contains(word[2]))
+				if (rs.contains(word[0]) || rs.contains(word[1]) || rs.contains(word[2]))
 					continue;
-				if (!results.containsKey(word[0])
-						&& !results.containsKey(word[1])
-						&& !results.containsKey(word[2])) {
+				if (!results.containsKey(word[0]) && !results.containsKey(word[1]) && !results.containsKey(word[2])) {
 					if ((ta.isHead == 1) || (ta.tf > 3))
 						btTs.add(ta);
 				}
@@ -1380,7 +1259,7 @@ public class Extract {
 		Iterator i = uniTs.iterator();
 		results = new Hashtable();
 		// while (i.hasNext() && results.size()<5){//get the top five
-		while (i.hasNext() && results.size() < KEYNUM) {// modify by lj,
+		while (i.hasNext() && results.size() < commonUtil.getTopKeyWords()) {
 			// 2007-09-26
 			// ++++++++++++++++++++++++
 			Token t = (Token) i.next();
@@ -1393,26 +1272,22 @@ public class Extract {
 					continue;
 			}
 
-			if (!t.word.contains("^") && (t.isHead == 0) && (t.tf < 3)
-					&& (t.df < 20) && (!t.type.matches("nt|ns|nz")))
+			if (!t.word.contains("^") && (t.isHead == 0) && (t.tf < 3) && (t.df < 20) && (!t.type.matches("nt|ns|nz")))
 				continue; // df<20 ,8
 
-			if (t.type.equals("ns")
-					&& (t.word.endsWith("市") || t.word.endsWith("省"))
-					&& (t.df > 65)) {// df>65,30
+			if (t.type.equals("ns") && (t.word.endsWith("市") || t.word.endsWith("省")) && (t.df > 65)) {// df>65,30
 				t.word = t.word.substring(0, t.word.length() - 1);
 				word0 = word0.substring(0, word0.length() - 1);
 			}
 
 			if (word0.length() == 1 && !news.headLine.contains(word0))
 				continue;
-			if (word0.length() == 1 && !DAO.singleWordSet.contains(word0))
+			if (word0.length() == 1 && !dao.singleWordSet.contains(word0))
 				continue;
 
 			// 如果候选结果中已经存在，则调整对应参数后直接过滤
 			if (results.containsKey(word0)
-					|| (results.containsKey(word0 + "省") || (results
-							.containsKey(word0 + "市")))) {
+					|| (results.containsKey(word0 + "省") || (results.containsKey(word0 + "市")))) {
 				regularPlaceName(word0, results, t);
 				uniTs.remove(t);
 				continue;
@@ -1424,7 +1299,7 @@ public class Extract {
 
 			// if (results.size() == 5) backToBigram(results);
 			// 当达到指定的挑选个数时，进行下边的关键词组合处理
-			if (results.size() == KEYNUM)
+			if (results.size() == commonUtil.getTopKeyWords())
 				backToBigram(results);// modify by lj, 2007-09-26
 			// ++++++++++++++++++++++++
 		}
@@ -1443,12 +1318,10 @@ public class Extract {
 		}
 		Iterator it = resultTs.iterator();
 		// news.keywords = new Token[5];
-		news.keywords = new Token[KEYNUM];// modify by lj, 2007-09-26
-		// ++++++++++++++++++++++++
-
+		news.keywords = new Token[commonUtil.getTopKeyWords()];
 		int count = 0;
 		// while (it.hasNext()&&(count<5)){//put results in to News.keywords[]
-		while (it.hasNext() && (count < KEYNUM)) {// modify by lj, 2007-09-26
+		while (it.hasNext() && (count < commonUtil.getTopKeyWords())) {
 			// ++++++++++++++++++++++++
 			Token t = (Token) it.next();
 			news.keywords[count] = t;
@@ -1536,10 +1409,8 @@ public class Extract {
 					addToResult = false;
 					break;
 				}
-				if ((t.word.length() > 2) && t.word.contains(key)
-						&& (key.length() > 1)) {
-					if ((t.stability > 0.9) && (t.tf > 7)
-							&& (t.word.length() > 4)) {
+				if ((t.word.length() > 2) && t.word.contains(key) && (key.length() > 1)) {
+					if ((t.stability > 0.9) && (t.tf > 7) && (t.word.length() > 4)) {
 						keySubTfSize++;
 						keySubTf[keySubTfSize] = key;
 						continue;
@@ -1560,8 +1431,7 @@ public class Extract {
 							break;
 						}
 					}
-					if (uniT.type.equals("newword")
-							&& (!t.type.equals("newword"))) {
+					if (uniT.type.equals("newword") && (!t.type.equals("newword"))) {
 						addToResult = false;
 						break;
 					}
@@ -1606,8 +1476,7 @@ public class Extract {
 					uniTokens.put(word[0] + word[1], t);
 				continue;
 			}
-			double tTf = Math.pow((double) t.tf + t.isHead * 2 + t.inQuotation
-					* 3 + t.bonus + t.firstpara, 3.0);
+			double tTf = Math.pow((double) t.tf + t.isHead * 2 + t.inQuotation * 3 + t.bonus + t.firstpara, 3.0);
 			// System.out.println(t.word+"\t"+tTf+"\t"+t.stability+"\t"+tfSum+"\t"+tTf*t.stability/tfSum);
 			/*
 			 * for (int j=0; j<2; j++){ if
@@ -1632,8 +1501,7 @@ public class Extract {
 					uniTokens.put(word[0] + word[1], t);
 			} else {
 				for (int j = 0; j < 2; j++) {
-					if (uniTokens.containsKey(word[j])
-							&& (word[j].length() > 1)) {
+					if (uniTokens.containsKey(word[j]) && (word[j].length() > 1)) {
 						Token tu = (Token) uniTokens.get(word[j]);
 						tu.bonus++;
 					}
@@ -1643,12 +1511,10 @@ public class Extract {
 	}
 
 	public boolean triCheck(Token t) {
-		double tTf = Math.pow((double) t.tf + t.isHead * 2 + t.inQuotation * 3
-				+ t.firstpara, 3.0);
+		double tTf = Math.pow((double) t.tf + t.isHead * 2 + t.inQuotation * 3 + t.firstpara, 3.0);
 		if ((double) tTf * t.stability / tfSum < 0.51)
 			return false;
-		if ((t.word.length() > 5) && (t.stability < 0.8)
-				&& (t.inQuotation == 0))
+		if ((t.word.length() > 5) && (t.stability < 0.8) && (t.inQuotation == 0))
 			return false;
 		return true;
 	}
@@ -1684,8 +1550,7 @@ public class Extract {
 				}
 				uniTokens.put(word[0] + word[1] + word[2], t);
 			} else {
-				if (biTokens.containsKey(word[1] + word[2])
-						&& biTokens.containsKey(word[0] + word[1])) {
+				if (biTokens.containsKey(word[1] + word[2]) && biTokens.containsKey(word[0] + word[1])) {
 					Token tb1 = (Token) biTokens.get(word[0] + word[1]);
 					Token tb2 = (Token) biTokens.get(word[1] + word[2]);
 					if (tb2.tf > tb1.tf) {
@@ -1693,15 +1558,13 @@ public class Extract {
 						biTokens.remove(word[0] + word[1]);
 						continue;
 					}
-					if ((DAO.termsBi.containsKey(word[0] + word[1]) && !DAO.termsBi
-							.containsKey(word[1] + word[2]))
+					if ((DAO.termsBi.containsKey(word[0] + word[1]) && !DAO.termsBi.containsKey(word[1] + word[2]))
 							|| (tb1.tf > tb2.tf)) {
 						tb1.bonus++;
 						biTokens.remove(word[1] + word[2]);
 						continue;
 					}
-					if (DAO.termsBi.containsKey(word[1] + word[2])
-							&& !DAO.termsBi.containsKey(word[0] + word[1])) {
+					if (DAO.termsBi.containsKey(word[1] + word[2]) && !DAO.termsBi.containsKey(word[0] + word[1])) {
 						tb2.bonus++;
 						biTokens.remove(word[0] + word[1]);
 						continue;
@@ -1715,11 +1578,9 @@ public class Extract {
 					Token tb = (Token) biTokens.get(word[1] + word[2]);
 					tb.bonus++;
 				}
-				if (!biTokens.containsKey(word[1] + word[2])
-						&& !biTokens.containsKey(word[0] + word[1]))
+				if (!biTokens.containsKey(word[1] + word[2]) && !biTokens.containsKey(word[0] + word[1]))
 					for (int k = 0; k < 3; k++) {
-						if (uniTokens.containsKey(word[k])
-								&& (word[k].length() > 1)) {
+						if (uniTokens.containsKey(word[k]) && (word[k].length() > 1)) {
 							Token tu = (Token) uniTokens.get(word[k]);
 							tu.bonus++;
 						}
@@ -1757,8 +1618,7 @@ public class Extract {
 					String key = dealText1[i].substring(0, j);
 					if ((key.length() > 7) || (key.length() < 2))
 						continue;
-					if (uniTokens.containsKey(key) || biTokens.containsKey(key)
-							|| triTokens.containsKey(key)) {
+					if (uniTokens.containsKey(key) || biTokens.containsKey(key) || triTokens.containsKey(key)) {
 						// 如果已经在某文法关键词候选集合中，则需要进行标定该词为强调引用
 						setQuotation(uniTokens, key);
 						setQuotation(biTokens, key);
@@ -1787,8 +1647,7 @@ public class Extract {
 				int j = dealText1[i].indexOf("》");
 				if (j > -1) {
 					String key = dealText1[i].substring(0, j);
-					if (uniTokens.containsKey(key) || biTokens.containsKey(key)
-							|| triTokens.containsKey(key)) {
+					if (uniTokens.containsKey(key) || biTokens.containsKey(key) || triTokens.containsKey(key)) {
 						setQuotation(uniTokens, key);
 						setQuotation(biTokens, key);
 						setQuotation(triTokens, key);
@@ -1812,8 +1671,7 @@ public class Extract {
 				String key = dealText1[i];
 				if ((key.length() > 7) || (key.length() < 2))
 					continue;
-				if (uniTokens.containsKey(key) || biTokens.containsKey(key)
-						|| triTokens.containsKey(key)) {
+				if (uniTokens.containsKey(key) || biTokens.containsKey(key) || triTokens.containsKey(key)) {
 					setQuotation(uniTokens, key);
 					setQuotation(biTokens, key);
 					setQuotation(triTokens, key);
@@ -1851,8 +1709,7 @@ public class Extract {
 					headSet.add(key1);
 				if (type1.matches("nr|nx"))
 					namelist.add(key1);
-				if (type1.matches("w|c") || key1.equals("/")
-						|| key1.equals("／")) {
+				if (type1.matches("w|c") || key1.equals("/") || key1.equals("／")) {
 					titleWords[j] = " ";
 				}
 				if (type0.equals("m")) {
@@ -1902,18 +1759,13 @@ public class Extract {
 					continue;
 				} else {
 					Token t = new Token(dealWords[j], "newword", 1, 0, tf, 0.99);
-					if (modifyHashtable(t, uniTokens)
-							|| modifyHashtable(t, biTokens)
-							|| modifyHashtable(t, triTokens))
+					if (modifyHashtable(t, uniTokens) || modifyHashtable(t, biTokens) || modifyHashtable(t, triTokens))
 						continue;
 					if (checkHashtable(t, uniTokens))
 						continue;
 					double stability = (double) tf
-							/ (countTf(dealWords[j].substring(0, dealWords[j]
-									.length() - 1), content)
-									+ countTf(dealWords[j].substring(1,
-											dealWords[j].length()), content)
-									+ 2 - tf);
+							/ (countTf(dealWords[j].substring(0, dealWords[j].length() - 1), content)
+									+ countTf(dealWords[j].substring(1, dealWords[j].length()), content) + 2 - tf);
 					if (firstPara.indexOf(dealWords[j]) > -1)
 						t.firstpara = 1;
 					if (((double) tf / tfSum > 0.021) && (stability > 0.39))
@@ -1923,39 +1775,30 @@ public class Extract {
 				int[][] tf = new int[size - 1][size + 1];
 				for (int i = 0; i < size - 1; i++) {
 					for (int k = 0; k < size - 1 - i; k++) {
-						if (dealWords[j].substring(k, k + 2 + i).endsWith("队")
-								&& (i > 0))
+						if (dealWords[j].substring(k, k + 2 + i).endsWith("队") && (i > 0))
 							continue;
-						if (headSet.contains(dealWords[j].substring(k, k + 2
-								+ i)))
+						if (headSet.contains(dealWords[j].substring(k, k + 2 + i)))
 							continue;
-						if (((dealWords[j].charAt(k) == '的') || (dealWords[j]
-								.charAt(k + 1 + i) == '的'))
+						if (((dealWords[j].charAt(k) == '的') || (dealWords[j].charAt(k + 1 + i) == '的'))
 								&& headTokens.containsKey("的")) {
 							if (((String) headTokens.get("的")).equals("u"))
 								continue;
 						}
-						if ((dealWords[j].charAt(k) == '在')
-								&& headTokens.containsKey("在")) {
+						if ((dealWords[j].charAt(k) == '在') && headTokens.containsKey("在")) {
 							if (((String) headTokens.get("在")).equals("p"))
 								continue;
 						}
-						int temp = headline.indexOf(dealWords[j].substring(k, k
-								+ 2 + i));
+						int temp = headline.indexOf(dealWords[j].substring(k, k + 2 + i));
 						char c1 = (temp > 0) ? headline.charAt(temp - 1) : ' ';
-						char c2 = (temp + 2 + i < headline.length()) ? headline
-								.charAt(temp + 2 + i) : ' ';
+						char c2 = (temp + 2 + i < headline.length()) ? headline.charAt(temp + 2 + i) : ' ';
 						// if (dealWords[j].substring(k,k+2+i).equals("突发公共事件"))
 						// System.out.println("dfad");
-						tf[k][k + 2 + i] = 1 + countTf(dealWords[j].substring(
-								k, k + 2 + i), content, c1, c2);
+						tf[k][k + 2 + i] = 1 + countTf(dealWords[j].substring(k, k + 2 + i), content, c1, c2);
 						if (completeness) {
 							if (i > 0) {
-								if ((double) tf[k][k + 2 + i]
-										/ tf[k + 1][k + 2 + i] > 0.74)
+								if ((double) tf[k][k + 2 + i] / tf[k + 1][k + 2 + i] > 0.74)
 									tf[k + 1][k + 2 + i] = 1;
-								if ((double) tf[k][k + 2 + i]
-										/ tf[k][k + 1 + i] > 0.74)
+								if ((double) tf[k][k + 2 + i] / tf[k][k + 1 + i] > 0.74)
 									tf[k][k + 1 + i] = 1;
 							}
 						} else
@@ -1968,31 +1811,24 @@ public class Extract {
 						if (tf[k][k + 2 + i] == 1)
 							goon++;
 
-						if (dealWords[j].substring(k, k + 2 + i).endsWith("队")
-								&& (i > 0))
+						if (dealWords[j].substring(k, k + 2 + i).endsWith("队") && (i > 0))
 							continue;
 						// if (dealWords[j].substring(k,k+2+i).equals("突发公共事件"))
 						// System.out.println(dealWords[j].substring(k,k+2+i));
-						if (headSet.contains(dealWords[j].substring(k, k + 2
-								+ i)))
+						if (headSet.contains(dealWords[j].substring(k, k + 2 + i)))
 							continue;
 						if (tf[k][k + 2 + i] < 2) {// uncompleteness term,
 							// remove from bitokens and
 							// tritokens
-							modifyHashtable(dealWords[j]
-									.substring(k, k + 2 + i), uniTokens);
-							modifyHashtable(dealWords[j]
-									.substring(k, k + 2 + i), biTokens);
-							modifyHashtable(dealWords[j]
-									.substring(k, k + 2 + i), triTokens);
+							modifyHashtable(dealWords[j].substring(k, k + 2 + i), uniTokens);
+							modifyHashtable(dealWords[j].substring(k, k + 2 + i), biTokens);
+							modifyHashtable(dealWords[j].substring(k, k + 2 + i), triTokens);
 							continue;
 						}
 
-						Token t = new Token(dealWords[j]
-								.substring(k, k + 2 + i), "newword", 1, 0,
-								tf[k][k + 2 + i], 0.99);
-						if (modifyHashtable(t, uniTokens)
-								|| modifyHashtable(t, biTokens)
+						Token t = new Token(dealWords[j].substring(k, k + 2 + i), "newword", 1, 0, tf[k][k + 2 + i],
+								0.99);
+						if (modifyHashtable(t, uniTokens) || modifyHashtable(t, biTokens)
 								|| modifyHashtable(t, triTokens))
 							continue;
 
@@ -2000,25 +1836,17 @@ public class Extract {
 							continue;
 
 						double stability = (double) tf[k][k + 2 + i]
-								/ (countTf(
-										dealWords[j].substring(k, k + 1 + i),
-										content)
-										+ countTf(dealWords[j].substring(k + 1,
-												k + 2 + i), content) + 2 - tf[k][k
-										+ 2 + i]);
+								/ (countTf(dealWords[j].substring(k, k + 1 + i), content)
+										+ countTf(dealWords[j].substring(k + 1, k + 2 + i), content) + 2
+										- tf[k][k + 2 + i]);
 						t.stability = stability;
 						if (checkHashtable(t, uniTokens))
 							continue;
-						if (checkHashtable(
-								dealWords[j].substring(k, k + 2 + i), biTokens,
-								t.tf, t.del)
-								|| checkHashtable(dealWords[j].substring(k, k
-										+ 2 + i), triTokens, t.tf, t.del))
+						if (checkHashtable(dealWords[j].substring(k, k + 2 + i), biTokens, t.tf, t.del)
+								|| checkHashtable(dealWords[j].substring(k, k + 2 + i), triTokens, t.tf, t.del))
 							continue;
 
-						if (containsNr(dealWords[j].substring(k, k + 2 + i),
-								namelist)
-								&& (tf[k][k + 2 + i] > 1))
+						if (containsNr(dealWords[j].substring(k, k + 2 + i), namelist) && (tf[k][k + 2 + i] > 1))
 							t.del = false;
 
 						if (t.del) {
@@ -2044,11 +1872,9 @@ public class Extract {
 
 						// if (dealWords[j].substring(k,k+2+i).equals("北京奥组委"))
 						// System.out.println("dfad");
-						if (firstPara.indexOf(dealWords[j].substring(k, k + 2
-								+ i)) > -1)
+						if (firstPara.indexOf(dealWords[j].substring(k, k + 2 + i)) > -1)
 							t.firstpara = 1;
-						if (((double) tf[k][k + 2 + i] / tfSum > 0.021)
-								&& (t.stability > tOfstability))
+						if (((double) tf[k][k + 2 + i] / tfSum > 0.021) && (t.stability > tOfstability))
 							// 把标题中发现的潜在关键词保存至headTs中去
 							headTs.add(t);
 					}
@@ -2126,16 +1952,14 @@ public class Extract {
 		if (word.length() > 8)
 			significance = 3;
 		double tf = Math.pow((t.tf + t.bonus), t1)
-				* (1 + t.isHead * t2 + t.inQuotation * t3 + t.firstpara * t4 + significance
-						* t7);
+				* (1 + t.isHead * t2 + t.inQuotation * t3 + t.firstpara * t4 + significance * t7);
 		double init = Math.log(termSum) * t5 - Math.pow(Math.log(k), t6);
 
 		return tf * init;
 	}
 
 	// 进行特征拟合运算，其中ts为各关键词候选集合中各词的最终进行排名集合
-	public void countScore(Hashtable newsTokens, Hashtable allTokens,
-			TreeSet ts, long termSum) {
+	public void countScore(Hashtable newsTokens, Hashtable allTokens, TreeSet ts, long termSum) {
 		Enumeration e = newsTokens.keys();
 		int nrcount = 0;
 		// System.out.println("#####################:");
@@ -2155,9 +1979,9 @@ public class Extract {
 			// System.out.println("ok1");
 
 			// 如果包含在停用词中则直接过滤
-			if (DAO.stop1Set.contains(word) || DAO.stop2Set.contains(word))
+			if (dao.stop1Set.contains(word) || dao.stop2Set.contains(word))
 				continue;
-			if (DAO.stopSet.contains(word))
+			if (dao.stopSet.contains(word))
 				continue;
 
 			// 该词类型为非名词且长度小于3时,设置它为完整的
@@ -2201,8 +2025,7 @@ public class Extract {
 
 			} else { // 当该词为非一元文法词时，进行相应处理
 				if (t.inQuotation == 0) {
-					if (content.contains("《" + word + "》")
-							|| content.contains("“" + word + "”")
+					if (content.contains("《" + word + "》") || content.contains("“" + word + "”")
 							|| content.contains("‘" + word + "’"))
 						t.inQuotation = 1;
 				}
@@ -2234,22 +2057,18 @@ public class Extract {
 			// if (word.equals("汽车电子狗"))
 			// System.out.println("ok1");
 			if (i > -1 && i > 0 && j > 0) {
-				if (!t.completeness && (t.inQuotation == 0)
-						&& ((i != j) || (t.type.matches(".*(vg|ng|k|tg)"))))
+				if (!t.completeness && (t.inQuotation == 0) && ((i != j) || (t.type.matches(".*(vg|ng|k|tg)"))))
 					continue;
-				if ((!t.completeness || (t.isHead + t.tf < 5))
-						&& (t.inQuotation == 0) && (t.type.contains("v_")))
+				if ((!t.completeness || (t.isHead + t.tf < 5)) && (t.inQuotation == 0) && (t.type.contains("v_")))
 					continue;
 
 				int temp;
 				if (i == j)
 					temp = countTf(t.word.substring(0, i), content)
-							+ countTf(t.word.substring(i + 1, t.word.length()),
-									content) - t.tf;
+							+ countTf(t.word.substring(i + 1, t.word.length()), content) - t.tf;
 				else
 					temp = countTf(word.substring(0, j - 1), content)
-							+ countTf(word.substring(i, word.length()), content)
-							- t.tf;
+							+ countTf(word.substring(i, word.length()), content) - t.tf;
 				if (t.isHead == 1)
 					temp += 2;
 				t.stability = (double) t.tf / temp;
@@ -2257,14 +2076,12 @@ public class Extract {
 					t.stability = 1.0;
 			}
 
-			int tf = t.tf + t.isHead * 2 + t.inQuotation + t.bonus
-					+ t.firstpara;
+			int tf = t.tf + t.isHead * 2 + t.inQuotation + t.bonus + t.firstpara;
 
 			int k = 0;
 			// if (allTokens == null) System.out.println("ftft");
 			String place = "";
-			if ((word.endsWith("市") || word.endsWith("省"))
-					&& (word.length() > 1))
+			if ((word.endsWith("市") || word.endsWith("省")) && (word.length() > 1))
 				place = word.substring(0, word.length() - 1);
 
 			if (!allTokens.containsKey(word)) {
@@ -2286,8 +2103,8 @@ public class Extract {
 
 			t.score = score(t, termSum, k);
 
-			// System.out.println(t.word+": type = " + t.type + "  termSum = "+
-			// termSum +"  k = "+ k); //to test by lj
+			// System.out.println(t.word+": type = " + t.type + " termSum = "+
+			// termSum +" k = "+ k); //to test by lj
 			// 此处把经过过滤操作的剩余候选关键词加入到相应的TreeSet中去
 			t.df = k;
 			ts.add(t); // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!

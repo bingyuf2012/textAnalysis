@@ -78,15 +78,6 @@ public class Constant {
 	public static final String DOC_TOKEN_FILENAME = "TokensToNews.txt";
 
 	/**
-	 * 网站代理相关的参数
-	 */
-	public static final String PROXY_URL = "http://www.56ads.com/article/201309/399228.html";
-	public static final String PROXY_FILE = "proxy.txt";
-	public static final String PROXY_DIR = CommonUtil
-			.getPropertiesValue("proxy");
-	public static final String PROXY_FILENAME = PROXY_DIR + "/" + PROXY_FILE;
-
-	/**
 	 * 临时文件夹名字被 “-”分割的字符串数组的长度
 	 */
 	public static final int TEMP_FILENAME_LEN = 5;

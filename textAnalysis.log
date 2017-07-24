@@ -1,0 +1,580 @@
+text.analysis[2017-07-24 15:35:34,630][INFO]Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener][main][org.springframework.test.context.support.AbstractTestContextBootstrapper.getDefaultTestExecutionListenerClassNames(AbstractTestContextBootstrapper.java:256)]
+text.analysis[2017-07-24 15:35:34,639][INFO]Could not instantiate TestExecutionListener [org.springframework.test.context.web.ServletTestExecutionListener]. Specify custom listener classes or make the default listener classes (and their required dependencies) available. Offending class: [javax/servlet/ServletContext][main][org.springframework.test.context.support.AbstractTestContextBootstrapper.instantiateListeners(AbstractTestContextBootstrapper.java:204)]
+text.analysis[2017-07-24 15:35:34,647][INFO]Using TestExecutionListeners: [org.springframework.test.context.support.DependencyInjectionTestExecutionListener@3b25b88c, org.springframework.test.context.support.DirtiesContextTestExecutionListener@29770daa, org.springframework.test.context.transaction.TransactionalTestExecutionListener@4722292a, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@13bca8e2][main][org.springframework.test.context.support.AbstractTestContextBootstrapper.getTestExecutionListeners(AbstractTestContextBootstrapper.java:182)]
+text.analysis[2017-07-24 15:35:34,750][INFO]Loading XML bean definitions from URL [file:/D:/Workspaces/text.analysis/target/classes/ApplicationContext.xml][main][org.springframework.beans.factory.xml.XmlBeanDefinitionReader.loadBeanDefinitions(XmlBeanDefinitionReader.java:317)]
+text.analysis[2017-07-24 15:35:34,977][INFO]Refreshing org.springframework.context.support.GenericApplicationContext@4b43b5da: startup date [Mon Jul 24 15:35:34 CST 2017]; root of context hierarchy[main][org.springframework.context.support.AbstractApplicationContext.prepareRefresh(AbstractApplicationContext.java:514)]
+text.analysis[2017-07-24 15:35:35,949][WARN]not find library.properties in classpath use it by default ![main][org.ansj.util.MyStaticValue.<clinit>(MyStaticValue.java:91)]
+text.analysis[2017-07-24 15:35:35,953][INFO]path to stream library/ambiguity.dic[main][org.ansj.dic.impl.File2Stream.toStream(File2Stream.java:29)]
+text.analysis[2017-07-24 15:35:35,956][INFO]load dic use time:2 path is : library/ambiguity.dic[main][org.ansj.library.AmbiguityLibrary.init(AmbiguityLibrary.java:108)]
+text.analysis[2017-07-24 15:35:35,957][INFO]path to stream library/default.dic[main][org.ansj.dic.impl.File2Stream.toStream(File2Stream.java:29)]
+text.analysis[2017-07-24 15:35:36,590][INFO]load dic use time:633 path is : library/default.dic[main][org.ansj.library.DicLibrary.init(DicLibrary.java:191)]
+text.analysis[2017-07-24 15:35:37,941][INFO]load crf model ok ! use time :1346[main][org.ansj.app.crf.model.CRFModel.loadModel(CRFModel.java:59)]
+text.analysis[2017-07-24 15:35:37,941][INFO]load crf use time:1350 path is : jar://crf.model[main][org.ansj.library.CrfLibrary.initCRFModel(CrfLibrary.java:82)]
+text.analysis[2017-07-24 15:35:37,974][WARN]Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'ETMCluster': Injection of autowired dependencies failed; nested exception is org.springframework.beans.factory.BeanCreationException: Could not autowire field: text.thu.keyword.ExtFactory text.analyse.etmutility.ETMCluster.extFactory; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'extFactory' defined in file [D:\Workspaces\text.analysis\target\classes\text\thu\keyword\ExtFactory.class]: Instantiation of bean failed; nested exception is java.lang.ExceptionInInitializerError[main][org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:488)]
+text.analysis[2017-07-24 15:35:37,975][ERROR]Caught exception while allowing TestExecutionListener [org.springframework.test.context.support.DependencyInjectionTestExecutionListener@3b25b88c] to prepare test instance [text.analysis.cluster.ETMClusterTest@4d37dfac][main][org.springframework.test.context.TestContextManager.prepareTestInstance(TestContextManager.java:215)]
+java.lang.IllegalStateException: Failed to load ApplicationContext
+	at org.springframework.test.context.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:94)
+	at org.springframework.test.context.DefaultTestContext.getApplicationContext(DefaultTestContext.java:72)
+	at org.springframework.test.context.support.DependencyInjectionTestExecutionListener.injectDependencies(DependencyInjectionTestExecutionListener.java:117)
+	at org.springframework.test.context.support.DependencyInjectionTestExecutionListener.prepareTestInstance(DependencyInjectionTestExecutionListener.java:83)
+	at org.springframework.test.context.TestContextManager.prepareTestInstance(TestContextManager.java:212)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.createTest(SpringJUnit4ClassRunner.java:200)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner$1.runReflectiveCall(SpringJUnit4ClassRunner.java:259)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.methodBlock(SpringJUnit4ClassRunner.java:261)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.runChild(SpringJUnit4ClassRunner.java:219)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.runChild(SpringJUnit4ClassRunner.java:83)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)
+	at org.springframework.test.context.junit4.statements.RunBeforeTestClassCallbacks.evaluate(RunBeforeTestClassCallbacks.java:61)
+	at org.springframework.test.context.junit4.statements.RunAfterTestClassCallbacks.evaluate(RunAfterTestClassCallbacks.java:70)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.run(SpringJUnit4ClassRunner.java:163)
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:86)
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:459)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:675)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:382)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:192)
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'ETMCluster': Injection of autowired dependencies failed; nested exception is org.springframework.beans.factory.BeanCreationException: Could not autowire field: text.thu.keyword.ExtFactory text.analyse.etmutility.ETMCluster.extFactory; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'extFactory' defined in file [D:\Workspaces\text.analysis\target\classes\text\thu\keyword\ExtFactory.class]: Instantiation of bean failed; nested exception is java.lang.ExceptionInInitializerError
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessPropertyValues(AutowiredAnnotationBeanPostProcessor.java:334)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1208)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:537)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:476)
+	at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:303)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:230)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:299)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:194)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:755)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:762)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:480)
+	at org.springframework.test.context.support.AbstractGenericContextLoader.loadContext(AbstractGenericContextLoader.java:125)
+	at org.springframework.test.context.support.AbstractGenericContextLoader.loadContext(AbstractGenericContextLoader.java:60)
+	at org.springframework.test.context.support.AbstractDelegatingSmartContextLoader.delegateLoading(AbstractDelegatingSmartContextLoader.java:109)
+	at org.springframework.test.context.support.AbstractDelegatingSmartContextLoader.loadContext(AbstractDelegatingSmartContextLoader.java:261)
+	at org.springframework.test.context.DefaultCacheAwareContextLoaderDelegate.loadContextInternal(DefaultCacheAwareContextLoaderDelegate.java:68)
+	at org.springframework.test.context.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:86)
+	... 25 more
+Caused by: org.springframework.beans.factory.BeanCreationException: Could not autowire field: text.thu.keyword.ExtFactory text.analyse.etmutility.ETMCluster.extFactory; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'extFactory' defined in file [D:\Workspaces\text.analysis\target\classes\text\thu\keyword\ExtFactory.class]: Instantiation of bean failed; nested exception is java.lang.ExceptionInInitializerError
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:561)
+	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:88)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessPropertyValues(AutowiredAnnotationBeanPostProcessor.java:331)
+	... 41 more
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'extFactory' defined in file [D:\Workspaces\text.analysis\target\classes\text\thu\keyword\ExtFactory.class]: Instantiation of bean failed; nested exception is java.lang.ExceptionInInitializerError
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateBean(AbstractAutowireCapableBeanFactory.java:1099)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1044)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:504)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:476)
+	at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:303)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:230)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:299)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:194)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.findAutowireCandidates(DefaultListableBeanFactory.java:1120)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1044)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:942)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:533)
+	... 43 more
+Caused by: java.lang.ExceptionInInitializerError
+	at text.thu.keyword.ExtFactory.<clinit>(ExtFactory.java:28)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:57)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:526)
+	at org.springframework.beans.BeanUtils.instantiateClass(BeanUtils.java:147)
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:89)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateBean(AbstractAutowireCapableBeanFactory.java:1092)
+	... 54 more
+Caused by: java.lang.NullPointerException
+	at text.searchSDK.util.CommonUtil.getTopKeyWords(CommonUtil.java:72)
+	at text.thu.keyword.extract.Extract.<clinit>(Extract.java:22)
+	... 62 more
+text.analysis[2017-07-24 15:36:35,003][INFO]Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener][main][org.springframework.test.context.support.AbstractTestContextBootstrapper.getDefaultTestExecutionListenerClassNames(AbstractTestContextBootstrapper.java:256)]
+text.analysis[2017-07-24 15:36:35,018][INFO]Could not instantiate TestExecutionListener [org.springframework.test.context.web.ServletTestExecutionListener]. Specify custom listener classes or make the default listener classes (and their required dependencies) available. Offending class: [javax/servlet/ServletContext][main][org.springframework.test.context.support.AbstractTestContextBootstrapper.instantiateListeners(AbstractTestContextBootstrapper.java:204)]
+text.analysis[2017-07-24 15:36:35,022][INFO]Using TestExecutionListeners: [org.springframework.test.context.support.DependencyInjectionTestExecutionListener@52d0fd7b, org.springframework.test.context.support.DirtiesContextTestExecutionListener@16b1c0b7, org.springframework.test.context.transaction.TransactionalTestExecutionListener@6fe33a04, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@2ef615ff][main][org.springframework.test.context.support.AbstractTestContextBootstrapper.getTestExecutionListeners(AbstractTestContextBootstrapper.java:182)]
+text.analysis[2017-07-24 15:36:35,132][INFO]Loading XML bean definitions from URL [file:/D:/Workspaces/text.analysis/target/classes/ApplicationContext.xml][main][org.springframework.beans.factory.xml.XmlBeanDefinitionReader.loadBeanDefinitions(XmlBeanDefinitionReader.java:317)]
+text.analysis[2017-07-24 15:36:35,377][INFO]Refreshing org.springframework.context.support.GenericApplicationContext@f7bf0a7: startup date [Mon Jul 24 15:36:35 CST 2017]; root of context hierarchy[main][org.springframework.context.support.AbstractApplicationContext.prepareRefresh(AbstractApplicationContext.java:514)]
+text.analysis[2017-07-24 15:36:36,358][WARN]not find library.properties in classpath use it by default ![main][org.ansj.util.MyStaticValue.<clinit>(MyStaticValue.java:91)]
+text.analysis[2017-07-24 15:36:36,364][INFO]path to stream library/ambiguity.dic[main][org.ansj.dic.impl.File2Stream.toStream(File2Stream.java:29)]
+text.analysis[2017-07-24 15:36:36,367][INFO]load dic use time:2 path is : library/ambiguity.dic[main][org.ansj.library.AmbiguityLibrary.init(AmbiguityLibrary.java:108)]
+text.analysis[2017-07-24 15:36:36,368][INFO]path to stream library/default.dic[main][org.ansj.dic.impl.File2Stream.toStream(File2Stream.java:29)]
+text.analysis[2017-07-24 15:36:37,061][INFO]load dic use time:692 path is : library/default.dic[main][org.ansj.library.DicLibrary.init(DicLibrary.java:191)]
+text.analysis[2017-07-24 15:36:38,461][INFO]load crf model ok ! use time :1394[main][org.ansj.app.crf.model.CRFModel.loadModel(CRFModel.java:59)]
+text.analysis[2017-07-24 15:36:38,461][INFO]load crf use time:1398 path is : jar://crf.model[main][org.ansj.library.CrfLibrary.initCRFModel(CrfLibrary.java:82)]
+text.analysis[2017-07-24 15:38:46,841][INFO]Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener][main][org.springframework.test.context.support.AbstractTestContextBootstrapper.getDefaultTestExecutionListenerClassNames(AbstractTestContextBootstrapper.java:256)]
+text.analysis[2017-07-24 15:38:46,859][INFO]Could not instantiate TestExecutionListener [org.springframework.test.context.web.ServletTestExecutionListener]. Specify custom listener classes or make the default listener classes (and their required dependencies) available. Offending class: [javax/servlet/ServletContext][main][org.springframework.test.context.support.AbstractTestContextBootstrapper.instantiateListeners(AbstractTestContextBootstrapper.java:204)]
+text.analysis[2017-07-24 15:38:46,861][INFO]Using TestExecutionListeners: [org.springframework.test.context.support.DependencyInjectionTestExecutionListener@6c5a8d3b, org.springframework.test.context.support.DirtiesContextTestExecutionListener@2cee5410, org.springframework.test.context.transaction.TransactionalTestExecutionListener@52d0fd7b, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@16b1c0b7][main][org.springframework.test.context.support.AbstractTestContextBootstrapper.getTestExecutionListeners(AbstractTestContextBootstrapper.java:182)]
+text.analysis[2017-07-24 15:38:46,974][INFO]Loading XML bean definitions from URL [file:/D:/Workspaces/text.analysis/target/classes/ApplicationContext.xml][main][org.springframework.beans.factory.xml.XmlBeanDefinitionReader.loadBeanDefinitions(XmlBeanDefinitionReader.java:317)]
+text.analysis[2017-07-24 15:38:47,246][INFO]Refreshing org.springframework.context.support.GenericApplicationContext@750fd2df: startup date [Mon Jul 24 15:38:47 CST 2017]; root of context hierarchy[main][org.springframework.context.support.AbstractApplicationContext.prepareRefresh(AbstractApplicationContext.java:514)]
+text.analysis[2017-07-24 15:38:48,258][WARN]not find library.properties in classpath use it by default ![main][org.ansj.util.MyStaticValue.<clinit>(MyStaticValue.java:91)]
+text.analysis[2017-07-24 15:38:48,264][INFO]path to stream library/ambiguity.dic[main][org.ansj.dic.impl.File2Stream.toStream(File2Stream.java:29)]
+text.analysis[2017-07-24 15:38:48,267][INFO]load dic use time:2 path is : library/ambiguity.dic[main][org.ansj.library.AmbiguityLibrary.init(AmbiguityLibrary.java:108)]
+text.analysis[2017-07-24 15:38:48,268][INFO]path to stream library/default.dic[main][org.ansj.dic.impl.File2Stream.toStream(File2Stream.java:29)]
+text.analysis[2017-07-24 15:38:48,953][INFO]load dic use time:684 path is : library/default.dic[main][org.ansj.library.DicLibrary.init(DicLibrary.java:191)]
+text.analysis[2017-07-24 15:38:50,814][INFO]load crf model ok ! use time :1855[main][org.ansj.app.crf.model.CRFModel.loadModel(CRFModel.java:59)]
+text.analysis[2017-07-24 15:38:50,814][INFO]load crf use time:1859 path is : jar://crf.model[main][org.ansj.library.CrfLibrary.initCRFModel(CrfLibrary.java:82)]
+text.analysis[2017-07-24 15:39:37,345][INFO]Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener][main][org.springframework.test.context.support.AbstractTestContextBootstrapper.getDefaultTestExecutionListenerClassNames(AbstractTestContextBootstrapper.java:256)]
+text.analysis[2017-07-24 15:39:37,355][INFO]Could not instantiate TestExecutionListener [org.springframework.test.context.web.ServletTestExecutionListener]. Specify custom listener classes or make the default listener classes (and their required dependencies) available. Offending class: [javax/servlet/ServletContext][main][org.springframework.test.context.support.AbstractTestContextBootstrapper.instantiateListeners(AbstractTestContextBootstrapper.java:204)]
+text.analysis[2017-07-24 15:39:37,363][INFO]Using TestExecutionListeners: [org.springframework.test.context.support.DependencyInjectionTestExecutionListener@3b25b88c, org.springframework.test.context.support.DirtiesContextTestExecutionListener@29770daa, org.springframework.test.context.transaction.TransactionalTestExecutionListener@4722292a, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@13bca8e2][main][org.springframework.test.context.support.AbstractTestContextBootstrapper.getTestExecutionListeners(AbstractTestContextBootstrapper.java:182)]
+text.analysis[2017-07-24 15:39:37,469][INFO]Loading XML bean definitions from URL [file:/D:/Workspaces/text.analysis/target/classes/ApplicationContext.xml][main][org.springframework.beans.factory.xml.XmlBeanDefinitionReader.loadBeanDefinitions(XmlBeanDefinitionReader.java:317)]
+text.analysis[2017-07-24 15:39:37,701][INFO]Refreshing org.springframework.context.support.GenericApplicationContext@4b43b5da: startup date [Mon Jul 24 15:39:37 CST 2017]; root of context hierarchy[main][org.springframework.context.support.AbstractApplicationContext.prepareRefresh(AbstractApplicationContext.java:514)]
+text.analysis[2017-07-24 15:39:38,697][WARN]not find library.properties in classpath use it by default ![main][org.ansj.util.MyStaticValue.<clinit>(MyStaticValue.java:91)]
+text.analysis[2017-07-24 15:39:38,701][INFO]path to stream library/ambiguity.dic[main][org.ansj.dic.impl.File2Stream.toStream(File2Stream.java:29)]
+text.analysis[2017-07-24 15:39:38,704][INFO]load dic use time:1 path is : library/ambiguity.dic[main][org.ansj.library.AmbiguityLibrary.init(AmbiguityLibrary.java:108)]
+text.analysis[2017-07-24 15:39:38,706][INFO]path to stream library/default.dic[main][org.ansj.dic.impl.File2Stream.toStream(File2Stream.java:29)]
+text.analysis[2017-07-24 15:39:39,331][INFO]load dic use time:625 path is : library/default.dic[main][org.ansj.library.DicLibrary.init(DicLibrary.java:191)]
+text.analysis[2017-07-24 15:39:40,652][INFO]load crf model ok ! use time :1316[main][org.ansj.app.crf.model.CRFModel.loadModel(CRFModel.java:59)]
+text.analysis[2017-07-24 15:39:40,652][INFO]load crf use time:1320 path is : jar://crf.model[main][org.ansj.library.CrfLibrary.initCRFModel(CrfLibrary.java:82)]
+text.analysis[2017-07-24 15:39:40,685][WARN]Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'ETMCluster': Injection of autowired dependencies failed; nested exception is org.springframework.beans.factory.BeanCreationException: Could not autowire field: text.thu.keyword.ExtFactory text.analyse.etmutility.ETMCluster.extFactory; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'extFactory' defined in file [D:\Workspaces\text.analysis\target\classes\text\thu\keyword\ExtFactory.class]: Instantiation of bean failed; nested exception is java.lang.ExceptionInInitializerError[main][org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:488)]
+text.analysis[2017-07-24 15:39:40,687][ERROR]Caught exception while allowing TestExecutionListener [org.springframework.test.context.support.DependencyInjectionTestExecutionListener@3b25b88c] to prepare test instance [text.analysis.cluster.ETMClusterTest@52da37d8][main][org.springframework.test.context.TestContextManager.prepareTestInstance(TestContextManager.java:215)]
+java.lang.IllegalStateException: Failed to load ApplicationContext
+	at org.springframework.test.context.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:94)
+	at org.springframework.test.context.DefaultTestContext.getApplicationContext(DefaultTestContext.java:72)
+	at org.springframework.test.context.support.DependencyInjectionTestExecutionListener.injectDependencies(DependencyInjectionTestExecutionListener.java:117)
+	at org.springframework.test.context.support.DependencyInjectionTestExecutionListener.prepareTestInstance(DependencyInjectionTestExecutionListener.java:83)
+	at org.springframework.test.context.TestContextManager.prepareTestInstance(TestContextManager.java:212)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.createTest(SpringJUnit4ClassRunner.java:200)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner$1.runReflectiveCall(SpringJUnit4ClassRunner.java:259)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.methodBlock(SpringJUnit4ClassRunner.java:261)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.runChild(SpringJUnit4ClassRunner.java:219)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.runChild(SpringJUnit4ClassRunner.java:83)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)
+	at org.springframework.test.context.junit4.statements.RunBeforeTestClassCallbacks.evaluate(RunBeforeTestClassCallbacks.java:61)
+	at org.springframework.test.context.junit4.statements.RunAfterTestClassCallbacks.evaluate(RunAfterTestClassCallbacks.java:70)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.run(SpringJUnit4ClassRunner.java:163)
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:86)
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:459)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:675)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:382)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:192)
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'ETMCluster': Injection of autowired dependencies failed; nested exception is org.springframework.beans.factory.BeanCreationException: Could not autowire field: text.thu.keyword.ExtFactory text.analyse.etmutility.ETMCluster.extFactory; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'extFactory' defined in file [D:\Workspaces\text.analysis\target\classes\text\thu\keyword\ExtFactory.class]: Instantiation of bean failed; nested exception is java.lang.ExceptionInInitializerError
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessPropertyValues(AutowiredAnnotationBeanPostProcessor.java:334)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1208)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:537)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:476)
+	at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:303)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:230)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:299)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:194)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:755)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:762)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:480)
+	at org.springframework.test.context.support.AbstractGenericContextLoader.loadContext(AbstractGenericContextLoader.java:125)
+	at org.springframework.test.context.support.AbstractGenericContextLoader.loadContext(AbstractGenericContextLoader.java:60)
+	at org.springframework.test.context.support.AbstractDelegatingSmartContextLoader.delegateLoading(AbstractDelegatingSmartContextLoader.java:109)
+	at org.springframework.test.context.support.AbstractDelegatingSmartContextLoader.loadContext(AbstractDelegatingSmartContextLoader.java:261)
+	at org.springframework.test.context.DefaultCacheAwareContextLoaderDelegate.loadContextInternal(DefaultCacheAwareContextLoaderDelegate.java:68)
+	at org.springframework.test.context.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:86)
+	... 25 more
+Caused by: org.springframework.beans.factory.BeanCreationException: Could not autowire field: text.thu.keyword.ExtFactory text.analyse.etmutility.ETMCluster.extFactory; nested exception is org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'extFactory' defined in file [D:\Workspaces\text.analysis\target\classes\text\thu\keyword\ExtFactory.class]: Instantiation of bean failed; nested exception is java.lang.ExceptionInInitializerError
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:561)
+	at org.springframework.beans.factory.annotation.InjectionMetadata.inject(InjectionMetadata.java:88)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor.postProcessPropertyValues(AutowiredAnnotationBeanPostProcessor.java:331)
+	... 41 more
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'extFactory' defined in file [D:\Workspaces\text.analysis\target\classes\text\thu\keyword\ExtFactory.class]: Instantiation of bean failed; nested exception is java.lang.ExceptionInInitializerError
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateBean(AbstractAutowireCapableBeanFactory.java:1099)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1044)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:504)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:476)
+	at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:303)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:230)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:299)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:194)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.findAutowireCandidates(DefaultListableBeanFactory.java:1120)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1044)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:942)
+	at org.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor$AutowiredFieldElement.inject(AutowiredAnnotationBeanPostProcessor.java:533)
+	... 43 more
+Caused by: java.lang.ExceptionInInitializerError
+	at text.thu.keyword.ExtFactory.<clinit>(ExtFactory.java:28)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance0(Native Method)
+	at sun.reflect.NativeConstructorAccessorImpl.newInstance(NativeConstructorAccessorImpl.java:57)
+	at sun.reflect.DelegatingConstructorAccessorImpl.newInstance(DelegatingConstructorAccessorImpl.java:45)
+	at java.lang.reflect.Constructor.newInstance(Constructor.java:526)
+	at org.springframework.beans.BeanUtils.instantiateClass(BeanUtils.java:147)
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:89)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateBean(AbstractAutowireCapableBeanFactory.java:1092)
+	... 54 more
+Caused by: java.lang.NullPointerException
+	at text.searchSDK.util.CommonUtil.getTopKeyWords(CommonUtil.java:72)
+	at text.thu.keyword.extract.Extract.<clinit>(Extract.java:22)
+	... 62 more
+text.analysis[2017-07-24 15:41:28,642][INFO]Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener][main][org.springframework.test.context.support.AbstractTestContextBootstrapper.getDefaultTestExecutionListenerClassNames(AbstractTestContextBootstrapper.java:256)]
+text.analysis[2017-07-24 15:41:28,658][INFO]Could not instantiate TestExecutionListener [org.springframework.test.context.web.ServletTestExecutionListener]. Specify custom listener classes or make the default listener classes (and their required dependencies) available. Offending class: [javax/servlet/ServletContext][main][org.springframework.test.context.support.AbstractTestContextBootstrapper.instantiateListeners(AbstractTestContextBootstrapper.java:204)]
+text.analysis[2017-07-24 15:41:28,659][INFO]Using TestExecutionListeners: [org.springframework.test.context.support.DependencyInjectionTestExecutionListener@29770daa, org.springframework.test.context.support.DirtiesContextTestExecutionListener@4722292a, org.springframework.test.context.transaction.TransactionalTestExecutionListener@13bca8e2, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@46f3978d][main][org.springframework.test.context.support.AbstractTestContextBootstrapper.getTestExecutionListeners(AbstractTestContextBootstrapper.java:182)]
+text.analysis[2017-07-24 15:41:28,764][INFO]Loading XML bean definitions from URL [file:/D:/Workspaces/text.analysis/target/classes/ApplicationContext.xml][main][org.springframework.beans.factory.xml.XmlBeanDefinitionReader.loadBeanDefinitions(XmlBeanDefinitionReader.java:317)]
+text.analysis[2017-07-24 15:41:28,991][INFO]Refreshing org.springframework.context.support.GenericApplicationContext@4a5821d0: startup date [Mon Jul 24 15:41:28 CST 2017]; root of context hierarchy[main][org.springframework.context.support.AbstractApplicationContext.prepareRefresh(AbstractApplicationContext.java:514)]
+text.analysis[2017-07-24 15:41:29,998][WARN]not find library.properties in classpath use it by default ![main][org.ansj.util.MyStaticValue.<clinit>(MyStaticValue.java:91)]
+text.analysis[2017-07-24 15:41:30,002][INFO]path to stream library/ambiguity.dic[main][org.ansj.dic.impl.File2Stream.toStream(File2Stream.java:29)]
+text.analysis[2017-07-24 15:41:30,005][INFO]load dic use time:2 path is : library/ambiguity.dic[main][org.ansj.library.AmbiguityLibrary.init(AmbiguityLibrary.java:108)]
+text.analysis[2017-07-24 15:41:30,006][INFO]path to stream library/default.dic[main][org.ansj.dic.impl.File2Stream.toStream(File2Stream.java:29)]
+text.analysis[2017-07-24 15:41:30,666][INFO]load dic use time:660 path is : library/default.dic[main][org.ansj.library.DicLibrary.init(DicLibrary.java:191)]
+text.analysis[2017-07-24 15:41:32,028][INFO]load crf model ok ! use time :1357[main][org.ansj.app.crf.model.CRFModel.loadModel(CRFModel.java:59)]
+text.analysis[2017-07-24 15:41:32,028][INFO]load crf use time:1361 path is : jar://crf.model[main][org.ansj.library.CrfLibrary.initCRFModel(CrfLibrary.java:82)]
+text.analysis[2017-07-24 15:41:32,682][INFO]init core library ok use time : 555[main][org.ansj.library.DATDictionary.loadDAT(DATDictionary.java:54)]
+text.analysis[2017-07-24 15:41:35,748][INFO]init ngram ok use time :3046[main][org.ansj.library.NgramLibrary.<clinit>(NgramLibrary.java:17)]
+text.analysis[2017-07-24 15:41:38,464][INFO]Closing org.springframework.context.support.GenericApplicationContext@4a5821d0: startup date [Mon Jul 24 15:41:28 CST 2017]; root of context hierarchy[Thread-0][org.springframework.context.support.AbstractApplicationContext.doClose(AbstractApplicationContext.java:869)]
+text.analysis[2017-07-24 15:43:16,282][INFO]Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener][main][org.springframework.test.context.support.AbstractTestContextBootstrapper.getDefaultTestExecutionListenerClassNames(AbstractTestContextBootstrapper.java:256)]
+text.analysis[2017-07-24 15:43:16,297][INFO]Could not instantiate TestExecutionListener [org.springframework.test.context.web.ServletTestExecutionListener]. Specify custom listener classes or make the default listener classes (and their required dependencies) available. Offending class: [javax/servlet/ServletContext][main][org.springframework.test.context.support.AbstractTestContextBootstrapper.instantiateListeners(AbstractTestContextBootstrapper.java:204)]
+text.analysis[2017-07-24 15:43:16,299][INFO]Using TestExecutionListeners: [org.springframework.test.context.support.DependencyInjectionTestExecutionListener@7fe3a7ec, org.springframework.test.context.support.DirtiesContextTestExecutionListener@3b25b88c, org.springframework.test.context.transaction.TransactionalTestExecutionListener@29770daa, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@4722292a][main][org.springframework.test.context.support.AbstractTestContextBootstrapper.getTestExecutionListeners(AbstractTestContextBootstrapper.java:182)]
+text.analysis[2017-07-24 15:43:16,402][INFO]Loading XML bean definitions from URL [file:/D:/Workspaces/text.analysis/target/classes/ApplicationContext.xml][main][org.springframework.beans.factory.xml.XmlBeanDefinitionReader.loadBeanDefinitions(XmlBeanDefinitionReader.java:317)]
+text.analysis[2017-07-24 15:43:16,628][INFO]Refreshing org.springframework.context.support.GenericApplicationContext@491238a0: startup date [Mon Jul 24 15:43:16 CST 2017]; root of context hierarchy[main][org.springframework.context.support.AbstractApplicationContext.prepareRefresh(AbstractApplicationContext.java:514)]
+text.analysis[2017-07-24 15:43:17,635][WARN]not find library.properties in classpath use it by default ![main][org.ansj.util.MyStaticValue.<clinit>(MyStaticValue.java:91)]
+text.analysis[2017-07-24 15:43:17,638][INFO]path to stream library/ambiguity.dic[main][org.ansj.dic.impl.File2Stream.toStream(File2Stream.java:29)]
+text.analysis[2017-07-24 15:43:17,641][INFO]load dic use time:1 path is : library/ambiguity.dic[main][org.ansj.library.AmbiguityLibrary.init(AmbiguityLibrary.java:108)]
+text.analysis[2017-07-24 15:43:17,642][INFO]path to stream library/default.dic[main][org.ansj.dic.impl.File2Stream.toStream(File2Stream.java:29)]
+text.analysis[2017-07-24 15:43:18,262][INFO]load dic use time:620 path is : library/default.dic[main][org.ansj.library.DicLibrary.init(DicLibrary.java:191)]
+text.analysis[2017-07-24 15:43:19,587][INFO]load crf model ok ! use time :1320[main][org.ansj.app.crf.model.CRFModel.loadModel(CRFModel.java:59)]
+text.analysis[2017-07-24 15:43:19,588][INFO]load crf use time:1325 path is : jar://crf.model[main][org.ansj.library.CrfLibrary.initCRFModel(CrfLibrary.java:82)]
+text.analysis[2017-07-24 15:43:19,625][WARN]Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'ETMUtility' defined in file [D:\Workspaces\text.analysis\target\classes\text\analyse\etmutility\ETMUtility.class]: Instantiation of bean failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [text.analyse.etmutility.ETMUtility]: No default constructor found; nested exception is java.lang.NoSuchMethodException: text.analyse.etmutility.ETMUtility.<init>()[main][org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:488)]
+text.analysis[2017-07-24 15:43:19,626][ERROR]Caught exception while allowing TestExecutionListener [org.springframework.test.context.support.DependencyInjectionTestExecutionListener@7fe3a7ec] to prepare test instance [text.analysis.cluster.ETMClusterTest@30b4ff9a][main][org.springframework.test.context.TestContextManager.prepareTestInstance(TestContextManager.java:215)]
+java.lang.IllegalStateException: Failed to load ApplicationContext
+	at org.springframework.test.context.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:94)
+	at org.springframework.test.context.DefaultTestContext.getApplicationContext(DefaultTestContext.java:72)
+	at org.springframework.test.context.support.DependencyInjectionTestExecutionListener.injectDependencies(DependencyInjectionTestExecutionListener.java:117)
+	at org.springframework.test.context.support.DependencyInjectionTestExecutionListener.prepareTestInstance(DependencyInjectionTestExecutionListener.java:83)
+	at org.springframework.test.context.TestContextManager.prepareTestInstance(TestContextManager.java:212)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.createTest(SpringJUnit4ClassRunner.java:200)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner$1.runReflectiveCall(SpringJUnit4ClassRunner.java:259)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.methodBlock(SpringJUnit4ClassRunner.java:261)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.runChild(SpringJUnit4ClassRunner.java:219)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.runChild(SpringJUnit4ClassRunner.java:83)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)
+	at org.springframework.test.context.junit4.statements.RunBeforeTestClassCallbacks.evaluate(RunBeforeTestClassCallbacks.java:61)
+	at org.springframework.test.context.junit4.statements.RunAfterTestClassCallbacks.evaluate(RunAfterTestClassCallbacks.java:70)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.run(SpringJUnit4ClassRunner.java:163)
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:86)
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:459)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:675)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:382)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:192)
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'ETMUtility' defined in file [D:\Workspaces\text.analysis\target\classes\text\analyse\etmutility\ETMUtility.class]: Instantiation of bean failed; nested exception is org.springframework.beans.BeanInstantiationException: Failed to instantiate [text.analyse.etmutility.ETMUtility]: No default constructor found; nested exception is java.lang.NoSuchMethodException: text.analyse.etmutility.ETMUtility.<init>()
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateBean(AbstractAutowireCapableBeanFactory.java:1099)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1044)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:504)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:476)
+	at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:303)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:230)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:299)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:194)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:755)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:762)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:480)
+	at org.springframework.test.context.support.AbstractGenericContextLoader.loadContext(AbstractGenericContextLoader.java:125)
+	at org.springframework.test.context.support.AbstractGenericContextLoader.loadContext(AbstractGenericContextLoader.java:60)
+	at org.springframework.test.context.support.AbstractDelegatingSmartContextLoader.delegateLoading(AbstractDelegatingSmartContextLoader.java:109)
+	at org.springframework.test.context.support.AbstractDelegatingSmartContextLoader.loadContext(AbstractDelegatingSmartContextLoader.java:261)
+	at org.springframework.test.context.DefaultCacheAwareContextLoaderDelegate.loadContextInternal(DefaultCacheAwareContextLoaderDelegate.java:68)
+	at org.springframework.test.context.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:86)
+	... 25 more
+Caused by: org.springframework.beans.BeanInstantiationException: Failed to instantiate [text.analyse.etmutility.ETMUtility]: No default constructor found; nested exception is java.lang.NoSuchMethodException: text.analyse.etmutility.ETMUtility.<init>()
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:85)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateBean(AbstractAutowireCapableBeanFactory.java:1092)
+	... 41 more
+Caused by: java.lang.NoSuchMethodException: text.analyse.etmutility.ETMUtility.<init>()
+	at java.lang.Class.getConstructor0(Class.java:2892)
+	at java.lang.Class.getDeclaredConstructor(Class.java:2058)
+	at org.springframework.beans.factory.support.SimpleInstantiationStrategy.instantiate(SimpleInstantiationStrategy.java:80)
+	... 42 more
+text.analysis[2017-07-24 16:07:13,069][INFO]Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener][main][org.springframework.test.context.support.AbstractTestContextBootstrapper.getDefaultTestExecutionListenerClassNames(AbstractTestContextBootstrapper.java:256)]
+text.analysis[2017-07-24 16:07:13,079][INFO]Could not instantiate TestExecutionListener [org.springframework.test.context.web.ServletTestExecutionListener]. Specify custom listener classes or make the default listener classes (and their required dependencies) available. Offending class: [javax/servlet/ServletContext][main][org.springframework.test.context.support.AbstractTestContextBootstrapper.instantiateListeners(AbstractTestContextBootstrapper.java:204)]
+text.analysis[2017-07-24 16:07:13,087][INFO]Using TestExecutionListeners: [org.springframework.test.context.support.DependencyInjectionTestExecutionListener@3b25b88c, org.springframework.test.context.support.DirtiesContextTestExecutionListener@29770daa, org.springframework.test.context.transaction.TransactionalTestExecutionListener@4722292a, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@13bca8e2][main][org.springframework.test.context.support.AbstractTestContextBootstrapper.getTestExecutionListeners(AbstractTestContextBootstrapper.java:182)]
+text.analysis[2017-07-24 16:07:13,193][INFO]Loading XML bean definitions from URL [file:/D:/Workspaces/text.analysis/target/classes/ApplicationContext.xml][main][org.springframework.beans.factory.xml.XmlBeanDefinitionReader.loadBeanDefinitions(XmlBeanDefinitionReader.java:317)]
+text.analysis[2017-07-24 16:07:13,424][INFO]Refreshing org.springframework.context.support.GenericApplicationContext@4b43b5da: startup date [Mon Jul 24 16:07:13 CST 2017]; root of context hierarchy[main][org.springframework.context.support.AbstractApplicationContext.prepareRefresh(AbstractApplicationContext.java:514)]
+text.analysis[2017-07-24 16:07:14,427][WARN]not find library.properties in classpath use it by default ![main][org.ansj.util.MyStaticValue.<clinit>(MyStaticValue.java:91)]
+text.analysis[2017-07-24 16:07:14,431][INFO]path to stream library/ambiguity.dic[main][org.ansj.dic.impl.File2Stream.toStream(File2Stream.java:29)]
+text.analysis[2017-07-24 16:07:14,434][INFO]load dic use time:2 path is : library/ambiguity.dic[main][org.ansj.library.AmbiguityLibrary.init(AmbiguityLibrary.java:108)]
+text.analysis[2017-07-24 16:07:14,435][INFO]path to stream library/default.dic[main][org.ansj.dic.impl.File2Stream.toStream(File2Stream.java:29)]
+text.analysis[2017-07-24 16:07:15,128][INFO]load dic use time:693 path is : library/default.dic[main][org.ansj.library.DicLibrary.init(DicLibrary.java:191)]
+text.analysis[2017-07-24 16:07:16,545][INFO]load crf model ok ! use time :1412[main][org.ansj.app.crf.model.CRFModel.loadModel(CRFModel.java:59)]
+text.analysis[2017-07-24 16:07:16,546][INFO]load crf use time:1417 path is : jar://crf.model[main][org.ansj.library.CrfLibrary.initCRFModel(CrfLibrary.java:82)]
+text.analysis[2017-07-24 16:07:16,951][INFO]init core library ok use time : 336[main][org.ansj.library.DATDictionary.loadDAT(DATDictionary.java:54)]
+text.analysis[2017-07-24 16:07:18,598][INFO]init ngram ok use time :1627[main][org.ansj.library.NgramLibrary.<clinit>(NgramLibrary.java:17)]
+text.analysis[2017-07-24 16:07:18,786][INFO]Refreshing org.springframework.context.support.ClassPathXmlApplicationContext@2ac702f7: startup date [Mon Jul 24 16:07:18 CST 2017]; root of context hierarchy[main][org.springframework.context.support.AbstractApplicationContext.prepareRefresh(AbstractApplicationContext.java:514)]
+text.analysis[2017-07-24 16:07:18,787][INFO]Loading XML bean definitions from class path resource [ApplicationContext.xml][main][org.springframework.beans.factory.xml.XmlBeanDefinitionReader.loadBeanDefinitions(XmlBeanDefinitionReader.java:317)]
+text.analysis[2017-07-24 16:07:18,982][INFO]Closing org.springframework.context.support.GenericApplicationContext@4b43b5da: startup date [Mon Jul 24 16:07:13 CST 2017]; root of context hierarchy[Thread-0][org.springframework.context.support.AbstractApplicationContext.doClose(AbstractApplicationContext.java:869)]
+text.analysis[2017-07-24 16:11:59,671][INFO]Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener][main][org.springframework.test.context.support.AbstractTestContextBootstrapper.getDefaultTestExecutionListenerClassNames(AbstractTestContextBootstrapper.java:256)]
+text.analysis[2017-07-24 16:11:59,681][INFO]Could not instantiate TestExecutionListener [org.springframework.test.context.web.ServletTestExecutionListener]. Specify custom listener classes or make the default listener classes (and their required dependencies) available. Offending class: [javax/servlet/ServletContext][main][org.springframework.test.context.support.AbstractTestContextBootstrapper.instantiateListeners(AbstractTestContextBootstrapper.java:204)]
+text.analysis[2017-07-24 16:11:59,688][INFO]Using TestExecutionListeners: [org.springframework.test.context.support.DependencyInjectionTestExecutionListener@3b25b88c, org.springframework.test.context.support.DirtiesContextTestExecutionListener@29770daa, org.springframework.test.context.transaction.TransactionalTestExecutionListener@4722292a, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@13bca8e2][main][org.springframework.test.context.support.AbstractTestContextBootstrapper.getTestExecutionListeners(AbstractTestContextBootstrapper.java:182)]
+text.analysis[2017-07-24 16:11:59,793][INFO]Loading XML bean definitions from URL [file:/D:/Workspaces/text.analysis/target/classes/ApplicationContext.xml][main][org.springframework.beans.factory.xml.XmlBeanDefinitionReader.loadBeanDefinitions(XmlBeanDefinitionReader.java:317)]
+text.analysis[2017-07-24 16:12:00,022][INFO]Refreshing org.springframework.context.support.GenericApplicationContext@4b43b5da: startup date [Mon Jul 24 16:12:00 CST 2017]; root of context hierarchy[main][org.springframework.context.support.AbstractApplicationContext.prepareRefresh(AbstractApplicationContext.java:514)]
+text.analysis[2017-07-24 16:12:01,068][WARN]not find library.properties in classpath use it by default ![main][org.ansj.util.MyStaticValue.<clinit>(MyStaticValue.java:91)]
+text.analysis[2017-07-24 16:12:01,071][INFO]path to stream library/ambiguity.dic[main][org.ansj.dic.impl.File2Stream.toStream(File2Stream.java:29)]
+text.analysis[2017-07-24 16:12:01,074][INFO]load dic use time:2 path is : library/ambiguity.dic[main][org.ansj.library.AmbiguityLibrary.init(AmbiguityLibrary.java:108)]
+text.analysis[2017-07-24 16:12:01,076][INFO]path to stream library/default.dic[main][org.ansj.dic.impl.File2Stream.toStream(File2Stream.java:29)]
+text.analysis[2017-07-24 16:12:01,746][INFO]load dic use time:670 path is : library/default.dic[main][org.ansj.library.DicLibrary.init(DicLibrary.java:191)]
+text.analysis[2017-07-24 16:12:03,038][INFO]load crf model ok ! use time :1286[main][org.ansj.app.crf.model.CRFModel.loadModel(CRFModel.java:59)]
+text.analysis[2017-07-24 16:12:03,038][INFO]load crf use time:1291 path is : jar://crf.model[main][org.ansj.library.CrfLibrary.initCRFModel(CrfLibrary.java:82)]
+text.analysis[2017-07-24 16:12:03,149][WARN]Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'DAO': Invocation of init method failed; nested exception is java.lang.NullPointerException[main][org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:488)]
+text.analysis[2017-07-24 16:12:03,150][ERROR]Caught exception while allowing TestExecutionListener [org.springframework.test.context.support.DependencyInjectionTestExecutionListener@3b25b88c] to prepare test instance [text.analysis.cluster.ETMClusterTest@461b3399][main][org.springframework.test.context.TestContextManager.prepareTestInstance(TestContextManager.java:215)]
+java.lang.IllegalStateException: Failed to load ApplicationContext
+	at org.springframework.test.context.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:94)
+	at org.springframework.test.context.DefaultTestContext.getApplicationContext(DefaultTestContext.java:72)
+	at org.springframework.test.context.support.DependencyInjectionTestExecutionListener.injectDependencies(DependencyInjectionTestExecutionListener.java:117)
+	at org.springframework.test.context.support.DependencyInjectionTestExecutionListener.prepareTestInstance(DependencyInjectionTestExecutionListener.java:83)
+	at org.springframework.test.context.TestContextManager.prepareTestInstance(TestContextManager.java:212)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.createTest(SpringJUnit4ClassRunner.java:200)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner$1.runReflectiveCall(SpringJUnit4ClassRunner.java:259)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.methodBlock(SpringJUnit4ClassRunner.java:261)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.runChild(SpringJUnit4ClassRunner.java:219)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.runChild(SpringJUnit4ClassRunner.java:83)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)
+	at org.springframework.test.context.junit4.statements.RunBeforeTestClassCallbacks.evaluate(RunBeforeTestClassCallbacks.java:61)
+	at org.springframework.test.context.junit4.statements.RunAfterTestClassCallbacks.evaluate(RunAfterTestClassCallbacks.java:70)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.run(SpringJUnit4ClassRunner.java:163)
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:86)
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:459)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:675)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:382)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:192)
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'DAO': Invocation of init method failed; nested exception is java.lang.NullPointerException
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor.postProcessBeforeInitialization(InitDestroyAnnotationBeanPostProcessor.java:136)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.applyBeanPostProcessorsBeforeInitialization(AbstractAutowireCapableBeanFactory.java:408)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1564)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:539)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:476)
+	at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:303)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:230)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:299)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:194)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:755)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:762)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:480)
+	at org.springframework.test.context.support.AbstractGenericContextLoader.loadContext(AbstractGenericContextLoader.java:125)
+	at org.springframework.test.context.support.AbstractGenericContextLoader.loadContext(AbstractGenericContextLoader.java:60)
+	at org.springframework.test.context.support.AbstractDelegatingSmartContextLoader.delegateLoading(AbstractDelegatingSmartContextLoader.java:109)
+	at org.springframework.test.context.support.AbstractDelegatingSmartContextLoader.loadContext(AbstractDelegatingSmartContextLoader.java:261)
+	at org.springframework.test.context.DefaultCacheAwareContextLoaderDelegate.loadContextInternal(DefaultCacheAwareContextLoaderDelegate.java:68)
+	at org.springframework.test.context.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:86)
+	... 25 more
+Caused by: java.lang.NullPointerException
+	at java.io.File.<init>(File.java:277)
+	at text.thu.keyword.dao.DAO.loadTerm(DAO.java:117)
+	at text.thu.keyword.dao.DAO.loadTerm(DAO.java:82)
+	at text.thu.keyword.dao.DAO.init(DAO.java:70)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor$LifecycleElement.invoke(InitDestroyAnnotationBeanPostProcessor.java:349)
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor$LifecycleMetadata.invokeInitMethods(InitDestroyAnnotationBeanPostProcessor.java:300)
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor.postProcessBeforeInitialization(InitDestroyAnnotationBeanPostProcessor.java:133)
+	... 42 more
+text.analysis[2017-07-24 16:25:12,242][INFO]Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener][main][org.springframework.test.context.support.AbstractTestContextBootstrapper.getDefaultTestExecutionListenerClassNames(AbstractTestContextBootstrapper.java:256)]
+text.analysis[2017-07-24 16:25:12,258][INFO]Could not instantiate TestExecutionListener [org.springframework.test.context.web.ServletTestExecutionListener]. Specify custom listener classes or make the default listener classes (and their required dependencies) available. Offending class: [javax/servlet/ServletContext][main][org.springframework.test.context.support.AbstractTestContextBootstrapper.instantiateListeners(AbstractTestContextBootstrapper.java:204)]
+text.analysis[2017-07-24 16:25:12,260][INFO]Using TestExecutionListeners: [org.springframework.test.context.support.DependencyInjectionTestExecutionListener@29770daa, org.springframework.test.context.support.DirtiesContextTestExecutionListener@4722292a, org.springframework.test.context.transaction.TransactionalTestExecutionListener@13bca8e2, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@46f3978d][main][org.springframework.test.context.support.AbstractTestContextBootstrapper.getTestExecutionListeners(AbstractTestContextBootstrapper.java:182)]
+text.analysis[2017-07-24 16:25:12,362][INFO]Loading XML bean definitions from URL [file:/D:/Workspaces/text.analysis/target/classes/ApplicationContext.xml][main][org.springframework.beans.factory.xml.XmlBeanDefinitionReader.loadBeanDefinitions(XmlBeanDefinitionReader.java:317)]
+text.analysis[2017-07-24 16:25:12,590][INFO]Refreshing org.springframework.context.support.GenericApplicationContext@4a5821d0: startup date [Mon Jul 24 16:25:12 CST 2017]; root of context hierarchy[main][org.springframework.context.support.AbstractApplicationContext.prepareRefresh(AbstractApplicationContext.java:514)]
+text.analysis[2017-07-24 16:25:13,585][WARN]not find library.properties in classpath use it by default ![main][org.ansj.util.MyStaticValue.<clinit>(MyStaticValue.java:91)]
+text.analysis[2017-07-24 16:25:13,589][INFO]path to stream library/ambiguity.dic[main][org.ansj.dic.impl.File2Stream.toStream(File2Stream.java:29)]
+text.analysis[2017-07-24 16:25:13,592][INFO]load dic use time:2 path is : library/ambiguity.dic[main][org.ansj.library.AmbiguityLibrary.init(AmbiguityLibrary.java:108)]
+text.analysis[2017-07-24 16:25:13,593][INFO]path to stream library/default.dic[main][org.ansj.dic.impl.File2Stream.toStream(File2Stream.java:29)]
+text.analysis[2017-07-24 16:25:14,225][INFO]load dic use time:632 path is : library/default.dic[main][org.ansj.library.DicLibrary.init(DicLibrary.java:191)]
+text.analysis[2017-07-24 16:25:15,592][INFO]load crf model ok ! use time :1362[main][org.ansj.app.crf.model.CRFModel.loadModel(CRFModel.java:59)]
+text.analysis[2017-07-24 16:25:15,592][INFO]load crf use time:1366 path is : jar://crf.model[main][org.ansj.library.CrfLibrary.initCRFModel(CrfLibrary.java:82)]
+text.analysis[2017-07-24 16:25:15,631][WARN]Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'DAO': Invocation of init method failed; nested exception is java.lang.NullPointerException[main][org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:488)]
+text.analysis[2017-07-24 16:25:15,632][ERROR]Caught exception while allowing TestExecutionListener [org.springframework.test.context.support.DependencyInjectionTestExecutionListener@29770daa] to prepare test instance [text.analysis.cluster.ETMClusterTest@35554107][main][org.springframework.test.context.TestContextManager.prepareTestInstance(TestContextManager.java:215)]
+java.lang.IllegalStateException: Failed to load ApplicationContext
+	at org.springframework.test.context.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:94)
+	at org.springframework.test.context.DefaultTestContext.getApplicationContext(DefaultTestContext.java:72)
+	at org.springframework.test.context.support.DependencyInjectionTestExecutionListener.injectDependencies(DependencyInjectionTestExecutionListener.java:117)
+	at org.springframework.test.context.support.DependencyInjectionTestExecutionListener.prepareTestInstance(DependencyInjectionTestExecutionListener.java:83)
+	at org.springframework.test.context.TestContextManager.prepareTestInstance(TestContextManager.java:212)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.createTest(SpringJUnit4ClassRunner.java:200)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner$1.runReflectiveCall(SpringJUnit4ClassRunner.java:259)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.methodBlock(SpringJUnit4ClassRunner.java:261)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.runChild(SpringJUnit4ClassRunner.java:219)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.runChild(SpringJUnit4ClassRunner.java:83)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:290)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:71)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:288)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:58)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:268)
+	at org.springframework.test.context.junit4.statements.RunBeforeTestClassCallbacks.evaluate(RunBeforeTestClassCallbacks.java:61)
+	at org.springframework.test.context.junit4.statements.RunAfterTestClassCallbacks.evaluate(RunAfterTestClassCallbacks.java:70)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:363)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.run(SpringJUnit4ClassRunner.java:163)
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:86)
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:459)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:675)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:382)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:192)
+Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'DAO': Invocation of init method failed; nested exception is java.lang.NullPointerException
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor.postProcessBeforeInitialization(InitDestroyAnnotationBeanPostProcessor.java:136)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.applyBeanPostProcessorsBeforeInitialization(AbstractAutowireCapableBeanFactory.java:408)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1564)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:539)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:476)
+	at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:303)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:230)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:299)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:194)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:755)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:762)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:480)
+	at org.springframework.test.context.support.AbstractGenericContextLoader.loadContext(AbstractGenericContextLoader.java:125)
+	at org.springframework.test.context.support.AbstractGenericContextLoader.loadContext(AbstractGenericContextLoader.java:60)
+	at org.springframework.test.context.support.AbstractDelegatingSmartContextLoader.delegateLoading(AbstractDelegatingSmartContextLoader.java:109)
+	at org.springframework.test.context.support.AbstractDelegatingSmartContextLoader.loadContext(AbstractDelegatingSmartContextLoader.java:261)
+	at org.springframework.test.context.DefaultCacheAwareContextLoaderDelegate.loadContextInternal(DefaultCacheAwareContextLoaderDelegate.java:68)
+	at org.springframework.test.context.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:86)
+	... 25 more
+Caused by: java.lang.NullPointerException
+	at java.io.File.<init>(File.java:277)
+	at text.thu.keyword.dao.DAO.loadTerm(DAO.java:117)
+	at text.thu.keyword.dao.DAO.loadTerm(DAO.java:82)
+	at text.thu.keyword.dao.DAO.init(DAO.java:70)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:57)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.lang.reflect.Method.invoke(Method.java:606)
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor$LifecycleElement.invoke(InitDestroyAnnotationBeanPostProcessor.java:349)
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor$LifecycleMetadata.invokeInitMethods(InitDestroyAnnotationBeanPostProcessor.java:300)
+	at org.springframework.beans.factory.annotation.InitDestroyAnnotationBeanPostProcessor.postProcessBeforeInitialization(InitDestroyAnnotationBeanPostProcessor.java:133)
+	... 42 more
+text.analysis[2017-07-24 16:25:52,518][INFO]Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener][main][org.springframework.test.context.support.AbstractTestContextBootstrapper.getDefaultTestExecutionListenerClassNames(AbstractTestContextBootstrapper.java:256)]
+text.analysis[2017-07-24 16:25:52,534][INFO]Could not instantiate TestExecutionListener [org.springframework.test.context.web.ServletTestExecutionListener]. Specify custom listener classes or make the default listener classes (and their required dependencies) available. Offending class: [javax/servlet/ServletContext][main][org.springframework.test.context.support.AbstractTestContextBootstrapper.instantiateListeners(AbstractTestContextBootstrapper.java:204)]
+text.analysis[2017-07-24 16:25:52,536][INFO]Using TestExecutionListeners: [org.springframework.test.context.support.DependencyInjectionTestExecutionListener@2cee5410, org.springframework.test.context.support.DirtiesContextTestExecutionListener@52d0fd7b, org.springframework.test.context.transaction.TransactionalTestExecutionListener@16b1c0b7, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@6fe33a04][main][org.springframework.test.context.support.AbstractTestContextBootstrapper.getTestExecutionListeners(AbstractTestContextBootstrapper.java:182)]
+text.analysis[2017-07-24 16:25:52,649][INFO]Loading XML bean definitions from URL [file:/D:/Workspaces/text.analysis/target/classes/ApplicationContext.xml][main][org.springframework.beans.factory.xml.XmlBeanDefinitionReader.loadBeanDefinitions(XmlBeanDefinitionReader.java:317)]
+text.analysis[2017-07-24 16:25:52,907][INFO]Refreshing org.springframework.context.support.GenericApplicationContext@61dd6a83: startup date [Mon Jul 24 16:25:52 CST 2017]; root of context hierarchy[main][org.springframework.context.support.AbstractApplicationContext.prepareRefresh(AbstractApplicationContext.java:514)]
+text.analysis[2017-07-24 16:25:53,941][WARN]not find library.properties in classpath use it by default ![main][org.ansj.util.MyStaticValue.<clinit>(MyStaticValue.java:91)]
+text.analysis[2017-07-24 16:25:53,947][INFO]path to stream library/ambiguity.dic[main][org.ansj.dic.impl.File2Stream.toStream(File2Stream.java:29)]
+text.analysis[2017-07-24 16:25:53,950][INFO]load dic use time:2 path is : library/ambiguity.dic[main][org.ansj.library.AmbiguityLibrary.init(AmbiguityLibrary.java:108)]
+text.analysis[2017-07-24 16:25:53,951][INFO]path to stream library/default.dic[main][org.ansj.dic.impl.File2Stream.toStream(File2Stream.java:29)]
+text.analysis[2017-07-24 16:25:54,682][INFO]load dic use time:731 path is : library/default.dic[main][org.ansj.library.DicLibrary.init(DicLibrary.java:191)]
+text.analysis[2017-07-24 16:25:56,111][INFO]load crf model ok ! use time :1422[main][org.ansj.app.crf.model.CRFModel.loadModel(CRFModel.java:59)]
+text.analysis[2017-07-24 16:25:56,111][INFO]load crf use time:1426 path is : jar://crf.model[main][org.ansj.library.CrfLibrary.initCRFModel(CrfLibrary.java:82)]
+text.analysis[2017-07-24 16:26:29,503][INFO]Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener][main][org.springframework.test.context.support.AbstractTestContextBootstrapper.getDefaultTestExecutionListenerClassNames(AbstractTestContextBootstrapper.java:256)]
+text.analysis[2017-07-24 16:26:29,520][INFO]Could not instantiate TestExecutionListener [org.springframework.test.context.web.ServletTestExecutionListener]. Specify custom listener classes or make the default listener classes (and their required dependencies) available. Offending class: [javax/servlet/ServletContext][main][org.springframework.test.context.support.AbstractTestContextBootstrapper.instantiateListeners(AbstractTestContextBootstrapper.java:204)]
+text.analysis[2017-07-24 16:26:29,523][INFO]Using TestExecutionListeners: [org.springframework.test.context.support.DependencyInjectionTestExecutionListener@52d0fd7b, org.springframework.test.context.support.DirtiesContextTestExecutionListener@16b1c0b7, org.springframework.test.context.transaction.TransactionalTestExecutionListener@6fe33a04, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@2ef615ff][main][org.springframework.test.context.support.AbstractTestContextBootstrapper.getTestExecutionListeners(AbstractTestContextBootstrapper.java:182)]
+text.analysis[2017-07-24 16:26:29,634][INFO]Loading XML bean definitions from URL [file:/D:/Workspaces/text.analysis/target/classes/ApplicationContext.xml][main][org.springframework.beans.factory.xml.XmlBeanDefinitionReader.loadBeanDefinitions(XmlBeanDefinitionReader.java:317)]
+text.analysis[2017-07-24 16:26:29,897][INFO]Refreshing org.springframework.context.support.GenericApplicationContext@f7bf0a7: startup date [Mon Jul 24 16:26:29 CST 2017]; root of context hierarchy[main][org.springframework.context.support.AbstractApplicationContext.prepareRefresh(AbstractApplicationContext.java:514)]
+text.analysis[2017-07-24 16:26:30,925][WARN]not find library.properties in classpath use it by default ![main][org.ansj.util.MyStaticValue.<clinit>(MyStaticValue.java:91)]
+text.analysis[2017-07-24 16:26:30,930][INFO]path to stream library/ambiguity.dic[main][org.ansj.dic.impl.File2Stream.toStream(File2Stream.java:29)]
+text.analysis[2017-07-24 16:26:30,933][INFO]load dic use time:1 path is : library/ambiguity.dic[main][org.ansj.library.AmbiguityLibrary.init(AmbiguityLibrary.java:108)]
+text.analysis[2017-07-24 16:26:30,935][INFO]path to stream library/default.dic[main][org.ansj.dic.impl.File2Stream.toStream(File2Stream.java:29)]
+text.analysis[2017-07-24 16:26:31,642][INFO]load dic use time:707 path is : library/default.dic[main][org.ansj.library.DicLibrary.init(DicLibrary.java:191)]
+text.analysis[2017-07-24 16:26:33,039][INFO]load crf model ok ! use time :1390[main][org.ansj.app.crf.model.CRFModel.loadModel(CRFModel.java:59)]
+text.analysis[2017-07-24 16:26:33,039][INFO]load crf use time:1394 path is : jar://crf.model[main][org.ansj.library.CrfLibrary.initCRFModel(CrfLibrary.java:82)]
+text.analysis[2017-07-24 16:30:17,609][INFO]Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener][main][org.springframework.test.context.support.AbstractTestContextBootstrapper.getDefaultTestExecutionListenerClassNames(AbstractTestContextBootstrapper.java:256)]
+text.analysis[2017-07-24 16:30:17,619][INFO]Could not instantiate TestExecutionListener [org.springframework.test.context.web.ServletTestExecutionListener]. Specify custom listener classes or make the default listener classes (and their required dependencies) available. Offending class: [javax/servlet/ServletContext][main][org.springframework.test.context.support.AbstractTestContextBootstrapper.instantiateListeners(AbstractTestContextBootstrapper.java:204)]
+text.analysis[2017-07-24 16:30:17,626][INFO]Using TestExecutionListeners: [org.springframework.test.context.support.DependencyInjectionTestExecutionListener@3b25b88c, org.springframework.test.context.support.DirtiesContextTestExecutionListener@29770daa, org.springframework.test.context.transaction.TransactionalTestExecutionListener@4722292a, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@13bca8e2][main][org.springframework.test.context.support.AbstractTestContextBootstrapper.getTestExecutionListeners(AbstractTestContextBootstrapper.java:182)]
+text.analysis[2017-07-24 16:30:17,731][INFO]Loading XML bean definitions from URL [file:/D:/Workspaces/text.analysis/target/classes/ApplicationContext.xml][main][org.springframework.beans.factory.xml.XmlBeanDefinitionReader.loadBeanDefinitions(XmlBeanDefinitionReader.java:317)]
+text.analysis[2017-07-24 16:30:17,967][INFO]Refreshing org.springframework.context.support.GenericApplicationContext@4b43b5da: startup date [Mon Jul 24 16:30:17 CST 2017]; root of context hierarchy[main][org.springframework.context.support.AbstractApplicationContext.prepareRefresh(AbstractApplicationContext.java:514)]
+text.analysis[2017-07-24 16:30:18,949][WARN]not find library.properties in classpath use it by default ![main][org.ansj.util.MyStaticValue.<clinit>(MyStaticValue.java:91)]
+text.analysis[2017-07-24 16:30:18,953][INFO]path to stream library/ambiguity.dic[main][org.ansj.dic.impl.File2Stream.toStream(File2Stream.java:29)]
+text.analysis[2017-07-24 16:30:18,956][INFO]load dic use time:1 path is : library/ambiguity.dic[main][org.ansj.library.AmbiguityLibrary.init(AmbiguityLibrary.java:108)]
+text.analysis[2017-07-24 16:30:18,958][INFO]path to stream library/default.dic[main][org.ansj.dic.impl.File2Stream.toStream(File2Stream.java:29)]
+text.analysis[2017-07-24 16:30:19,583][INFO]load dic use time:625 path is : library/default.dic[main][org.ansj.library.DicLibrary.init(DicLibrary.java:191)]
+text.analysis[2017-07-24 16:30:20,934][INFO]load crf model ok ! use time :1346[main][org.ansj.app.crf.model.CRFModel.loadModel(CRFModel.java:59)]
+text.analysis[2017-07-24 16:30:20,935][INFO]load crf use time:1351 path is : jar://crf.model[main][org.ansj.library.CrfLibrary.initCRFModel(CrfLibrary.java:82)]
+text.analysis[2017-07-24 16:30:21,969][INFO]init core library ok use time : 319[main][org.ansj.library.DATDictionary.loadDAT(DATDictionary.java:54)]
+text.analysis[2017-07-24 16:30:23,405][INFO]init ngram ok use time :1416[main][org.ansj.library.NgramLibrary.<clinit>(NgramLibrary.java:17)]
+text.analysis[2017-07-24 16:30:23,576][INFO]Refreshing org.springframework.context.support.ClassPathXmlApplicationContext@264def3a: startup date [Mon Jul 24 16:30:23 CST 2017]; root of context hierarchy[main][org.springframework.context.support.AbstractApplicationContext.prepareRefresh(AbstractApplicationContext.java:514)]
+text.analysis[2017-07-24 16:30:23,578][INFO]Loading XML bean definitions from class path resource [ApplicationContext.xml][main][org.springframework.beans.factory.xml.XmlBeanDefinitionReader.loadBeanDefinitions(XmlBeanDefinitionReader.java:317)]
+text.analysis[2017-07-24 16:30:24,351][INFO]Closing org.springframework.context.support.GenericApplicationContext@4b43b5da: startup date [Mon Jul 24 16:30:17 CST 2017]; root of context hierarchy[Thread-0][org.springframework.context.support.AbstractApplicationContext.doClose(AbstractApplicationContext.java:869)]
+text.analysis[2017-07-24 16:31:07,918][INFO]Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener][main][org.springframework.test.context.support.AbstractTestContextBootstrapper.getDefaultTestExecutionListenerClassNames(AbstractTestContextBootstrapper.java:256)]
+text.analysis[2017-07-24 16:31:07,930][INFO]Could not instantiate TestExecutionListener [org.springframework.test.context.web.ServletTestExecutionListener]. Specify custom listener classes or make the default listener classes (and their required dependencies) available. Offending class: [javax/servlet/ServletContext][main][org.springframework.test.context.support.AbstractTestContextBootstrapper.instantiateListeners(AbstractTestContextBootstrapper.java:204)]
+text.analysis[2017-07-24 16:31:07,947][INFO]Using TestExecutionListeners: [org.springframework.test.context.support.DependencyInjectionTestExecutionListener@6fe33a04, org.springframework.test.context.support.DirtiesContextTestExecutionListener@2ef615ff, org.springframework.test.context.transaction.TransactionalTestExecutionListener@1e1e306f, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@4ffdd6db][main][org.springframework.test.context.support.AbstractTestContextBootstrapper.getTestExecutionListeners(AbstractTestContextBootstrapper.java:182)]
+text.analysis[2017-07-24 16:31:08,059][INFO]Loading XML bean definitions from URL [file:/D:/Workspaces/text.analysis/target/classes/ApplicationContext.xml][main][org.springframework.beans.factory.xml.XmlBeanDefinitionReader.loadBeanDefinitions(XmlBeanDefinitionReader.java:317)]
+text.analysis[2017-07-24 16:31:08,312][INFO]Refreshing org.springframework.context.support.GenericApplicationContext@45d6cba3: startup date [Mon Jul 24 16:31:08 CST 2017]; root of context hierarchy[main][org.springframework.context.support.AbstractApplicationContext.prepareRefresh(AbstractApplicationContext.java:514)]
+text.analysis[2017-07-24 16:31:09,322][WARN]not find library.properties in classpath use it by default ![main][org.ansj.util.MyStaticValue.<clinit>(MyStaticValue.java:91)]
+text.analysis[2017-07-24 16:31:09,327][INFO]path to stream library/ambiguity.dic[main][org.ansj.dic.impl.File2Stream.toStream(File2Stream.java:29)]
+text.analysis[2017-07-24 16:31:09,331][INFO]load dic use time:2 path is : library/ambiguity.dic[main][org.ansj.library.AmbiguityLibrary.init(AmbiguityLibrary.java:108)]
+text.analysis[2017-07-24 16:31:09,332][INFO]path to stream library/default.dic[main][org.ansj.dic.impl.File2Stream.toStream(File2Stream.java:29)]
+text.analysis[2017-07-24 16:31:10,024][INFO]load dic use time:692 path is : library/default.dic[main][org.ansj.library.DicLibrary.init(DicLibrary.java:191)]
+text.analysis[2017-07-24 16:31:11,844][INFO]load crf model ok ! use time :1812[main][org.ansj.app.crf.model.CRFModel.loadModel(CRFModel.java:59)]
+text.analysis[2017-07-24 16:31:11,844][INFO]load crf use time:1817 path is : jar://crf.model[main][org.ansj.library.CrfLibrary.initCRFModel(CrfLibrary.java:82)]
+text.analysis[2017-07-24 16:31:30,657][INFO]init core library ok use time : 356[main][org.ansj.library.DATDictionary.loadDAT(DATDictionary.java:54)]
+text.analysis[2017-07-24 16:31:31,056][INFO]init ngram ok use time :375[main][org.ansj.library.NgramLibrary.<clinit>(NgramLibrary.java:17)]
+text.analysis[2017-07-24 16:31:31,248][INFO]Refreshing org.springframework.context.support.ClassPathXmlApplicationContext@2d211ad5: startup date [Mon Jul 24 16:31:31 CST 2017]; root of context hierarchy[main][org.springframework.context.support.AbstractApplicationContext.prepareRefresh(AbstractApplicationContext.java:514)]
+text.analysis[2017-07-24 16:31:31,250][INFO]Loading XML bean definitions from class path resource [ApplicationContext.xml][main][org.springframework.beans.factory.xml.XmlBeanDefinitionReader.loadBeanDefinitions(XmlBeanDefinitionReader.java:317)]
+text.analysis[2017-07-24 16:32:53,202][INFO]Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener][main][org.springframework.test.context.support.AbstractTestContextBootstrapper.getDefaultTestExecutionListenerClassNames(AbstractTestContextBootstrapper.java:256)]
+text.analysis[2017-07-24 16:32:53,211][INFO]Could not instantiate TestExecutionListener [org.springframework.test.context.web.ServletTestExecutionListener]. Specify custom listener classes or make the default listener classes (and their required dependencies) available. Offending class: [javax/servlet/ServletContext][main][org.springframework.test.context.support.AbstractTestContextBootstrapper.instantiateListeners(AbstractTestContextBootstrapper.java:204)]
+text.analysis[2017-07-24 16:32:53,220][INFO]Using TestExecutionListeners: [org.springframework.test.context.support.DependencyInjectionTestExecutionListener@3b25b88c, org.springframework.test.context.support.DirtiesContextTestExecutionListener@29770daa, org.springframework.test.context.transaction.TransactionalTestExecutionListener@4722292a, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@13bca8e2][main][org.springframework.test.context.support.AbstractTestContextBootstrapper.getTestExecutionListeners(AbstractTestContextBootstrapper.java:182)]
+text.analysis[2017-07-24 16:32:53,329][INFO]Loading XML bean definitions from URL [file:/D:/Workspaces/text.analysis/target/classes/ApplicationContext.xml][main][org.springframework.beans.factory.xml.XmlBeanDefinitionReader.loadBeanDefinitions(XmlBeanDefinitionReader.java:317)]
+text.analysis[2017-07-24 16:32:53,562][INFO]Refreshing org.springframework.context.support.GenericApplicationContext@4b43b5da: startup date [Mon Jul 24 16:32:53 CST 2017]; root of context hierarchy[main][org.springframework.context.support.AbstractApplicationContext.prepareRefresh(AbstractApplicationContext.java:514)]
+text.analysis[2017-07-24 16:32:54,549][WARN]not find library.properties in classpath use it by default ![main][org.ansj.util.MyStaticValue.<clinit>(MyStaticValue.java:91)]
+text.analysis[2017-07-24 16:32:54,553][INFO]path to stream library/ambiguity.dic[main][org.ansj.dic.impl.File2Stream.toStream(File2Stream.java:29)]
+text.analysis[2017-07-24 16:32:54,557][INFO]load dic use time:2 path is : library/ambiguity.dic[main][org.ansj.library.AmbiguityLibrary.init(AmbiguityLibrary.java:108)]
+text.analysis[2017-07-24 16:32:54,558][INFO]path to stream library/default.dic[main][org.ansj.dic.impl.File2Stream.toStream(File2Stream.java:29)]
+text.analysis[2017-07-24 16:32:55,187][INFO]load dic use time:629 path is : library/default.dic[main][org.ansj.library.DicLibrary.init(DicLibrary.java:191)]
+text.analysis[2017-07-24 16:32:56,566][INFO]load crf model ok ! use time :1374[main][org.ansj.app.crf.model.CRFModel.loadModel(CRFModel.java:59)]
+text.analysis[2017-07-24 16:32:56,566][INFO]load crf use time:1378 path is : jar://crf.model[main][org.ansj.library.CrfLibrary.initCRFModel(CrfLibrary.java:82)]
+text.analysis[2017-07-24 16:32:57,426][INFO]init core library ok use time : 326[main][org.ansj.library.DATDictionary.loadDAT(DATDictionary.java:54)]
+text.analysis[2017-07-24 16:32:59,082][INFO]init ngram ok use time :1636[main][org.ansj.library.NgramLibrary.<clinit>(NgramLibrary.java:17)]
+text.analysis[2017-07-24 16:32:59,257][INFO]Refreshing org.springframework.context.support.ClassPathXmlApplicationContext@9990da7: startup date [Mon Jul 24 16:32:59 CST 2017]; root of context hierarchy[main][org.springframework.context.support.AbstractApplicationContext.prepareRefresh(AbstractApplicationContext.java:514)]
+text.analysis[2017-07-24 16:32:59,259][INFO]Loading XML bean definitions from class path resource [ApplicationContext.xml][main][org.springframework.beans.factory.xml.XmlBeanDefinitionReader.loadBeanDefinitions(XmlBeanDefinitionReader.java:317)]
+text.analysis[2017-07-24 16:32:59,957][INFO]Closing org.springframework.context.support.GenericApplicationContext@4b43b5da: startup date [Mon Jul 24 16:32:53 CST 2017]; root of context hierarchy[Thread-0][org.springframework.context.support.AbstractApplicationContext.doClose(AbstractApplicationContext.java:869)]
+text.analysis[2017-07-24 16:35:55,292][INFO]Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener][main][org.springframework.test.context.support.AbstractTestContextBootstrapper.getDefaultTestExecutionListenerClassNames(AbstractTestContextBootstrapper.java:256)]
+text.analysis[2017-07-24 16:35:55,306][INFO]Could not instantiate TestExecutionListener [org.springframework.test.context.web.ServletTestExecutionListener]. Specify custom listener classes or make the default listener classes (and their required dependencies) available. Offending class: [javax/servlet/ServletContext][main][org.springframework.test.context.support.AbstractTestContextBootstrapper.instantiateListeners(AbstractTestContextBootstrapper.java:204)]
+text.analysis[2017-07-24 16:35:55,308][INFO]Using TestExecutionListeners: [org.springframework.test.context.support.DependencyInjectionTestExecutionListener@46f3978d, org.springframework.test.context.support.DirtiesContextTestExecutionListener@2262ce5f, org.springframework.test.context.transaction.TransactionalTestExecutionListener@4dad09c, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@39b5b441][main][org.springframework.test.context.support.AbstractTestContextBootstrapper.getTestExecutionListeners(AbstractTestContextBootstrapper.java:182)]
+text.analysis[2017-07-24 16:35:55,414][INFO]Loading XML bean definitions from URL [file:/D:/Workspaces/text.analysis/target/classes/ApplicationContext.xml][main][org.springframework.beans.factory.xml.XmlBeanDefinitionReader.loadBeanDefinitions(XmlBeanDefinitionReader.java:317)]
+text.analysis[2017-07-24 16:35:55,646][INFO]Refreshing org.springframework.context.support.GenericApplicationContext@1f493111: startup date [Mon Jul 24 16:35:55 CST 2017]; root of context hierarchy[main][org.springframework.context.support.AbstractApplicationContext.prepareRefresh(AbstractApplicationContext.java:514)]
+text.analysis[2017-07-24 16:35:56,633][WARN]not find library.properties in classpath use it by default ![main][org.ansj.util.MyStaticValue.<clinit>(MyStaticValue.java:91)]
+text.analysis[2017-07-24 16:35:56,637][INFO]path to stream library/ambiguity.dic[main][org.ansj.dic.impl.File2Stream.toStream(File2Stream.java:29)]
+text.analysis[2017-07-24 16:35:56,640][INFO]load dic use time:2 path is : library/ambiguity.dic[main][org.ansj.library.AmbiguityLibrary.init(AmbiguityLibrary.java:108)]
+text.analysis[2017-07-24 16:35:56,641][INFO]path to stream library/default.dic[main][org.ansj.dic.impl.File2Stream.toStream(File2Stream.java:29)]
+text.analysis[2017-07-24 16:35:57,299][INFO]load dic use time:658 path is : library/default.dic[main][org.ansj.library.DicLibrary.init(DicLibrary.java:191)]
+text.analysis[2017-07-24 16:35:58,644][INFO]load crf model ok ! use time :1340[main][org.ansj.app.crf.model.CRFModel.loadModel(CRFModel.java:59)]
+text.analysis[2017-07-24 16:35:58,645][INFO]load crf use time:1345 path is : jar://crf.model[main][org.ansj.library.CrfLibrary.initCRFModel(CrfLibrary.java:82)]
+text.analysis[2017-07-24 16:35:59,482][INFO]init core library ok use time : 322[main][org.ansj.library.DATDictionary.loadDAT(DATDictionary.java:54)]
+text.analysis[2017-07-24 16:36:01,063][INFO]init ngram ok use time :1560[main][org.ansj.library.NgramLibrary.<clinit>(NgramLibrary.java:17)]
+text.analysis[2017-07-24 16:36:01,333][INFO]Refreshing org.springframework.context.support.ClassPathXmlApplicationContext@57173370: startup date [Mon Jul 24 16:36:01 CST 2017]; root of context hierarchy[main][org.springframework.context.support.AbstractApplicationContext.prepareRefresh(AbstractApplicationContext.java:514)]
+text.analysis[2017-07-24 16:36:01,334][INFO]Loading XML bean definitions from class path resource [ApplicationContext.xml][main][org.springframework.beans.factory.xml.XmlBeanDefinitionReader.loadBeanDefinitions(XmlBeanDefinitionReader.java:317)]
+text.analysis[2017-07-24 16:36:02,208][INFO]Closing org.springframework.context.support.GenericApplicationContext@1f493111: startup date [Mon Jul 24 16:35:55 CST 2017]; root of context hierarchy[Thread-0][org.springframework.context.support.AbstractApplicationContext.doClose(AbstractApplicationContext.java:869)]
+text.analysis[2017-07-24 16:39:14,443][INFO]Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener][main][org.springframework.test.context.support.AbstractTestContextBootstrapper.getDefaultTestExecutionListenerClassNames(AbstractTestContextBootstrapper.java:256)]
+text.analysis[2017-07-24 16:39:14,458][INFO]Could not instantiate TestExecutionListener [org.springframework.test.context.web.ServletTestExecutionListener]. Specify custom listener classes or make the default listener classes (and their required dependencies) available. Offending class: [javax/servlet/ServletContext][main][org.springframework.test.context.support.AbstractTestContextBootstrapper.instantiateListeners(AbstractTestContextBootstrapper.java:204)]
+text.analysis[2017-07-24 16:39:14,461][INFO]Using TestExecutionListeners: [org.springframework.test.context.support.DependencyInjectionTestExecutionListener@46f3978d, org.springframework.test.context.support.DirtiesContextTestExecutionListener@2262ce5f, org.springframework.test.context.transaction.TransactionalTestExecutionListener@4dad09c, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@39b5b441][main][org.springframework.test.context.support.AbstractTestContextBootstrapper.getTestExecutionListeners(AbstractTestContextBootstrapper.java:182)]
+text.analysis[2017-07-24 16:39:14,563][INFO]Loading XML bean definitions from URL [file:/D:/Workspaces/text.analysis/target/classes/ApplicationContext.xml][main][org.springframework.beans.factory.xml.XmlBeanDefinitionReader.loadBeanDefinitions(XmlBeanDefinitionReader.java:317)]
+text.analysis[2017-07-24 16:39:14,793][INFO]Refreshing org.springframework.context.support.GenericApplicationContext@1f493111: startup date [Mon Jul 24 16:39:14 CST 2017]; root of context hierarchy[main][org.springframework.context.support.AbstractApplicationContext.prepareRefresh(AbstractApplicationContext.java:514)]
+text.analysis[2017-07-24 16:39:15,790][WARN]not find library.properties in classpath use it by default ![main][org.ansj.util.MyStaticValue.<clinit>(MyStaticValue.java:91)]
+text.analysis[2017-07-24 16:39:15,794][INFO]path to stream library/ambiguity.dic[main][org.ansj.dic.impl.File2Stream.toStream(File2Stream.java:29)]
+text.analysis[2017-07-24 16:39:15,797][INFO]load dic use time:2 path is : library/ambiguity.dic[main][org.ansj.library.AmbiguityLibrary.init(AmbiguityLibrary.java:108)]
+text.analysis[2017-07-24 16:39:15,798][INFO]path to stream library/default.dic[main][org.ansj.dic.impl.File2Stream.toStream(File2Stream.java:29)]
+text.analysis[2017-07-24 16:39:16,419][INFO]load dic use time:621 path is : library/default.dic[main][org.ansj.library.DicLibrary.init(DicLibrary.java:191)]
+text.analysis[2017-07-24 16:39:17,757][INFO]load crf model ok ! use time :1333[main][org.ansj.app.crf.model.CRFModel.loadModel(CRFModel.java:59)]
+text.analysis[2017-07-24 16:39:17,758][INFO]load crf use time:1338 path is : jar://crf.model[main][org.ansj.library.CrfLibrary.initCRFModel(CrfLibrary.java:82)]
+text.analysis[2017-07-24 16:39:18,599][INFO]init core library ok use time : 315[main][org.ansj.library.DATDictionary.loadDAT(DATDictionary.java:54)]
+text.analysis[2017-07-24 16:39:20,019][INFO]init ngram ok use time :1399[main][org.ansj.library.NgramLibrary.<clinit>(NgramLibrary.java:17)]
+text.analysis[2017-07-24 16:39:20,355][INFO]Closing org.springframework.context.support.GenericApplicationContext@1f493111: startup date [Mon Jul 24 16:39:14 CST 2017]; root of context hierarchy[Thread-0][org.springframework.context.support.AbstractApplicationContext.doClose(AbstractApplicationContext.java:869)]
+text.analysis[2017-07-24 16:39:31,500][INFO]Loaded default TestExecutionListener class names from location [META-INF/spring.factories]: [org.springframework.test.context.web.ServletTestExecutionListener, org.springframework.test.context.support.DependencyInjectionTestExecutionListener, org.springframework.test.context.support.DirtiesContextTestExecutionListener, org.springframework.test.context.transaction.TransactionalTestExecutionListener, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener][main][org.springframework.test.context.support.AbstractTestContextBootstrapper.getDefaultTestExecutionListenerClassNames(AbstractTestContextBootstrapper.java:256)]
+text.analysis[2017-07-24 16:39:31,515][INFO]Could not instantiate TestExecutionListener [org.springframework.test.context.web.ServletTestExecutionListener]. Specify custom listener classes or make the default listener classes (and their required dependencies) available. Offending class: [javax/servlet/ServletContext][main][org.springframework.test.context.support.AbstractTestContextBootstrapper.instantiateListeners(AbstractTestContextBootstrapper.java:204)]
+text.analysis[2017-07-24 16:39:31,517][INFO]Using TestExecutionListeners: [org.springframework.test.context.support.DependencyInjectionTestExecutionListener@46f3978d, org.springframework.test.context.support.DirtiesContextTestExecutionListener@2262ce5f, org.springframework.test.context.transaction.TransactionalTestExecutionListener@4dad09c, org.springframework.test.context.jdbc.SqlScriptsTestExecutionListener@39b5b441][main][org.springframework.test.context.support.AbstractTestContextBootstrapper.getTestExecutionListeners(AbstractTestContextBootstrapper.java:182)]
+text.analysis[2017-07-24 16:39:31,627][INFO]Loading XML bean definitions from URL [file:/D:/Workspaces/text.analysis/target/classes/ApplicationContext.xml][main][org.springframework.beans.factory.xml.XmlBeanDefinitionReader.loadBeanDefinitions(XmlBeanDefinitionReader.java:317)]
+text.analysis[2017-07-24 16:39:31,862][INFO]Refreshing org.springframework.context.support.GenericApplicationContext@1f493111: startup date [Mon Jul 24 16:39:31 CST 2017]; root of context hierarchy[main][org.springframework.context.support.AbstractApplicationContext.prepareRefresh(AbstractApplicationContext.java:514)]
+text.analysis[2017-07-24 16:39:32,859][WARN]not find library.properties in classpath use it by default ![main][org.ansj.util.MyStaticValue.<clinit>(MyStaticValue.java:91)]
+text.analysis[2017-07-24 16:39:32,863][INFO]path to stream library/ambiguity.dic[main][org.ansj.dic.impl.File2Stream.toStream(File2Stream.java:29)]
+text.analysis[2017-07-24 16:39:32,866][INFO]load dic use time:2 path is : library/ambiguity.dic[main][org.ansj.library.AmbiguityLibrary.init(AmbiguityLibrary.java:108)]
+text.analysis[2017-07-24 16:39:32,868][INFO]path to stream library/default.dic[main][org.ansj.dic.impl.File2Stream.toStream(File2Stream.java:29)]
+text.analysis[2017-07-24 16:39:33,486][INFO]load dic use time:618 path is : library/default.dic[main][org.ansj.library.DicLibrary.init(DicLibrary.java:191)]
+text.analysis[2017-07-24 16:39:34,828][INFO]load crf model ok ! use time :1336[main][org.ansj.app.crf.model.CRFModel.loadModel(CRFModel.java:59)]
+text.analysis[2017-07-24 16:39:34,828][INFO]load crf use time:1340 path is : jar://crf.model[main][org.ansj.library.CrfLibrary.initCRFModel(CrfLibrary.java:82)]
+text.analysis[2017-07-24 16:39:35,665][INFO]init core library ok use time : 321[main][org.ansj.library.DATDictionary.loadDAT(DATDictionary.java:54)]
+text.analysis[2017-07-24 16:39:36,899][INFO]init ngram ok use time :1214[main][org.ansj.library.NgramLibrary.<clinit>(NgramLibrary.java:17)]
+text.analysis[2017-07-24 16:39:37,243][INFO]Closing org.springframework.context.support.GenericApplicationContext@1f493111: startup date [Mon Jul 24 16:39:31 CST 2017]; root of context hierarchy[Thread-0][org.springframework.context.support.AbstractApplicationContext.doClose(AbstractApplicationContext.java:869)]

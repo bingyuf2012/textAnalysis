@@ -25,7 +25,8 @@ import text.thu.keyword.model.Token;
 @Component
 public class ExtFactory {
 	public NewsSet newsSet;
-	static Extract ext = new Extract();
+	@Autowired
+	Extract ext;
 
 	@Autowired
 	SegUtil segUtil;

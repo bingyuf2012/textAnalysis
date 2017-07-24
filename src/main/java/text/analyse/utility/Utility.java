@@ -222,7 +222,7 @@ public class Utility {
 	public ArrayList<TopWords> topic_lable_Candicate(int num) {
 		ArrayList<TopWords> topWords = new ArrayList<TopWords>();
 
-		num = CommonUtil.getTopwords();
+		num = new CommonUtil().getTopwords();
 
 		int index = 0;
 		try {

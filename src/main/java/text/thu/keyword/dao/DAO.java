@@ -6,16 +6,24 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.RandomAccessFile;
-
+import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.Hashtable;
-
-import java.util.Enumeration;
-import java.util.Locale;
-import java.util.ResourceBundle;
 import java.util.Set;
 
+import javax.annotation.PostConstruct;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import text.analyse.common.utils.properties.Context;
+import text.analyse.common.utils.properties.Keys;
+
+@Component
 public class DAO {
+	@Autowired
+	Context context;
+
 	protected static String termPathUni;
 	protected static String termPathBi;
 	protected static String termPathTri;
@@ -32,10 +40,10 @@ public class DAO {
 	public static Hashtable termsBi;
 	public static Hashtable termsTri;
 
-	public static Set stop1Set;
-	public static Set stop2Set;
-	public static Set stopSet;
-	public static Set singleWordSet;
+	public Set stop1Set;
+	public Set stop2Set;
+	public Set stopSet;
+	public Set singleWordSet;
 
 	public static long uniTermSum = 0l;
 	public static long biTermSum = 0l;
@@ -45,25 +53,24 @@ public class DAO {
 	static Hashtable termAll = null;
 	static Hashtable term_to_id = null;
 
-	public static ResourceBundle bundle = ResourceBundle.getBundle(
-			"config", Locale.ENGLISH);
+	/*	public static ResourceBundle bundle = ResourceBundle.getBundle(
+				"config", Locale.ENGLISH);*/
 
-	static {
-		termPathUni = bundle.getString("news.ICTUniterm");
-		termPathBi = bundle.getString("news.ICTBiterm");
-		termPathTri = bundle.getString("news.ICTTriterm");
-
-		stopWord1Path = bundle.getString("news.stopword1");
-		stopWord2Path = bundle.getString("news.stopword2");
-		stopWordPath = bundle.getString("news.stopword");
-		singleWordPath = bundle.getString("news.singleword");
-
-		weblogPath = bundle.getString("news.weblogPath");
+	@PostConstruct
+	private void init() {
+		termPathUni = context.getString(Keys.NEWS_ICTUNITERM);
+		termPathBi = context.getString(Keys.NEWS_ICTBITERM);
+		termPathTri = context.getString(Keys.NEWS_ICTTRITERM);
+		stopWord1Path = context.getString(Keys.NEWS_STOPWORD1);
+		stopWord2Path = context.getString(Keys.NEWS_STOPWORD2);
+		stopWordPath = context.getString(Keys.NEWS_STOPWORD);
+		singleWordPath = context.getString(Keys.NEWS_SINGLEWORD);
+		weblogPath = context.getString(Keys.NEWS_WEBLOGPATH);
 
 		loadTerm();
 	}
 
-	public static void loadTerm() {
+	public void loadTerm() {
 		termsUni = new Hashtable();
 		termsBi = new Hashtable();
 		termsTri = new Hashtable();
@@ -189,8 +196,7 @@ public class DAO {
 		File termFile = new File(weblogPath);
 
 		try {
-			RandomAccessFile randomWritefile = new RandomAccessFile(termFile,
-					"rw");
+			RandomAccessFile randomWritefile = new RandomAccessFile(termFile, "rw");
 			long address = termFile.length();
 			randomWritefile.seek(address);
 			randomWritefile.writeBytes("\r\n");

@@ -21,8 +21,6 @@ import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.alibaba.fastjson.JSONObject;
-
 import text.analyse.struct.etm.AllTopicsETM;
 import text.analyse.struct.etm.TECountModel;
 import text.analyse.struct.lda.AllEntity;
@@ -129,9 +127,6 @@ public class ETMCluster {
 				if (cut > -1)
 					key = key.substring(cut + 2);
 
-				// PrintConsole.PrintLog("allWords[j]", allWords[j]);
-				// PrintConsole.PrintLog("type", type);
-				// PrintConsole.PrintLog("key", key);
 				if (type.matches("u|c|p|w|d|r|f|z|q|o|mq")) {
 					continue;
 				}
@@ -218,13 +213,9 @@ public class ETMCluster {
 			pwTokens.write(list.size() + "\n");
 			for (int i = 0; i < list.size(); i++) {
 				NewsDetail newsDetail = new NewsDetail();
-				// newsDetail.setTitle(CommonUtil.filterHtmlChar(list.get(i)
-				// .getTitle()));
 				HtmlSplit htmlSplit = new HtmlSplit();
 				newsDetail.setTitle(htmlSplit.filterHtmlChar(list.get(i).getTitle()));
 				newsDetail.setUrl(list.get(i).getUrl());
-				// newsDetail.setContent(CommonUtil.filterHtmlChar(list.get(i)
-				// .getContent()));
 				newsDetail.setContent(htmlSplit.filterHtmlChar(list.get(i).getContent()));
 				newsDetail.setTime(list.get(i).getTime());
 				newsDetail.setType(list.get(i).getType());
@@ -232,20 +223,8 @@ public class ETMCluster {
 				newsDetail.setFresh(list.get(i).getFresh());
 				newsDetails.add(newsDetail);
 				String data = list.get(i).getTitle() + list.get(i).getContent();
-				// fc = split.splitString(FilterData(data));
-				// fc = split.splitString(FilterData(data).toLowerCase());
 				fc = segUtil.segText(data.toUpperCase(), true);
-				// String title = list.get(i).getTitle();
-				// String content = list.get(i).getContent();
-				//
-				// fc = split.splitString(title) + "@@@@" +
-				// split.splitString(content);
-
 				allTokens = GetKeywords(fc);
-
-				// System.out.println("i : " + i + " allTokens : " + allTokens);
-				// System.out.println("i : " + i + " data : " + data);
-
 				if (allTokens.equals(""))
 					continue;
 
@@ -281,45 +260,6 @@ public class ETMCluster {
 		ETMUtility utility = new ETMUtility(filename);
 		relee = utility.relEE(outputdir);
 		try {
-			// newTopics = (ArrayList<TopicSet>) topics.clone();
-			/*
-			 * Novelty novelty = new Novelty(); List<String> interestList = new
-			 * ArrayList<String>(); List<String> interestBeforeList = new
-			 * SearchResultDaoImpl().selectSearchWords();
-			 * interestBeforeList.add(keyword); String interestr = ""; for (int
-			 * i = 0; i < interestBeforeList.size(); i++) { interestr +=
-			 * interestBeforeList.get(i) + " "; }
-			 * 
-			 * String interestoken = split.splitString(interestr.toUpperCase());
-			 * if (!"".equals(interestoken)) { String[] interestrArray =
-			 * interestoken.split(" "); for (int i = 0; i <
-			 * interestrArray.length; i++) { //
-			 * PrintConsole.PrintLog("interestrArray[i]", // interestrArray[i]);
-			 * interestList.add(interestrArray[i]); } }
-			 * PrintConsole.PrintLog("interestList.size()",
-			 * interestList.size()); HashSet h = new HashSet(interestList);
-			 * interestList.clear(); interestList.addAll(h);
-			 * PrintConsole.PrintLog("interestList.size()",
-			 * interestList.size());
-			 * 
-			 * String countingDocumentsPath =
-			 * CommonUtil.getPropertiesValue("counting");
-			 * PrintConsole.PrintLog("countingDocumentsPath",
-			 * countingDocumentsPath); novelty.init(countingDocumentsPath,
-			 * interestList); List<com.searchSDK.fresh.NewsSort> refreshList =
-			 * novelty.calc(tokendir); List<com.searchSDK.fresh.NewsSort>
-			 * sortrefreshList = refreshList; Collections.sort(sortrefreshList,
-			 * NewsSort.comparator); Double maxValue =
-			 * sortrefreshList.get(0).getScore(); Double minValue =
-			 * sortrefreshList.get(sortrefreshList.size() - 1).getScore();
-			 * PrintConsole.PrintLog("refreshList.size()", refreshList.size());
-			 * DecimalFormat df3 = new DecimalFormat("0.0000"); for (int i = 0;
-			 * i < newsDetails.size(); i++) { Double curValue =
-			 * (refreshList.get(i).getScore() - minValue) / (maxValue -
-			 * minValue); String refresh = df3.format(curValue);
-			 * newsDetails.get(i).setFresh(refresh); }
-			 */
-
 			ArrayList<TopicSet> topicsets = utility.getTopicSet(outputdir, newsDetails);
 			allTopics.setTopics(topicsets);
 			allTopics.setRelee(relee);
@@ -333,13 +273,7 @@ public class ETMCluster {
 			ArrayList<TopWords> topWords = new ArrayList<TopWords>();
 			topWords = utility.getTopWords(outputdir);// topic的前x个label
 
-			/*
-			 * String uselabeling =
-			 * CommonUtil.getPropertiesValue("uselabeling"); if
-			 * (!uselabeling.equals("false")) { lzxTopicname(topWords); } else {
-			 */
 			luluTopicname(topWords);
-			/* } */
 
 			for (int i = 0; i < topWords.size(); i++) {
 				String labelstr = topWords.get(i).getLabelWords();

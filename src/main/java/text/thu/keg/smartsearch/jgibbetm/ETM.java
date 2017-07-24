@@ -30,6 +30,7 @@ package text.thu.keg.smartsearch.jgibbetm;
 
 import org.kohsuke.args4j.CmdLineException;
 import org.kohsuke.args4j.CmdLineParser;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import text.searchSDK.util.CommonUtil;
@@ -38,18 +39,18 @@ import text.thu.keg.smartsearch.timer.Timer;
 
 @Component
 public class ETM {
+	@Autowired
+	CommonUtil commonUtil;
+
 	public Model est(String filetokename, String outputdir, int docNum) {
 		Timer timer = new Timer("ETM");
 		ETMCmdOption option = new ETMCmdOption();
 		CmdLineParser parser = new CmdLineParser(option);
-		int topicNum = CommonUtil.getTopicNum(docNum);
-		int topicword = CommonUtil.getTopwords();
-		int top100entity = CommonUtil.getTop100Entity();
 		try {
-			parser.parseArgument(new String[] { "-est", "-beta1", "0.1", "-beta2", "0.01", "-ntopics", "" + topicNum,
-					"-netopics", "" + topicNum, "-twords", "" + topicword, "-tentities", "" + top100entity, "-dir",
-					outputdir, "-dfile", filetokename });
-
+			parser.parseArgument(new String[] { "-est", "-beta1", "0.1", "-beta2", "0.01", "-ntopics",
+					"" + commonUtil.getTopicNum(docNum), "-netopics", "" + commonUtil.getTopicNum(docNum), "-twords",
+					"" + commonUtil.getTopwords(), "-tentities", "" + commonUtil.getTop100Entity(), "-dir", outputdir,
+					"-dfile", filetokename });
 		} catch (CmdLineException e) {
 			e.printStackTrace();
 		}
@@ -74,7 +75,7 @@ public class ETM {
 		CmdLineParser parser = new CmdLineParser(option);
 		parser.parseArgument(new String[] { "-inf", "-beta1", "0.1", "-beta2", "0.1", "-ntopics", "20", "-netopics",
 				"15", "-twords", "20", "-tentities", "20", "-dir", ".\\perp\\", "-dfile", "����8.8������_train1.txt" });
-
+	
 		option.niters = 100;
 		option.modelName = "model-final";
 		ETMInference eInference = new ETMInference();
@@ -83,9 +84,9 @@ public class ETM {
 		Model newModel = eInference.inference();
 		newModel.saveModel("model-inf");
 		PrintConsole.PrintLog("", Perplexity.calPerp(newModel, eInference.trnModel));
-
+	
 	}
-
+	
 	public static void showHelp(CmdLineParser parser) {
 		System.out.println("ETM [options ...] [arguments...]");
 		parser.printUsage(System.out);
