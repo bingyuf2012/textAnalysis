@@ -23,9 +23,6 @@ import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
 import text.analyse.common.utils.properties.SpringContextUtil;
 import text.analyse.struct.etm.TECountModel;
 import text.analyse.struct.lda.AllEntity;
@@ -164,44 +161,6 @@ public class ETMUtility extends Utility {
 				}
 			}
 		}
-
-		/*for (int i = 0; i < topiccountMap.size(); i++) {
-			int lnum = 0, onum = 0, penum = 0;
-			int topicnum = Integer.parseInt(topiccountMap.get(i).toString());
-			for (int j = 0; j < entitylist.size(); j++) {
-				String et = entitylist.get(j).id + ":" + i;
-				if (entitycountMap.get(et) != null) {
-					int count = Integer.parseInt(entitycountMap.get(et).toString());
-		
-					double score1 = Double.parseDouble(count + "") / topicnum;
-					DecimalFormat df = new DecimalFormat("0.00000");
-					String values = df.format(score1);
-		
-					if (entitylist.get(j).type.equals("LOC") && lnum < 100) {
-						RelationLocTE locTE = new RelationLocTE();
-						locTE.setID(j);
-						locTE.setTopicID(i);
-						locTE.setValue(values);
-						lnum++;
-						relLocTe.add(locTE);
-					} else if (entitylist.get(j).type.equals("PER") && penum < 100) {
-						RelationPerTE perTE = new RelationPerTE();
-						perTE.setID(j);
-						perTE.setTopicID(i);
-						perTE.setValue(values);
-						penum++;
-						relPerTe.add(perTE);
-					} else if (entitylist.get(j).type.equals("ORG") && onum < 100) {
-						RelationOrgTE orgTE = new RelationOrgTE();
-						orgTE.setID(j);
-						orgTE.setTopicID(i);
-						orgTE.setValue(values);
-						onum++;
-						relOrgTe.add(orgTE);
-					}
-				}
-			}
-		}*/
 		reletmte.setRelLocTe(relLocTe);
 		reletmte.setRelPerTe(relPerTe);
 		reletmte.setRelOrgTe(relOrgTe);
