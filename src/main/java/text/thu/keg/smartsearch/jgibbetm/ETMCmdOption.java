@@ -1,8 +1,8 @@
 package text.thu.keg.smartsearch.jgibbetm;
 
-import org.kohsuke.args4j.*;
+import org.kohsuke.args4j.Option;
 
-import text.searchSDK.util.Constant;
+import text.analysis.utils.ConstantUtil;
 
 public class ETMCmdOption {
 
@@ -61,8 +61,8 @@ public class ETMCmdOption {
 	public boolean withrawdata = false;
 
 	@Option(name = "-wordmap", usage = "Specify the wordmap file")
-	public String wordMapFileName = Constant.WORD_MAP;
+	public String wordMapFileName = ConstantUtil.WORD_MAP;
 
 	@Option(name = "-entitymap", usage = "Specify the entitymap file")
-	public String entityMapFileName = Constant.ENTITY_MAP;
+	public String entityMapFileName = ConstantUtil.ENTITY_MAP;
 }

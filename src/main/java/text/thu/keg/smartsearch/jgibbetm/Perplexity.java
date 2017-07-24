@@ -2,11 +2,13 @@ package text.thu.keg.smartsearch.jgibbetm;
 
 import java.io.IOException;
 
-import text.searchSDK.util.PrintConsole;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Perplexity {
-	public static double calPerp(Model newModel, Model trnModel)
-			throws IOException {
+	private Logger LOG = LoggerFactory.getLogger(Perplexity.class);
+
+	public double calPerp(Model newModel, Model trnModel) throws IOException {
 
 		double perp = 0;
 		double numerator = 0;// ����
@@ -16,8 +18,7 @@ public class Perplexity {
 		for (int i = 0; i < newModel.data.docs.length; i++) {
 			for (int j = 0; j < newModel.KEntities; j++) {
 				for (int k = 0; k < newModel.KWords; k++) {
-					thetaEntity[i][j] += newModel.theta[i][k]
-							* trnModel.kesai[k][j];
+					thetaEntity[i][j] += newModel.theta[i][k] * trnModel.kesai[k][j];
 				}
 			}
 		}
@@ -25,8 +26,7 @@ public class Perplexity {
 		for (int m = 0; m < newModel.data.docs.length; m++) {
 			int Ndw = newModel.data.docs[m].words.length;
 			int Nde = newModel.data.docs[m].entities.length;
-			PrintConsole.PrintLog("Nd", Ndw);
-			PrintConsole.PrintLog("Nd", Nde);
+			LOG.info("Ndw = {} , Nde = {} ", Ndw, Nde);
 			double log_p_wd = 0.0;
 
 			for (int n = 0; n < Ndw; n++) {

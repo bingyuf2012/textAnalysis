@@ -24,6 +24,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.validator.GenericValidator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import text.analyse.common.utils.properties.SpringContextUtil;
 import text.analyse.struct.etm.TECountModel;
@@ -43,23 +45,23 @@ import text.analyse.utility.Utility;
 import text.analyse.utility.Word;
 import text.analysis.utils.ConstantUtil;
 import text.searchSDK.util.CommonUtil;
-import text.searchSDK.util.Constant;
-import text.searchSDK.util.PrintConsole;
 
 public class ETMUtility extends Utility {
+	private Logger LOG = LoggerFactory.getLogger(ETMUtility.class);
+
 	CommonUtil commonUtil = SpringContextUtil.getBean(CommonUtil.class);
 
 	public ETMUtility(String filename) {
 		super(filename);
 	}
 
-	/*public String filexEAssignall = Constant.MODEL_NAME + Constant.SUFFIX_XEASSIGN;*/
-	public String filetEAssignall = Constant.MODEL_NAME + Constant.SUFFIX_TEASSIGN;
-	public String filentityword = Constant.ENTITY_MAP;
-	public String filekesai = Constant.MODEL_NAME + Constant.SUFFIX_KESAI;
-	public String filephientityall = Constant.MODEL_NAME + Constant.SUFFIX_PHIENTITY;
-	public String filetopwordsall = Constant.MODEL_NAME + Constant.SUFFIX_TWORDS;
-	public String filetheta = Constant.MODEL_NAME + Constant.SUFFIX_THETA;
+	/*public String filexEAssignall = ConstantUtil.MODEL_NAME + ConstantUtil.SUFFIX_XEASSIGN;*/
+	public String filetEAssignall = ConstantUtil.MODEL_NAME + ConstantUtil.SUFFIX_TEASSIGN;
+	public String filentityword = ConstantUtil.ENTITY_MAP;
+	public String filekesai = ConstantUtil.MODEL_NAME + ConstantUtil.SUFFIX_KESAI;
+	public String filephientityall = ConstantUtil.MODEL_NAME + ConstantUtil.SUFFIX_PHIENTITY;
+	public String filetopwordsall = ConstantUtil.MODEL_NAME + ConstantUtil.SUFFIX_TWORDS;
+	public String filetheta = ConstantUtil.MODEL_NAME + ConstantUtil.SUFFIX_THETA;
 
 	public AllEntity GetEntityUsrDef(List entitylist) {
 		AllEntity entity = new AllEntity();
@@ -180,7 +182,7 @@ public class ETMUtility extends Utility {
 		Map<String, Integer> topicountMap = new HashMap<String, Integer>();
 		try {
 			br = new BufferedReader(
-					new InputStreamReader(new FileInputStream(outputdir + filetEAssignall), Constant.UTF8));
+					new InputStreamReader(new FileInputStream(outputdir + filetEAssignall), ConstantUtil.UTF8));
 			String line = "";
 
 			while ((line = br.readLine()) != null) {
@@ -229,7 +231,7 @@ public class ETMUtility extends Utility {
 		Map<String, Integer> topicountMap = new HashMap<String, Integer>();
 		try {
 			br = new BufferedReader(
-					new InputStreamReader(new FileInputStream(outputdir + filetEAssignall), Constant.UTF8));
+					new InputStreamReader(new FileInputStream(outputdir + filetEAssignall), ConstantUtil.UTF8));
 			String line = "";
 
 			while ((line = br.readLine()) != null) {
@@ -284,7 +286,7 @@ public class ETMUtility extends Utility {
 
 		try {
 			br = new BufferedReader(
-					new InputStreamReader(new FileInputStream(outputdir + filentityword), Constant.UTF8));
+					new InputStreamReader(new FileInputStream(outputdir + filentityword), ConstantUtil.UTF8));
 			String line = "";
 
 			while ((line = br.readLine()) != null) {
@@ -334,7 +336,7 @@ public class ETMUtility extends Utility {
 		BufferedReader br = null;
 		Map<Integer, TECountModel> maptecmodelMap = new HashMap<Integer, TECountModel>();
 		try {
-			br = new BufferedReader(new InputStreamReader(new FileInputStream(filename), Constant.UTF8));
+			br = new BufferedReader(new InputStreamReader(new FileInputStream(filename), ConstantUtil.UTF8));
 			String line = "";
 
 			Map<String, Integer> allemap = new HashMap<String, Integer>();
@@ -467,7 +469,8 @@ public class ETMUtility extends Utility {
 		BufferedReader br = null;
 		double[][] kesai = new double[topicNum][];
 		try {
-			br = new BufferedReader(new InputStreamReader(new FileInputStream(outputdir + filekesai), Constant.UTF8));
+			br = new BufferedReader(
+					new InputStreamReader(new FileInputStream(outputdir + filekesai), ConstantUtil.UTF8));
 			String line = "";
 			int flag = 0;
 			while ((line = br.readLine()) != null) {
@@ -506,7 +509,7 @@ public class ETMUtility extends Utility {
 		}
 		try {
 			BufferedReader br = new BufferedReader(
-					new InputStreamReader(new FileInputStream(outputdir + filephientityall), Constant.UTF8));
+					new InputStreamReader(new FileInputStream(outputdir + filephientityall), ConstantUtil.UTF8));
 			String t_e = br.readLine();
 			int k = 0;
 			while (t_e != null) {
@@ -537,7 +540,7 @@ public class ETMUtility extends Utility {
 			for (int e = 0; e < num; e++) {
 				int counte = 0;
 				BufferedReader in = new BufferedReader(
-						new InputStreamReader(new FileInputStream(outputdir + filetEAssignall), Constant.UTF8));
+						new InputStreamReader(new FileInputStream(outputdir + filetEAssignall), ConstantUtil.UTF8));
 				String e_t = null;
 				while ((e_t = in.readLine()) != null) {
 					String[] ets = e_t.split(" ");
@@ -682,7 +685,7 @@ public class ETMUtility extends Utility {
 		BufferedReader br = null;
 		try {
 			br = new BufferedReader(
-					new InputStreamReader(new FileInputStream(outputdir + filetopwordsall), Constant.UTF8));
+					new InputStreamReader(new FileInputStream(outputdir + filetopwordsall), ConstantUtil.UTF8));
 			String line = "";
 			int flag = 0;
 			int num = 0;
@@ -703,8 +706,8 @@ public class ETMUtility extends Utility {
 				if (num % commonUtil.getTopwords() == 0) {
 					TopWords topWords = new TopWords();
 					topWords.setTopicID(flag);
-					PrintConsole.PrintLog("labelsplit.length()", label.split(ConstantUtil.WORD_SPLIT).length,
-							"valueList.size()", valueList.size(), "");
+					LOG.info("labelsplit.length() = {} , valueList.size() = {} ",
+							label.split(ConstantUtil.WORD_SPLIT).length, valueList.size());
 					String[] lsArray = label.split(ConstantUtil.WORD_SPLIT);
 					int len = Math.min(lsArray.length, valueList.size());
 					String rslabel = "";
@@ -747,7 +750,7 @@ public class ETMUtility extends Utility {
 		BufferedReader br = null;
 		try {
 			br = new BufferedReader(
-					new InputStreamReader(new FileInputStream(outputdir + filetopwordsall), Constant.UTF8));
+					new InputStreamReader(new FileInputStream(outputdir + filetopwordsall), ConstantUtil.UTF8));
 			String line = "";
 			int flag = 0;
 			int num = 0;
@@ -802,14 +805,15 @@ public class ETMUtility extends Utility {
 		PrintWriter pw = null;
 		ArrayList<TopicSet> topicSets = new ArrayList<TopicSet>();
 		try {
-			br = new BufferedReader(new InputStreamReader(new FileInputStream(outputdir + filetheta), Constant.UTF8));
+			br = new BufferedReader(
+					new InputStreamReader(new FileInputStream(outputdir + filetheta), ConstantUtil.UTF8));
 
 			// Token 原文件
-			brf = new BufferedReader(
-					new InputStreamReader(new FileInputStream(outputdir + Constant.DOC_TOKEN_FILENAME), Constant.UTF8));
+			brf = new BufferedReader(new InputStreamReader(
+					new FileInputStream(outputdir + ConstantUtil.DOC_TOKEN_FILENAME), ConstantUtil.UTF8));
 			// 新闻原文
-			reader = new BufferedReader(
-					new InputStreamReader(new FileInputStream(outputdir + Constant.DOC_FILENAME), Constant.UTF8));
+			reader = new BufferedReader(new InputStreamReader(
+					new FileInputStream(outputdir + ConstantUtil.DOC_FILENAME), ConstantUtil.UTF8));
 			Map<Integer, Map<Integer, Double>> tdp = new HashMap<Integer, Map<Integer, Double>>();
 			String linef = brf.readLine();
 			linef = linef.trim();
@@ -881,8 +885,8 @@ public class ETMUtility extends Utility {
 				index++;
 			}
 
-			pw = new PrintWriter(new BufferedWriter(
-					new OutputStreamWriter(new FileOutputStream(outputdir + Constant.TOP_DOCS), Constant.UTF8)));
+			pw = new PrintWriter(new BufferedWriter(new OutputStreamWriter(
+					new FileOutputStream(outputdir + ConstantUtil.TOP_DOCS), ConstantUtil.UTF8)));
 			Map<Integer, ArrayList<WordStructSet>> worMap = getWordStructSetMap(outputdir);
 			for (int i = 0; i < numTopics; i++) {
 				Set<Entry<Integer, Double>> itemEntry = tdp.get(i).entrySet();

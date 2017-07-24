@@ -30,11 +30,14 @@ package text.thu.keg.smartsearch.jgibbetm;
 
 import java.io.File;
 
-import text.searchSDK.util.PrintConsole;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Estimator {
-	protected Model trnModel;
+	private Logger LOG = LoggerFactory.getLogger(Estimator.class);
+
 	ETMCmdOption option;
+	Model trnModel;
 
 	public boolean init(ETMCmdOption option) {
 		this.option = option;
@@ -54,7 +57,7 @@ public class Estimator {
 	}
 
 	public Model estimate() {
-		PrintConsole.PrintLog("Sampling ", trnModel.niters, " iteration!");
+		LOG.info("Sampling {} iteration!", trnModel.niters);
 
 		int lastIter = trnModel.liter;
 		for (trnModel.liter = lastIter + 1; trnModel.liter < trnModel.niters + lastIter; trnModel.liter++) {
@@ -87,7 +90,7 @@ public class Estimator {
 
 			if (option.savestep > 0) {
 				if (trnModel.liter % option.savestep == 0) {
-					PrintConsole.PrintLog("Saving the model at iteration ", trnModel.liter, " ...");
+					LOG.info("Saving the model at iteration = {} ", trnModel.liter);
 					computeTheta();
 					computePhi();
 					computeKesai();
@@ -96,9 +99,9 @@ public class Estimator {
 				}
 			}
 		} // end iterations
-		PrintConsole.PrintLog("Iteration end ............", "");
-		PrintConsole.PrintLog("Gibbs sampling completed!\n", "");
-		PrintConsole.PrintLog("Saving the final model!\n", "");
+		LOG.info("Iteration end ............");
+		LOG.info("Gibbs sampling completed!");
+		LOG.info("Saving the final model!");
 		computeTheta();
 		computePhi();
 		computeKesai();

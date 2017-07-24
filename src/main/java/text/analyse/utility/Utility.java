@@ -17,6 +17,10 @@ import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import text.analyse.etmutility.ETMCluster;
 import text.analyse.struct.lda.AllEntity;
 import text.analyse.struct.lda.RelationLocTE;
 import text.analyse.struct.lda.RelationOrgTE;
@@ -24,11 +28,12 @@ import text.analyse.struct.lda.RelationPerTE;
 import text.analyse.struct.lda.RelationTE;
 import text.analyse.struct.lda.RelationTT;
 import text.analyse.struct.lda.TopWords;
+import text.analysis.utils.ConstantUtil;
 import text.searchSDK.util.CommonUtil;
-import text.searchSDK.util.Constant;
-import text.searchSDK.util.PrintConsole;
 
 public class Utility {
+	private Logger LOG = LoggerFactory.getLogger(ETMCluster.class);
+
 	public int wordNum;
 	public double[][] topics;// 装有Phi矩阵
 	public WordSet wordset;
@@ -92,7 +97,7 @@ public class Utility {
 	public void readPhiMatrix(String filename) {
 		BufferedReader br = null;
 		try {
-			br = new BufferedReader(new InputStreamReader(new FileInputStream(filename), Constant.UTF8));
+			br = new BufferedReader(new InputStreamReader(new FileInputStream(filename), ConstantUtil.UTF8));
 			wordNum = 0;
 			int index = 0;
 			String line = "";
@@ -128,12 +133,12 @@ public class Utility {
 	public void loadWord(String wordFile) {
 		BufferedReader br = null;
 		try {
-			br = new BufferedReader(new InputStreamReader(new FileInputStream(wordFile), Constant.UTF8));
+			br = new BufferedReader(new InputStreamReader(new FileInputStream(wordFile), ConstantUtil.UTF8));
 			String line = "";
 
 			// read word number
 			int num = Integer.valueOf((line = br.readLine()).trim()).intValue();
-			PrintConsole.PrintLog("该专题的词条个数：", num);
+			LOG.info("该专题的词条个数： {} ", num);
 			while ((line = br.readLine()) != null) {
 				String[] allWord = line.split(" ");
 				Word word = new Word();
@@ -212,7 +217,7 @@ public class Utility {
 			try {
 				result = (double) (result / (Math.sqrt(res1) * Math.sqrt(res2)));
 			} catch (Exception exp) {
-				PrintConsole.PrintLog("similarity compute error!", null);
+				LOG.error("similarity compute error!");
 			}
 		}
 		return result;
@@ -273,7 +278,7 @@ public class Utility {
 			ArrayList<Integer> orgs = new ArrayList<Integer>();
 
 			Iterator<Entry<Object, Word>> ite = wordset.wordTable.entrySet().iterator();
-			PrintConsole.PrintLog("wordset.wordTable", wordset.wordTable.size());
+			LOG.info("wordset.wordTable.size = {} ", wordset.wordTable.size());
 
 			int nIndex = 0;
 			while (ite.hasNext()) {
@@ -282,7 +287,7 @@ public class Utility {
 				String pattern = "[0-9]+(.[0-9]+)?";
 				Pattern p = Pattern.compile(pattern);
 				Matcher m = p.matcher(word.key);
-				PrintConsole.PrintLog("word.key", word.key, "word.type", word.type, "" + nIndex);
+				LOG.info("word.key = {} , word.type = {} , nIndex = {} ", word.key, word.type, nIndex);
 				boolean b = m.matches();
 				if (b == false) {
 					if (word.type.equals("nr") || word.type.equals("PER")) {
@@ -337,12 +342,10 @@ public class Utility {
 			entity.setPers(pers);
 			entity.setAll_Entitys(All_Entitys);
 
-			PrintConsole.PrintLog("LOC", entity.getLocs());
+			LOG.info("LOC = {} ", entity.getLocs());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
-		PrintConsole.PrintLog("LOC", entity.getLocs());
 
 		return entity;
 	}

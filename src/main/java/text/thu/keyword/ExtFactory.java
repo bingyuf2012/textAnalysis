@@ -9,14 +9,16 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import text.analyse.etmutility.ETMCluster;
 import text.analyse.struct.lda.TopWords;
 import text.analysis.utils.SegUtil;
-import text.searchSDK.util.PrintConsole;
 import text.thu.keyword.extract.Extract;
 import text.thu.keyword.model.News;
 import text.thu.keyword.model.NewsSet;
@@ -24,6 +26,8 @@ import text.thu.keyword.model.Token;
 
 @Component
 public class ExtFactory {
+	private Logger LOG = LoggerFactory.getLogger(ExtFactory.class);
+
 	public NewsSet newsSet;
 	@Autowired
 	Extract ext;
@@ -64,17 +68,7 @@ public class ExtFactory {
 
 	public NewsSet loadLDAphi(String in_path) {
 		NewsSet newsSet = new NewsSet();
-		// File newsFile = new
-		// File("D:\\temp\\output\\00282d98-6c51-4ace-80c8-8ce74e03baef\\TopicToNews");
-		// File newsFile = new
-		// File("D:\\temp\\output\\1aa418b9-301a-4c9c-8e25-26ed92739ab2\\TokensToNews");
-		// File newsFile = new
-		// File("D:\\temp\\output\\5af581e8-3adc-400d-a619-7013df2c2f61\\TokensToNews");
 		File newsFile = new File(in_path);
-		// System.out.println("in_path :"+in_path);
-		// File newsFile = new
-		// File("D:/temp/output/58739bb8-2df9-4161-a1f9-ac51dc0cef6f/TokensToNews");
-		PrintConsole.PrintLog(newsFile.exists() + "", "");
 		String line = "";
 		if (newsFile.exists()) {
 			try {
@@ -196,15 +190,15 @@ public class ExtFactory {
 		}
 	}
 
-	public ArrayList<TopWords> outputKeywors(NewsSet newsSet) {
+	public List<TopWords> outputKeywors(NewsSet newsSet) {
 		ArrayList<TopWords> topWordsArrayList = new ArrayList<TopWords>();
 
-		PrintConsole.PrintLog("抽取关键词，NewsSet.size ", newsSet.newsArray.size());
+		LOG.info("抽取关键词，NewsSet.size = {} ", newsSet.newsArray.size());
 
 		for (int i = 0; i < newsSet.newsArray.size(); i++) {
 			News news = (News) newsSet.newsArray.get(i);
 
-			PrintConsole.PrintLog("抽取关键词， News  index ... ", i);
+			LOG.info("抽取关键词， News index = {} ... ", i);
 
 			if (news == null)
 				continue;
@@ -216,7 +210,7 @@ public class ExtFactory {
 			ext.getKeyWord(news);
 		}
 
-		PrintConsole.PrintLog("新闻关键词抽取完毕，进行关键词格式化....", null);
+		LOG.info("新闻关键词抽取完毕，进行关键词格式化....");
 
 		for (int i = 0; i < newsSet.newsArray.size(); i++) {
 			News news = (News) newsSet.newsArray.get(i);
@@ -241,8 +235,6 @@ public class ExtFactory {
 			TopWords topWords = new TopWords();
 			topWords.setTopicID(i);
 			topWords.setLabelWords(sb);
-			// System.out.println("sb : " + sb);
-			PrintConsole.PrintLog("sb", sb);
 			topWordsArrayList.add(topWords);
 		}
 		return topWordsArrayList;

@@ -3,15 +3,13 @@ package text.analyse.etmutility;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Set;
 
-import text.searchSDK.util.CommonUtil;
-import text.searchSDK.util.Constant;
+import text.analysis.utils.ConstantUtil;
 
 public class Entity {
 	private int id;
@@ -26,9 +24,8 @@ public class Entity {
 
 	public Entity(String ouputdir) {
 		try {
-			BufferedReader br = new BufferedReader(new InputStreamReader(
-					new FileInputStream(ouputdir + Constant.ENTITY_MAP),
-					Constant.UTF8));
+			BufferedReader br = new BufferedReader(
+					new InputStreamReader(new FileInputStream(ouputdir + ConstantUtil.ENTITY_MAP), ConstantUtil.UTF8));
 			String line = br.readLine();
 			totalNum = Integer.parseInt(line);
 			while ((line = br.readLine()) != null) {

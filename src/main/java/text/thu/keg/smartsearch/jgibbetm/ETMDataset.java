@@ -36,10 +36,14 @@ import java.util.Vector;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import text.searchSDK.util.Constant;
-import text.searchSDK.util.PrintConsole;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import text.analysis.utils.ConstantUtil;
 
 public class ETMDataset {
+	private Logger LOG = LoggerFactory.getLogger(ETMDataset.class);
+
 	public static int WORDSNUM = 0;
 	public static int ENTITESNUM = 0;
 	// ---------------------------------------------------------------
@@ -250,12 +254,12 @@ public class ETMDataset {
 	 * 
 	 * @return dataset if success and null otherwise
 	 */
-	public static ETMDataset readDataSet(String filename) {
+	public ETMDataset readDataSet(String filename) {
 		try {
-			BufferedReader reader = new BufferedReader(new InputStreamReader(
-					new FileInputStream(filename), Constant.UTF8));
+			BufferedReader reader = new BufferedReader(
+					new InputStreamReader(new FileInputStream(filename), ConstantUtil.UTF8));
 
-			PrintConsole.PrintLog(filename, "");
+			LOG.info(filename, "");
 			ETMDataset data = readDataSet(reader);
 
 			reader.close();
@@ -276,10 +280,10 @@ public class ETMDataset {
 	 *            the dictionary
 	 * @return dataset if success and null otherwise
 	 */
-	public static ETMDataset readDataSet(String filename, Dictionary dict) {
+	public ETMDataset readDataSet(String filename, Dictionary dict) {
 		try {
-			BufferedReader reader = new BufferedReader(new InputStreamReader(
-					new FileInputStream(filename), Constant.UTF8));
+			BufferedReader reader = new BufferedReader(
+					new InputStreamReader(new FileInputStream(filename), ConstantUtil.UTF8));
 			ETMDataset data = readDataSet(reader, dict);
 
 			reader.close();
@@ -296,7 +300,7 @@ public class ETMDataset {
 	 * 
 	 * @return dataset if success and null otherwise
 	 */
-	public static ETMDataset readDataSet(BufferedReader reader) {
+	public ETMDataset readDataSet(BufferedReader reader) {
 		try {
 			// read number of document
 			String line;
@@ -310,8 +314,7 @@ public class ETMDataset {
 				data.setDoc(line, i);
 				documents[i] = line;
 			}
-			PrintConsole.PrintLog("words: ", WORDSNUM);
-			PrintConsole.PrintLog("entites: ", ENTITESNUM);
+			LOG.info("words = {} , entites = {} . ", WORDSNUM, ENTITESNUM);
 			return data;
 		} catch (Exception e) {
 			System.out.println("Read Dataset Error: " + e.getMessage());
@@ -329,13 +332,13 @@ public class ETMDataset {
 	 *            the dictionary
 	 * @return dataset if success and null otherwise
 	 */
-	public static ETMDataset readDataSet(BufferedReader reader, Dictionary dict) {
+	public ETMDataset readDataSet(BufferedReader reader, Dictionary dict) {
 		try {
 			// read number of document
 			String line;
 			line = reader.readLine();
 			int M = Integer.parseInt(line);
-			PrintConsole.PrintLog("NewM:", M);
+			LOG.info("NewM = {} ", M);
 
 			ETMDataset data = new ETMDataset(M, dict);
 			for (int i = 0; i < M; ++i) {
@@ -379,13 +382,12 @@ public class ETMDataset {
 	 *            the dictionary
 	 * @return dataset if success and null otherwise
 	 */
-	public static ETMDataset readDataSet(String[] strs, Dictionary dict)
-			throws Exception {
-		PrintConsole.PrintLog("readDataset...", null);
+	public ETMDataset readDataSet(String[] strs, Dictionary dict) throws Exception {
+		LOG.info("readDataset...");
 		ETMDataset data = new ETMDataset(strs.length, dict);
 
 		for (int i = 0; i < strs.length; ++i) {
-			PrintConsole.PrintLog("set doc ", i);
+			LOG.info("set doc = {}", i);
 			data.setDoc(strs[i], i);
 		}
 		return data;

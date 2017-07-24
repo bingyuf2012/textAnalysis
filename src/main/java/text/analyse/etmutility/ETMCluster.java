@@ -18,6 +18,8 @@ import java.util.regex.Pattern;
 
 import javax.annotation.PostConstruct;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -31,16 +33,16 @@ import text.analyse.struct.lda.RelationTT;
 import text.analyse.struct.lda.TopWords;
 import text.analyse.struct.lda.TopicSet;
 import text.analyse.utility.Word;
+import text.analysis.utils.ConstantUtil;
 import text.analysis.utils.SegUtil;
 import text.searchSDK.model.WebSearchResult;
-import text.searchSDK.util.Constant;
-import text.searchSDK.util.PrintConsole;
 import text.thu.keg.smartsearch.jgibbetm.ETM;
 import text.thu.keyword.ExtFactory;
 import text.thu.keyword.model.NewsSet;
 
 @Component
 public class ETMCluster {
+	private Logger LOG = LoggerFactory.getLogger(ETMCluster.class);
 
 	@Autowired
 	SegUtil segUtil;
@@ -183,21 +185,19 @@ public class ETMCluster {
 		if (!(dirFile.exists()) && !(dirFile.isDirectory())) {
 			boolean createDir = dirFile.mkdirs();
 			if (!createDir) {
-				PrintConsole.PrintLog(
-						"fail to create the specified path folder for saving the matrix, make sure you have the authority to create files or check the file path and make sure it's correct",
-						null);
+				LOG.info(
+						"fail to create the specified path folder for saving the matrix, make sure you have the authority to create files or check the file path and make sure it's correct");
 			}
 		} else if (dirFile.exists() && !(dirFile.isDirectory())) {
-			PrintConsole.PrintLog(
-					"the specified path already contains a same name file, can't create the same name directory", null);
+			LOG.info("the specified path already contains a same name file, can't create the same name directory");
 		}
 
 		/*
 		 * 以下为Topic对应的具体news的内容输出到文件
 		 */
-		String documentdir = m_outputPath + Constant.DOC_FILENAME;
+		String documentdir = m_outputPath + ConstantUtil.DOC_FILENAME;
 		File file = new File(documentdir);
-		String tokendir = m_outputPath + Constant.DOC_TOKEN_FILENAME;
+		String tokendir = m_outputPath + ConstantUtil.DOC_TOKEN_FILENAME;
 		File fileTokens = new File(tokendir);
 
 		PrintWriter pw = null;
@@ -205,9 +205,10 @@ public class ETMCluster {
 
 		String fc = null;
 		try {
-			pw = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), Constant.UTF8)));
+			pw = new PrintWriter(
+					new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), ConstantUtil.UTF8)));
 			pwTokens = new PrintWriter(
-					new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fileTokens), Constant.UTF8)));
+					new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fileTokens), ConstantUtil.UTF8)));
 			// 在 token 文件中输出新闻文档数据集的大小
 			pwTokens.write(list.size() + "\n");
 			for (int i = 0; i < list.size(); i++) {
@@ -245,7 +246,7 @@ public class ETMCluster {
 		}
 
 		// 对文档进行模型处理
-		etm.est(Constant.DOC_TOKEN_FILENAME, m_outputPath, newsDetails.size());
+		etm.est(ConstantUtil.DOC_TOKEN_FILENAME, m_outputPath, newsDetails.size());
 		return RunUtility(m_outputPath, keyword, tokendir);
 	}
 
@@ -253,7 +254,7 @@ public class ETMCluster {
 	public AllTopicsETM RunUtility(String outputdir, String keyword, String tokendir) {
 		// AllTopicsETM allTopics = new AllTopicsETM();
 		// String filename = outputdir + "model-final.tEAssign";
-		String filename = outputdir + Constant.MODEL_NAME + Constant.SUFFIX_TEASSIGN;
+		String filename = outputdir + ConstantUtil.MODEL_NAME + ConstantUtil.SUFFIX_TEASSIGN;
 		// String filename1 = outputdir + "model-final.xEAssign";
 		ETMUtility utility = new ETMUtility(filename);
 		relee = utility.relEE(outputdir);
@@ -279,7 +280,7 @@ public class ETMCluster {
 					String[] topwordArray = labelstr.split(" ");
 					String label = topwordArray[0].split("/")[0] + topwordArray[1].split("/")[0];
 
-					PrintConsole.PrintLog("label", label);
+					LOG.info("label = {} ", label);
 					String labels = "";
 
 					for (int j = 0; j < topwordArray.length; j++) {
@@ -296,11 +297,11 @@ public class ETMCluster {
 			// System.out.println("m_outputPath : " + m_outputPath);
 			// NewsSet newsSet = factory.loadLDAphi(outputdir +
 			// Constant.DOC_TOKEN_FILENAME);
-			PrintConsole.PrintLog("抽取关键词，开始加载 phi 矩阵文件..........", "");
-			NewsSet newsSet = extFactory.loadLDAphi(outputdir + Constant.TOP_DOCS);
-			PrintConsole.PrintLog("抽取关键词，加载 phi 矩阵文件结束，开始抽取关键词...", "");
-			ArrayList<TopWords> topWordsListkeywords = extFactory.outputKeywors(newsSet);
-			PrintConsole.PrintLog("抽取关键词完毕.............", topWordsListkeywords.size());
+			LOG.info("抽取关键词，开始加载 phi 矩阵文件..........");
+			NewsSet newsSet = extFactory.loadLDAphi(outputdir + ConstantUtil.TOP_DOCS);
+			LOG.info("抽取关键词，加载 phi 矩阵文件结束，开始抽取关键词...");
+			List<TopWords> topWordsListkeywords = extFactory.outputKeywors(newsSet);
+			LOG.info("抽取关键词完毕，关键词个数 = {} ", topWordsListkeywords.size());
 			ArrayList<TopWords> topWordsResult = new ArrayList<TopWords>();
 			for (int i = 0; i < topWordsListkeywords.size(); i++) {
 				TopWords topWordstemp = new TopWords();
@@ -311,25 +312,24 @@ public class ETMCluster {
 				topWordsResult.add(topWordstemp);
 			}
 			allTopics.setTopWords(topWordsResult);
-			PrintConsole.PrintLog("重置话题标签完毕......", "");
+			LOG.info("重置话题标签完毕......");
 
 			// allTopics.setTopWords(topWords);
 			// lzxTopicname(topWords);
 
 			// ----------------------------------------------------------
-			PrintConsole.PrintLog("获取实体列表...", "");
+			LOG.info("获取实体列表...");
 			AllEntity entity = new AllEntity();
-			PrintConsole.PrintLog("获取实体...", "");
-			utility.loadWord(outputdir + Constant.ENTITY_MAP);
+			LOG.info("获取实体...");
+			utility.loadWord(outputdir + ConstantUtil.ENTITY_MAP);
 			List<Word> entitylist = utility.getEntityList(outputdir);
 			entity = utility.GetEntityUsrDef(entitylist);// 获取实体
 			allTopics.setEntity(entity);
 			// ----------------------------------------------------------
-			PrintConsole.PrintLog("实体和话题之间的关系...", "");
+			LOG.info("实体和话题之间的关系...");
 			RelationTE relte = new RelationTE();
 			Map<String, Integer> topiccountMap = utility.getTopicCountMap(outputdir);
 			Map<String, Integer> entitycountMap = utility.getEntityCountMap(outputdir);
-			// List<Word> entitylist = utility.getEntityList(outputdir);
 			relte = utility.getTERelation(topiccountMap, entitycountMap, entitylist);
 			allTopics.setRelte(relte);
 		} catch (Exception e) {
@@ -342,7 +342,7 @@ public class ETMCluster {
 	// 露露程序获得分词类名
 	private void luluTopicname(List<TopWords> topWords) {
 		List[] newsListinfo = new List[topWords.size()];
-		PrintConsole.PrintLog("topWords.size()", topWords.size());
+		LOG.info("topWords.size() = {} ", topWords.size());
 		for (int i = 0; i < topWords.size(); i++) {
 			TopicSet ts = allTopics.getTopics().get(i);
 			List<?> newslist = ts.getNewsDetail();
@@ -377,11 +377,10 @@ public class ETMCluster {
 
 			do_Topic_Lable(topWords.size(), i, 1, list, newsListinfo);
 
-			PrintConsole.PrintLog("i", i);
-			PrintConsole.PrintLog("labelList.size()", labelList.size());
+			LOG.info("Label Index = {} , labelList.size()", i, labelList.size());
 
 			for (int a = 0; a < labelList.size(); a++) {
-				PrintConsole.PrintLog("labelList.get(a).toString()", labelList.get(a).toString());
+				LOG.info("labelList.get(a).toString() = {} ", labelList.get(a).toString());
 				String topword = "";
 
 				String[] toplabel = topwords.getLabelWords().split(" ");
@@ -405,54 +404,6 @@ public class ETMCluster {
 		}
 		lbstempmap.clear();
 	}
-
-	/*
-	 * private void lzxTopicname(List<TopWords> topWords) { List<String[]>
-	 * NewsList = new ArrayList<String[]>(); List<String[]> topWord = new
-	 * ArrayList<String[]>(); String[] wordlabels = new
-	 * String[allTopics.getTopics().size()]; for (int i = 0; i <
-	 * allTopics.getTopics().size(); i++) { String label = "";
-	 * ArrayList<NewsDetail> newsDetails =
-	 * allTopics.getTopics().get(i).getNewsDetail(); int size =
-	 * newsDetails.size(); String[] newsArray = new String[size];
-	 * 
-	 * for (int j = 0; j < size; j++) { try { String title =
-	 * split.splitString(FilterData(newsDetails.get(j).title)); String content =
-	 * split.splitString(FilterData(newsDetails.get(j).content)); // String
-	 * title = split.splitString(FilterData(newsDetails // .get(j).title)); //
-	 * String content = //
-	 * split.splitString(FilterData(newsDetails.get(j).content));
-	 * 
-	 * PrintConsole.PrintLog("title", title); PrintConsole.PrintLog("content",
-	 * content);
-	 * 
-	 * newsArray[j] = title + "@@@@" + content; } catch (WordSplitException e) {
-	 * e.printStackTrace(); } } //
-	 * System.out.println("_________________________");
-	 * 
-	 * NewsList.add(newsArray); TopWords topwords = topWords.get(i);
-	 * 
-	 * // System.out.println("topwords.getLabelWords().trim()" // +
-	 * topwords.getLabelWords().trim()); String[] topword =
-	 * topwords.getLabelWords().trim().split(" "); String[] topwordArray = new
-	 * String[topword.length]; for (int j = 0; j < topword.length; j++) { label
-	 * += topword[j].split("/")[0] + " "; topwordArray[j] =
-	 * topword[j].split("/")[0]; } wordlabels[i] = label.trim();
-	 * topWord.add(topwordArray); }
-	 * 
-	 * try { ArrayList<String> labels = Miner.doLabeling(NewsList, topWord);
-	 * 
-	 * for (int i = 0; i < labels.size(); i++) { String[] topwordArray =
-	 * topWord.get(i); String label = ""; for (int j = 0; j <
-	 * topwordArray.length; j++) { label += topwordArray[j] + " "; } //
-	 * System.out.println("Label :" + label); PrintConsole.PrintLog("label",
-	 * label); label = labels.get(i).toString().replace("_", "") + "###" +
-	 * label.trim(); // allTopics.getTopWords().get(i).setLabelWords(label);
-	 * TopWords topwords = topWords.get(i); // String topword = wordlabels[i];
-	 * topwords.setLabelWords(label); // topwords.setLabelWords(label + "###" +
-	 * topword.trim()); } } catch (Exception e) { // TODO Auto-generated catch
-	 * block e.printStackTrace(); } }
-	 */
 
 	private void do_Topic_Lable(int K, int id, int labelsize, List<Word> list, List[] newsList) {
 		// List<String> labelist = new ArrayList<String>();
@@ -553,9 +504,7 @@ public class ETMCluster {
 				count++;
 				lbstempmap.put(lbs, lbs);
 				labelList.add(lbs);
-				PrintConsole.PrintLog("w.key", w.key);
-				PrintConsole.PrintLog("w.value", w.value);
-				PrintConsole.PrintLog("count", count);
+				LOG.info("w.key = {} , w.value = {} , count = {} ", w.key, w.value, count);
 			}
 		}
 	}

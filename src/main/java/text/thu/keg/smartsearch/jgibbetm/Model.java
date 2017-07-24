@@ -40,10 +40,13 @@ import java.util.List;
 import java.util.StringTokenizer;
 import java.util.Vector;
 
-import text.searchSDK.util.Constant;
-import text.searchSDK.util.PrintConsole;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import text.analysis.utils.ConstantUtil;
 
 public class Model {
+	private Logger LOG = LoggerFactory.getLogger(Model.class);
 
 	// ---------------------------------------------------------------
 	// Class Variables
@@ -76,7 +79,7 @@ public class Model {
 	public String dir;
 	public String dfile;
 	public String modelName;
-	public int modelStatus; // see Constants class for status of model
+	public int modelStatus; // see ConstantUtils class for status of model
 	public ETMDataset data; // link to a dataset
 
 	public int M; // dataset size (i.e., number of docs)
@@ -149,26 +152,26 @@ public class Model {
 	 * Set default values for variables
 	 */
 	public void setDefaultValues() {
-		wordMapFile = Constant.WORD_MAP;
-		entityMapFile = Constant.ENTITY_MAP;
-		trainlogFile = Constant.TRAIN_LOG;
-		tassignSuffix = Constant.SUFFIX_TASSIGN;
-		tEAssignSuffix = Constant.SUFFIX_TEASSIGN;
-		xEAssignSuffix = Constant.SUFFIX_XEASSIGN;
-		thetaSuffix = Constant.SUFFIX_THETA;
-		kesaiSuffix = Constant.SUFFIX_KESAI;
+		wordMapFile = ConstantUtil.WORD_MAP;
+		entityMapFile = ConstantUtil.ENTITY_MAP;
+		trainlogFile = ConstantUtil.TRAIN_LOG;
+		tassignSuffix = ConstantUtil.SUFFIX_TASSIGN;
+		tEAssignSuffix = ConstantUtil.SUFFIX_TEASSIGN;
+		xEAssignSuffix = ConstantUtil.SUFFIX_XEASSIGN;
+		thetaSuffix = ConstantUtil.SUFFIX_THETA;
+		kesaiSuffix = ConstantUtil.SUFFIX_KESAI;
 
-		phiSuffix = Constant.SUFFIX_PHI;
-		phiEntitySuffix = Constant.SUFFIX_PHIENTITY;
-		othersSuffix = Constant.SUFFIX_OTHERS;
-		twordsSuffix = Constant.SUFFIX_TWORDS;
-		tdocsSuffix = Constant.SUFFIX_TDOCS;
-		tentitiesSuffix = Constant.SUFFIX_TENTITIES;
+		phiSuffix = ConstantUtil.SUFFIX_PHI;
+		phiEntitySuffix = ConstantUtil.SUFFIX_PHIENTITY;
+		othersSuffix = ConstantUtil.SUFFIX_OTHERS;
+		twordsSuffix = ConstantUtil.SUFFIX_TWORDS;
+		tdocsSuffix = ConstantUtil.SUFFIX_TDOCS;
+		tentitiesSuffix = ConstantUtil.SUFFIX_TENTITIES;
 
-		dir = Constant.DIR;
-		dfile = Constant.TRNDOCS_DAT;
-		modelName = Constant.MODEL_NAME;
-		modelStatus = Constant.MODEL_STATUS_UNKNOWN;
+		dir = ConstantUtil.DIR;
+		dfile = ConstantUtil.TRNDOCS_DAT;
+		modelName = ConstantUtil.MODEL_NAME;
+		modelStatus = ConstantUtil.MODEL_STATUS_UNKNOWN;
 
 		M = 0;
 		VWords = 0;
@@ -213,7 +216,7 @@ public class Model {
 
 		try {
 			BufferedReader reader = new BufferedReader(
-					new InputStreamReader(new FileInputStream(otherFile), Constant.UTF8));
+					new InputStreamReader(new FileInputStream(otherFile), ConstantUtil.UTF8));
 
 			String line;
 			while ((line = reader.readLine()) != null) {
@@ -264,9 +267,9 @@ public class Model {
 		try {
 			int i, j;
 			BufferedReader reader = new BufferedReader(
-					new InputStreamReader(new FileInputStream(tassignFile), Constant.UTF8));
+					new InputStreamReader(new FileInputStream(tassignFile), ConstantUtil.UTF8));
 			BufferedReader readerE = new BufferedReader(
-					new InputStreamReader(new FileInputStream(tEAssignFile), Constant.UTF8));// ��entity-topic��
+					new InputStreamReader(new FileInputStream(tEAssignFile), ConstantUtil.UTF8));// ��entity-topic��
 			String line;
 			String lineE;
 			z = new Vector[M];
@@ -293,7 +296,7 @@ public class Model {
 
 					StringTokenizer tknr2 = new StringTokenizer(token, ":");
 					if (tknr2.countTokens() != 2) {
-						PrintConsole.PrintLog("Invalid word-topic assignment line\n", null);
+						LOG.info("Invalid word-topic assignment line");
 						return false;
 					}
 
@@ -306,7 +309,7 @@ public class Model {
 
 					StringTokenizer tknr2 = new StringTokenizer(token, ":");
 					if (tknr2.countTokens() != 2) {
-						PrintConsole.PrintLog("Invalid entity-topic assignment line\n", null);
+						LOG.info("Invalid entity-topic assignment line");
 						return false;
 					}
 
@@ -347,7 +350,7 @@ public class Model {
 			int i, j;
 
 			BufferedReader readerXE = new BufferedReader(
-					new InputStreamReader(new FileInputStream(xEAssignFile), Constant.UTF8));//
+					new InputStreamReader(new FileInputStream(xEAssignFile), ConstantUtil.UTF8));//
 
 			String lineXE;
 			x = new Vector[M];
@@ -372,7 +375,7 @@ public class Model {
 
 					StringTokenizer tknr2 = new StringTokenizer(token, ":");
 					if (tknr2.countTokens() != 2) {
-						PrintConsole.PrintLog("Invalid entity-topic assignment line\n", null);
+						LOG.info("Invalid entity-topic assignment line");
 						return false;
 					}
 
@@ -401,7 +404,7 @@ public class Model {
 	}
 
 	public boolean readData() {
-		data = ETMDataset.readDataSet(dir + File.separator + dfile);
+		data = new ETMDataset().readDataSet(dir + File.separator + dfile);
 		return true;
 	}
 
@@ -437,7 +440,7 @@ public class Model {
 
 		try {
 			BufferedWriter writer = new BufferedWriter(
-					new OutputStreamWriter(new FileOutputStream(filename), Constant.UTF8));
+					new OutputStreamWriter(new FileOutputStream(filename), ConstantUtil.UTF8));
 
 			// write docs with topic assignments for words
 			for (i = 0; i < data.M; i++) {
@@ -464,7 +467,7 @@ public class Model {
 
 		try {
 			BufferedWriter writer = new BufferedWriter(
-					new OutputStreamWriter(new FileOutputStream(filename), Constant.UTF8));
+					new OutputStreamWriter(new FileOutputStream(filename), ConstantUtil.UTF8));
 
 			// write docs with topic assignments for words
 			for (i = 0; i < data.M; i++) {
@@ -491,7 +494,7 @@ public class Model {
 
 		try {
 			BufferedWriter writer = new BufferedWriter(
-					new OutputStreamWriter(new FileOutputStream(filename), Constant.UTF8));
+					new OutputStreamWriter(new FileOutputStream(filename), ConstantUtil.UTF8));
 
 			// write docs with topic assignments for words
 			for (i = 0; i < data.M; i++) {
@@ -516,7 +519,7 @@ public class Model {
 	public boolean saveModelTheta(String filename) {
 		try {
 			BufferedWriter writer = new BufferedWriter(
-					new OutputStreamWriter(new FileOutputStream(filename), Constant.UTF8));
+					new OutputStreamWriter(new FileOutputStream(filename), ConstantUtil.UTF8));
 			for (int i = 0; i < M; i++) {
 				for (int j = 0; j < KWords; j++) {
 					writer.write(theta[i][j] + " ");
@@ -538,7 +541,7 @@ public class Model {
 	public boolean saveModelKesai(String filename) {
 		try {
 			BufferedWriter writer = new BufferedWriter(
-					new OutputStreamWriter(new FileOutputStream(filename), Constant.UTF8));
+					new OutputStreamWriter(new FileOutputStream(filename), ConstantUtil.UTF8));
 			for (int i = 0; i < KWords; i++) {
 				for (int j = 0; j < KEntities; j++) {
 					writer.write(kesai[i][j] + " ");
@@ -561,7 +564,7 @@ public class Model {
 	public boolean saveModelPhi(String filename) {
 		try {
 			BufferedWriter writer = new BufferedWriter(
-					new OutputStreamWriter(new FileOutputStream(filename), Constant.UTF8));
+					new OutputStreamWriter(new FileOutputStream(filename), ConstantUtil.UTF8));
 
 			for (int i = 0; i < KWords; i++) {
 				for (int j = 0; j < VWords; j++) {
@@ -585,7 +588,7 @@ public class Model {
 	public boolean saveModelPhiEntity(String filename) {
 		try {
 			BufferedWriter writer = new BufferedWriter(
-					new OutputStreamWriter(new FileOutputStream(filename), Constant.UTF8));
+					new OutputStreamWriter(new FileOutputStream(filename), ConstantUtil.UTF8));
 
 			for (int i = 0; i < KEntities; i++) {
 				for (int j = 0; j < VEntities; j++) {
@@ -608,7 +611,7 @@ public class Model {
 	public boolean saveModelOthers(String filename) {
 		try {
 			BufferedWriter writer = new BufferedWriter(
-					new OutputStreamWriter(new FileOutputStream(filename), Constant.UTF8));
+					new OutputStreamWriter(new FileOutputStream(filename), ConstantUtil.UTF8));
 
 			writer.write("alpha=" + alpha + "\n");
 			writer.write("beta1=" + beta1 + "\n");
@@ -637,7 +640,7 @@ public class Model {
 	public boolean saveModelTwords(String filename) {
 		try {
 			BufferedWriter writer = new BufferedWriter(
-					new OutputStreamWriter(new FileOutputStream(filename), Constant.UTF8));
+					new OutputStreamWriter(new FileOutputStream(filename), ConstantUtil.UTF8));
 
 			if (twords > VWords) {
 				twords = VWords;
@@ -683,7 +686,7 @@ public class Model {
 	public boolean saveModelTEntities(String filename) {
 		try {
 			BufferedWriter writer = new BufferedWriter(
-					new OutputStreamWriter(new FileOutputStream(filename), Constant.UTF8));
+					new OutputStreamWriter(new FileOutputStream(filename), ConstantUtil.UTF8));
 
 			if (tentities > VEntities) {
 				tentities = VEntities;
@@ -784,28 +787,28 @@ public class Model {
 			return false;
 		}
 		modelName = option.modelName;
-		PrintConsole.PrintLog("modelName", modelName);
+		LOG.info("modelName = {} ", modelName);
 		KWords = option.KWords;
-		PrintConsole.PrintLog("Kwords", KWords);
+		LOG.info("Kwords = {} ", KWords);
 		KEntities = option.KEntities;
-		PrintConsole.PrintLog("KEntities", KEntities);
+		LOG.info("KEntities = {} ", KEntities);
 		alpha = option.alpha;
-		PrintConsole.PrintLog("alpha", alpha);
+		LOG.info("alpha = {} ", alpha);
 		beta1 = option.beta1;
-		PrintConsole.PrintLog("beta1", beta1);
+		LOG.info("beta1 = {} ", beta1);
 		beta2 = option.beta2;
-		PrintConsole.PrintLog("beta2", beta2);
+		LOG.info("beta2 = {} ", beta2);
 		gamma = option.gamma;
-		PrintConsole.PrintLog("gamma", gamma);
+		LOG.info("gamma = {} ", gamma);
 		if (alpha < 0.0)
 			alpha = 50.0 / KWords;
-		PrintConsole.PrintLog("alpha", alpha);
+		LOG.info("alpha = {} ", alpha);
 		if (gamma < 0.0)
 			gamma = 50.0 / KEntities;
-		PrintConsole.PrintLog("gamma", gamma);
+		LOG.info("gamma = {} ", gamma);
 		if (option.beta1 >= 0)
 			beta1 = option.beta1;
-		PrintConsole.PrintLog("beta1", beta1);
+		LOG.info("beta1 = {} ", beta1);
 		if (option.beta2 >= 0)
 			beta2 = option.beta2;
 		if (option.gamma >= 0)
@@ -814,22 +817,22 @@ public class Model {
 		niters = option.niters;
 
 		dir = option.dir;
-		PrintConsole.PrintLog("dir", dir);
+		LOG.info("dir = {} ", dir);
 		if (dir.endsWith(File.separator)) {
 			dir = dir.substring(0, dir.length() - 1);
-			PrintConsole.PrintLog("dir", dir);
+			LOG.info("dir = {} ", dir);
 		}
 		dfile = option.dfile;
-		PrintConsole.PrintLog("dfile", dfile);
+		LOG.info("dfile = {} ", dfile);
 		twords = option.twords;
 		tdocs = option.tdocs;
-		PrintConsole.PrintLog("twords", twords);
+		LOG.info("twords = {} ", twords);
 		tentities = option.tentities;
-		PrintConsole.PrintLog("tentities", tentities);
+		LOG.info("tentities = {} ", tentities);
 		wordMapFile = option.wordMapFileName;
-		PrintConsole.PrintLog("wordMapFile", wordMapFile);
+		LOG.info("wordMapFile = {} ", wordMapFile);
 		entityMapFile = option.entityMapFileName;
-		PrintConsole.PrintLog("entityMapFile", entityMapFile);
+		LOG.info("entityMapFile = {} ", entityMapFile);
 
 		return true;
 	}
@@ -842,13 +845,13 @@ public class Model {
 			return false;
 
 		int m, n, w, e, k, ke;
-		PrintConsole.PrintLog("KWords", KWords);
-		p = new double[KWords]; // ÿ��������ĸ���
+		LOG.info("KWords = {} ", KWords);
+		p = new double[KWords];
 		pEntity = new double[KWords][KEntities];//
 
-		data = ETMDataset.readDataSet(dir + File.separator + dfile);
+		data = new ETMDataset().readDataSet(dir + File.separator + dfile);
 		if (data == null) {
-			PrintConsole.PrintLog("Fail to read training data!\n", null);
+			LOG.info("Fail to read training data!\n");
 			return false;
 		}
 
@@ -1059,18 +1062,18 @@ public class Model {
 
 		p = new double[KWords];
 		pEntity = new double[KWords][KEntities];
-		PrintConsole.PrintLog("KWords:", KWords);
-		PrintConsole.PrintLog("KEntities:", KEntities);
+		LOG.info("KWords = {} ", KWords);
+		LOG.info("KEntities = {} ", KEntities);
 		data = newData;
 		// + allocate memory and assign values for variables
 		M = data.M;
 		VWords = data.VWords;
 		dir = option.dir;
 		savestep = option.savestep;
-		VEntities = data.VEntities;// ���ֵ���ɣ�������������������������������������������
-		PrintConsole.PrintLog("M:", M);
-		PrintConsole.PrintLog("VWords:", VWords);
-		PrintConsole.PrintLog("VEntities:", VEntities);
+		VEntities = data.VEntities;
+		LOG.info("M = {} ", M);
+		LOG.info("VWords = {} ", VWords);
+		LOG.info("VEntities = {} ", VEntities);
 
 		// KWords: from command line or default value
 		// alpha, beta: from command line or default values
@@ -1186,7 +1189,6 @@ public class Model {
 				if (s[1].equals("EQU") || s[1].equals("TEC") || s[1].equals("PRO")) {
 					// number of instances of word assigned to topic j
 					// System.out.println(s[1] + ".............");
-					PrintConsole.PrintLog(s[1], ".............");
 					nz[data.docs[m].entities[n]][xtopic] += 10;
 					ndz[m][xtopic] += 10;
 					nzsum[xtopic] += 10; // total number of entities assigned to
@@ -1216,7 +1218,6 @@ public class Model {
 				if (s[1].equals("EQU") || s[1].equals("TEC") || s[1].equals("PRO")) {
 					// number of instances of word assigned to topic j
 					// System.out.println(s[1] + ".............");
-					PrintConsole.PrintLog(s[1], ".............");
 					ne[data.docs[m].entities[n]][etopic] += 10;
 					// number of words in document i assigned to topic j
 					nde[m][etopic] += 10;
@@ -1257,9 +1258,9 @@ public class Model {
 		if (!init(option))
 			return false;
 
-		ETMDataset dataset = ETMDataset.readDataSet(dir + File.separator + dfile, trnModel.data.localDict);
+		ETMDataset dataset = new ETMDataset().readDataSet(dir + File.separator + dfile, trnModel.data.localDict);
 		if (dataset == null) {
-			PrintConsole.PrintLog("Fail to read dataset!\n", null);
+			LOG.info("Fail to read dataset!");
 			return false;
 		}
 
@@ -1280,18 +1281,12 @@ public class Model {
 
 		// load model, i.e., read z and trndata
 		if (!loadModel()) {
-			PrintConsole.PrintLog("Fail to load word-topic and entity-etopic assignment file of the model!\n", null);
+			LOG.info("Fail to load word-topic and entity-etopic assignment file of the model!");
 			return false;
 		}
 
-		PrintConsole.PrintLog("Model loaded:", null);
-		PrintConsole.PrintLog("\talpha:", alpha);
-		PrintConsole.PrintLog("\tbeta1:", beta1);
-		PrintConsole.PrintLog("\tbeta2:", beta2);
-		PrintConsole.PrintLog("\tgamma:", gamma);
-		PrintConsole.PrintLog("\tM:", M);
-		PrintConsole.PrintLog("\tV:", VWords);
-		PrintConsole.PrintLog("\tE:", VEntities);
+		LOG.info("Model loaded: alpha = {} , tbeta1 = {} , tbeta2 = {} , tgamma = {} , tM = {} , tV = {} , tE = {} ",
+				alpha, beta1, beta2, gamma, M, VWords, VEntities);
 		nw = new int[VWords][KWords];
 		for (w = 0; w < VWords; w++) {
 			for (k = 0; k < KWords; k++) {
@@ -1362,7 +1357,6 @@ public class Model {
 
 		for (m = 0; m < data.M; m++) {
 			int N = data.docs[m].words.length;
-			PrintConsole.PrintLog("N", N);
 			int NE = data.docs[m].entities.length;
 			// assign values for nw, nd, nwsum, and ndsum
 			for (n = 0; n < N; n++) {
@@ -1432,13 +1426,11 @@ public class Model {
 	public boolean saveModelTdocs(String filename) {
 		try {
 			BufferedWriter writer = new BufferedWriter(
-					new OutputStreamWriter(new FileOutputStream(filename), Constant.UTF8));
+					new OutputStreamWriter(new FileOutputStream(filename), ConstantUtil.UTF8));
 
 			if (tdocs > M) {
 				tdocs = M;
 			}
-
-			PrintConsole.PrintLog("KWords", KWords);
 
 			for (int k = 0; k < KWords; k++) {
 				List<Pair> docsProbsList = new ArrayList<Pair>();

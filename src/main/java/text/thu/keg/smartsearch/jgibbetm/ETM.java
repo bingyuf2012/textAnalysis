@@ -33,8 +33,8 @@ import org.kohsuke.args4j.CmdLineParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import text.analysis.utils.ConstantUtil;
 import text.searchSDK.util.CommonUtil;
-import text.searchSDK.util.Constant;
 import text.thu.keg.smartsearch.timer.Timer;
 
 @Component
@@ -59,7 +59,7 @@ public class ETM {
 		 * -inf -alpha 10 -beta1 0.1 -beta2 0.1 -gamma 10 -ntopics 5 -netopics
 		 * 10 -twords 20 -tentities 20 -dir .\test2\ -dfile t2.txt
 		 */
-		option.niters = Constant.ITERATOR_NUM;
+		option.niters = ConstantUtil.ITERATOR_NUM;
 
 		timer.start();
 		Estimator estimator = new Estimator();
@@ -68,28 +68,5 @@ public class ETM {
 		timer.getTime();
 		return estimator.estimate();
 	}
-
-	/*public static void inf() throws CmdLineException, IOException {
-		Timer timer = new Timer("ETM");
-		ETMCmdOption option = new ETMCmdOption();
-		CmdLineParser parser = new CmdLineParser(option);
-		parser.parseArgument(new String[] { "-inf", "-beta1", "0.1", "-beta2", "0.1", "-ntopics", "20", "-netopics",
-				"15", "-twords", "20", "-tentities", "20", "-dir", ".\\perp\\", "-dfile", "����8.8������_train1.txt" });
-	
-		option.niters = 100;
-		option.modelName = "model-final";
-		ETMInference eInference = new ETMInference();
-		eInference.init(option);
-		option.dfile = "����8.8������_test1.txt";
-		Model newModel = eInference.inference();
-		newModel.saveModel("model-inf");
-		PrintConsole.PrintLog("", Perplexity.calPerp(newModel, eInference.trnModel));
-	
-	}
-	
-	public static void showHelp(CmdLineParser parser) {
-		System.out.println("ETM [options ...] [arguments...]");
-		parser.printUsage(System.out);
-	}*/
 
 }

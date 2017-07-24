@@ -38,7 +38,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.StringTokenizer;
 
-import text.searchSDK.util.Constant;
+import text.analysis.utils.ConstantUtil;
 
 public class Dictionary {
 
@@ -156,10 +156,10 @@ public class Dictionary {
 	 */
 	public boolean readWordEntityMap(String wordMapFile, String entityMapFile) {
 		try {
-			BufferedReader readerw = new BufferedReader(new InputStreamReader(
-					new FileInputStream(wordMapFile), Constant.UTF8));
-			BufferedReader readere = new BufferedReader(new InputStreamReader(
-					new FileInputStream(entityMapFile), Constant.UTF8));
+			BufferedReader readerw = new BufferedReader(
+					new InputStreamReader(new FileInputStream(wordMapFile), ConstantUtil.UTF8));
+			BufferedReader readere = new BufferedReader(
+					new InputStreamReader(new FileInputStream(entityMapFile), ConstantUtil.UTF8));
 			String linew;// word
 			String linee;// entity
 			// read the number of words
@@ -201,8 +201,7 @@ public class Dictionary {
 			readere.close();
 			return true;
 		} catch (Exception e) {
-			System.out.println("Error while reading dictionary:"
-					+ e.getMessage());
+			System.out.println("Error while reading dictionary:" + e.getMessage());
 			e.printStackTrace();
 			return false;
 		}
@@ -210,10 +209,10 @@ public class Dictionary {
 
 	public boolean writeWordMap(String wordMapFile, String entityMapFile) {
 		try {
-			BufferedWriter writerw = new BufferedWriter(new OutputStreamWriter(
-					new FileOutputStream(wordMapFile), Constant.UTF8));
-			BufferedWriter writere = new BufferedWriter(new OutputStreamWriter(
-					new FileOutputStream(entityMapFile), Constant.UTF8));
+			BufferedWriter writerw = new BufferedWriter(
+					new OutputStreamWriter(new FileOutputStream(wordMapFile), ConstantUtil.UTF8));
+			BufferedWriter writere = new BufferedWriter(
+					new OutputStreamWriter(new FileOutputStream(entityMapFile), ConstantUtil.UTF8));
 
 			// write number of words
 			writerw.write(wordDic.word2id.size() + "\r\n");
