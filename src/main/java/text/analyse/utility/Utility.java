@@ -137,8 +137,8 @@ public class Utility {
 			String line = "";
 
 			// read word number
-			int num = Integer.valueOf((line = br.readLine()).trim()).intValue();
-			LOG.info("该专题的词条个数： {} ", num);
+			/*int num = Integer.valueOf((line = br.readLine()).trim()).intValue();
+			LOG.info("该专题的词条个数： {} ", num);*/
 			while ((line = br.readLine()) != null) {
 				String[] allWord = line.split(" ");
 				Word word = new Word();
@@ -150,6 +150,8 @@ public class Utility {
 				// PrintConsole.PrintLog("id :", word.id, "key :", word.key,
 				// "type :" + word.type);
 			}
+
+			LOG.info("该专题的词条个数： {} ", wordset.wordTable.size());
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {

@@ -26,12 +26,13 @@ public class Entity {
 		try {
 			BufferedReader br = new BufferedReader(
 					new InputStreamReader(new FileInputStream(ouputdir + ConstantUtil.ENTITY_MAP), ConstantUtil.UTF8));
-			String line = br.readLine();
-			totalNum = Integer.parseInt(line);
+			String line = "";
 			while ((line = br.readLine()) != null) {
 				String[] pairs = line.split(" ");
 				id_name.put(Integer.parseInt(pairs[1]), pairs[0]);
 			}
+
+			totalNum = id_name.size();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {

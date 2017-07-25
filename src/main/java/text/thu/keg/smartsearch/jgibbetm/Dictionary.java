@@ -215,8 +215,8 @@ public class Dictionary {
 					new OutputStreamWriter(new FileOutputStream(entityMapFile), ConstantUtil.UTF8));
 
 			// write number of words
-			writerw.write(wordDic.word2id.size() + "\r\n");
-			writere.write(entityDic.entity2id.size() + "\r\n");
+			/*writerw.write(wordDic.word2id.size() + "\r\n");*/
+			/*writere.write(entityDic.entity2id.size() + "\r\n");*/
 			// write word to id
 			Iterator<String> itw = wordDic.word2id.keySet().iterator();
 			Iterator<String> ite = entityDic.entity2id.keySet().iterator();

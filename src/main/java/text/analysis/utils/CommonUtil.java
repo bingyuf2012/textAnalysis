@@ -1,5 +1,8 @@
 package text.analysis.utils;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import org.apache.commons.validator.GenericValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -61,5 +64,4 @@ public class CommonUtil {
 		return GenericValidator.isBlankOrNull(context.getString(Keys.KWTOPWORDS)) ? 20
 				: context.getIntValue(Keys.KWTOPWORDS);
 	}
-
 }

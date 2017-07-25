@@ -13,8 +13,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeSet;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import javax.annotation.PostConstruct;
 
@@ -89,83 +87,6 @@ public class ETMCluster {
 	}
 
 	/**
-	 * 对新闻内容进行分词并过滤掉单个词和停用词
-	 * 
-	 * @param m_content
-	 * @return
-	 */
-	public String GetKeywords(String m_content) {
-		String allTokens = "";
-		String[] allWords = m_content.trim().split(" ");
-
-		for (int j = 0; j < allWords.length; j++) {
-
-			int pos1 = allWords[j].lastIndexOf("/");
-
-			if (pos1 > 0) {
-				String type = allWords[j].substring(pos1 + 1);
-				String key = allWords[j].substring(0, pos1).replaceAll(" ", "").replaceAll("　", "");
-
-				String pattern = "[a-zA-Z]{1,}";
-				Pattern p = Pattern.compile(pattern);
-				Matcher m = p.matcher(key);
-				boolean b = m.matches();
-
-				if (b) {
-					continue;
-				}
-
-				String pattern1 = "[0-9]{1,}";
-				Pattern p1 = Pattern.compile(pattern1);
-				Matcher m1 = p1.matcher(key);
-				boolean b1 = m1.matches();
-
-				if (b1) {
-					continue;
-				}
-
-				int cut = key.indexOf("/?");
-				if (cut > -1)
-					key = key.substring(cut + 2);
-
-				if (type.matches("u|c|p|w|d|r|f|z|q|o|mq")) {
-					continue;
-				}
-
-				if (type.matches("NUM|TIM")) {
-					continue;
-				}
-
-				if (key.length() == 1 /* || StopWordsFilter.isStopWord(key) */) {
-					continue;
-				}
-
-				if (type.equals("LOC") && (key.endsWith("市") || key.endsWith("省"))) {
-					key = key.substring(0, key.length() - 1);
-				}
-
-				if (type.equals("nt")) {
-					type = "ORG";
-				}
-
-				if (type.equals("ns")) {
-					type = "LOC";
-				}
-
-				if (type.equals("nr")) {
-					type = "PER";
-				}
-
-				if (!key.contains("(")) {
-					allTokens = allTokens + key + "/" + type + " ";
-				}
-
-			}
-		}
-		return allTokens;
-	}
-
-	/**
 	 * 根据百度抓取的结果List集合进行 LDA分析
 	 * 
 	 * @param list
@@ -223,7 +144,7 @@ public class ETMCluster {
 				newsDetails.add(newsDetail);
 				String data = list.get(i).getTitle() + list.get(i).getContent();
 				fc = segUtil.segText(data.toUpperCase(), true);
-				allTokens = GetKeywords(fc);
+				allTokens = segUtil.getKeywords(fc);
 				if (allTokens.equals(""))
 					continue;
 
@@ -370,10 +291,6 @@ public class ETMCluster {
 					list.add(word);
 				}
 			}
-
-			System.out.println("topWords.size() :" + topWords.size());
-
-			System.out.println("newsListinfo.length :" + newsListinfo.length);
 
 			do_Topic_Lable(topWords.size(), i, 1, list, newsListinfo);
 

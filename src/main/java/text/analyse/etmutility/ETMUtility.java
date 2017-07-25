@@ -648,7 +648,6 @@ public class ETMUtility extends Utility {
 			}
 		}
 
-		System.out.println("releeMap.size() :" + releeMap.size());
 		Map<Integer, TECountModel> tecountMap = getTeCountMap(outputdir + filetEAssignall);
 
 		ArrayList<RelationEE> relee = new ArrayList<RelationEE>();

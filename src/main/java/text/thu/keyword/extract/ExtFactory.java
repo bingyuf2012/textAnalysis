@@ -16,7 +16,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import text.analyse.etmutility.ETMCluster;
 import text.analyse.struct.lda.TopWords;
 import text.analysis.utils.SegUtil;
 import text.searchSDK.model.News;
@@ -85,28 +84,11 @@ public class ExtFactory {
 					}
 
 					if (!line.equals("#####")) {
-						int nIndex = 0;
-						// if(line.contains(" ")){
-						// nIndex = line.indexOf(" ");
-						// headLine += line.substring(0, nIndex).trim() ;
-						// content +=
-						// line.substring(nIndex+2,line.length()).trim();
-						// }
 
 						if (line.contains("@@@@")) {
-							// nIndex = line.indexOf("@@@@");
-							// String tempheadline = line.substring(0,
-							// nIndex).trim();
-
-							// headLine += line.substring(0, nIndex);
-							// content +=
-							// line.substring(nIndex+4,line.length()).trim();
-							// content +=
-							// line.substring(nIndex+2,line.length());
 							String[] newsinfo = line.split("@@@@");
-							ETMCluster etmCluster = new ETMCluster();
-							headLine += etmCluster.GetKeywords(segUtil.segText(newsinfo[0], true)) + " ";
-							content += etmCluster.GetKeywords(segUtil.segText(newsinfo[1], true)) + " ";
+							headLine += segUtil.getKeywords(segUtil.segText(newsinfo[0], true)) + " ";
+							content += segUtil.getKeywords(segUtil.segText(newsinfo[1], true)) + " ";
 
 						} else {
 							headLine += line;
@@ -118,9 +100,6 @@ public class ExtFactory {
 
 						news.headLine = headLine;
 						news.content = content;
-
-						// System.out.println(news.headLine+"========"+news.content);
-
 						newsSet.addNews(news);
 
 						headLine = "";
