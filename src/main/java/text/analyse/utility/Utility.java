@@ -71,10 +71,10 @@ public class Utility {
 		LineNumberReader reader;
 		try {
 			reader = new LineNumberReader(new FileReader(filename));
-			String lineRead = "";
 			int cnt = 0;
+			String lineRead = "";
 			while ((lineRead = reader.readLine()) != null) {
-
+			
 			}
 			cnt = reader.getLineNumber();
 			reader.close();

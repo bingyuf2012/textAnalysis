@@ -46,8 +46,9 @@ public class Estimator {
 		if (option.est) {
 			if (!trnModel.initNewModel(option))
 				return false;
-			trnModel.data.localDict.writeWordMap(option.dir + File.separator + option.wordMapFileName,
-					option.dir + File.separator + option.entityMapFileName);
+			return true;
+			/*trnModel.data.localDict.writeWordMap(option.dir + File.separator + option.wordMapFileName,
+					option.dir + File.separator + option.entityMapFileName);*/
 		} else if (option.estc) {
 			if (!trnModel.initEstimatedModel(option))
 				return false;

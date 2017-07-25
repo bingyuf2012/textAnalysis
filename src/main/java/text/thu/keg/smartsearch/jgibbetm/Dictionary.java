@@ -27,21 +27,15 @@
  */
 package text.thu.keg.smartsearch.jgibbetm;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.StringTokenizer;
+import java.util.Map.Entry;
 
-import text.analysis.utils.ConstantUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Dictionary {
-
 	public class WordDic {
 		public Map<String, Integer> word2id;
 		public Map<Integer, String> id2word;
@@ -154,7 +148,29 @@ public class Dictionary {
 	/**
 	 * read dictionary from file
 	 */
-	public boolean readWordEntityMap(String wordMapFile, String entityMapFile) {
+	public boolean readWordEntityMap() {
+		Iterator<Entry<String, Integer>> wordsIterator = wordDic.word2id.entrySet().iterator();
+
+		while (wordsIterator.hasNext()) {
+			Entry<String, Integer> itemWordEntry = wordsIterator.next();
+
+			wordDic.id2word.put(itemWordEntry.getValue(), itemWordEntry.getKey());
+			wordDic.word2id.put(itemWordEntry.getKey(), itemWordEntry.getValue());
+		}
+
+		Iterator<Entry<String, Integer>> entitysIterator = entityDic.entity2id.entrySet().iterator();
+
+		while (entitysIterator.hasNext()) {
+			Entry<String, Integer> itemEntityEntry = entitysIterator.next();
+
+			entityDic.id2entity.put(itemEntityEntry.getValue(), itemEntityEntry.getKey());
+			entityDic.entity2id.put(itemEntityEntry.getKey(), itemEntityEntry.getValue());
+		}
+
+		return true;
+	}
+
+	/*public boolean readWordEntityMap(String wordMapFile, String entityMapFile) {
 		try {
 			BufferedReader readerw = new BufferedReader(
 					new InputStreamReader(new FileInputStream(wordMapFile), ConstantUtil.UTF8));
@@ -171,75 +187,69 @@ public class Dictionary {
 			for (int i = 0; i < nwords; ++i) {
 				linew = readerw.readLine();
 				StringTokenizer tknr = new StringTokenizer(linew, " \t\n\r");
-
+	
 				if (tknr.countTokens() != 2)
 					continue;
-
+	
 				String word = tknr.nextToken();
 				String id = tknr.nextToken();
 				int intID = Integer.parseInt(id);
-
+	
 				wordDic.id2word.put(intID, word);
 				wordDic.word2id.put(word, intID);
 			}
 			for (int i = 0; i < nentities; ++i) {
 				linee = readere.readLine();
 				StringTokenizer tknr = new StringTokenizer(linee, " \t\n\r");
-
+	
 				if (tknr.countTokens() != 2)
 					continue;
-
+	
 				String entity = tknr.nextToken();
 				String id = tknr.nextToken();
 				int intID = Integer.parseInt(id);
-
+	
 				entityDic.id2entity.put(intID, entity);
 				entityDic.entity2id.put(entity, intID);
 			}
-
+	
 			readerw.close();
 			readere.close();
 			return true;
 		} catch (Exception e) {
-			System.out.println("Error while reading dictionary:" + e.getMessage());
-			e.printStackTrace();
+			LOG.error("Error while writing map ,error msg = {} ", ExceptionUtils.getFullStackTrace(e));
 			return false;
 		}
 	}
-
+	
 	public boolean writeWordMap(String wordMapFile, String entityMapFile) {
 		try {
 			BufferedWriter writerw = new BufferedWriter(
 					new OutputStreamWriter(new FileOutputStream(wordMapFile), ConstantUtil.UTF8));
 			BufferedWriter writere = new BufferedWriter(
 					new OutputStreamWriter(new FileOutputStream(entityMapFile), ConstantUtil.UTF8));
-
-			// write number of words
-			/*writerw.write(wordDic.word2id.size() + "\r\n");*/
-			/*writere.write(entityDic.entity2id.size() + "\r\n");*/
-			// write word to id
+	
 			Iterator<String> itw = wordDic.word2id.keySet().iterator();
 			Iterator<String> ite = entityDic.entity2id.keySet().iterator();
 			while (itw.hasNext()) {
 				String key = itw.next();
 				Integer value = wordDic.word2id.get(key);
-
+	
 				writerw.write(key + " " + value + "\r\n");
 			}
 			while (ite.hasNext()) {
 				String key = ite.next();
 				Integer value = entityDic.entity2id.get(key);
-
+	
 				writere.write(key + " " + value + "\r\n");
 			}
-
+	
 			writerw.close();
 			writere.close();
 			return true;
 		} catch (Exception e) {
-			System.out.println("Error while writing map " + e.getMessage());
-			e.printStackTrace();
+			LOG.error("Error while writing map ,error msg = {} ", ExceptionUtils.getFullStackTrace(e));
 			return false;
 		}
-	}
+	}*/
 }

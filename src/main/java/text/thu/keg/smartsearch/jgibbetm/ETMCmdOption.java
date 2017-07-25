@@ -60,9 +60,9 @@ public class ETMCmdOption {
 	@Option(name = "-withrawdata", usage = "Specify whether we include raw data in the input")
 	public boolean withrawdata = false;
 
-	@Option(name = "-wordmap", usage = "Specify the wordmap file")
+	/*@Option(name = "-wordmap", usage = "Specify the wordmap file")
 	public String wordMapFileName = ConstantUtil.WORD_MAP;
 
 	@Option(name = "-entitymap", usage = "Specify the entitymap file")
-	public String entityMapFileName = ConstantUtil.ENTITY_MAP;
+	public String entityMapFileName = ConstantUtil.ENTITY_MAP;*/
 }

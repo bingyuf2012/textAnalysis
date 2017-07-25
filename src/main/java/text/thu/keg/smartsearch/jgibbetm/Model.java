@@ -412,7 +412,7 @@ public class Model {
 	 * load saved model
 	 */
 	public boolean loadModel() {
-		if (!readData()) // ���Ӷ�ȡ��ݲ���
+		if (!readData())
 			return false;
 		if (!readOthersFile(dir + File.separator + modelName + othersSuffix))
 			return false;
@@ -425,8 +425,12 @@ public class Model {
 			return false;
 		// read dictionary
 		Dictionary dict = new Dictionary();
-		if (!dict.readWordEntityMap(dir + File.separator + wordMapFile, dir + File.separator + entityMapFile))
+
+		if (!dict.readWordEntityMap()) {
 			return false;
+		}
+		/*if (!dict.readWordEntityMap(dir + File.separator + wordMapFile, dir + File.separator + entityMapFile))
+			return false;*/
 
 		data.localDict = dict;
 		return true;
@@ -829,10 +833,10 @@ public class Model {
 		LOG.info("twords = {} ", twords);
 		tentities = option.tentities;
 		LOG.info("tentities = {} ", tentities);
-		wordMapFile = option.wordMapFileName;
+		/*wordMapFile = option.wordMapFileName;
 		LOG.info("wordMapFile = {} ", wordMapFile);
 		entityMapFile = option.entityMapFileName;
-		LOG.info("entityMapFile = {} ", entityMapFile);
+		LOG.info("entityMapFile = {} ", entityMapFile);*/
 
 		return true;
 	}
@@ -1382,33 +1386,33 @@ public class Model {
 
 				String[] s = ETMDataset.localDict.getEntity(data.docs[m].entities[n]).split("/");
 
-				if (s[1].equals("EQU") || s[1].equals("TEC") || s[1].equals("PRO")) {
+				/*if (s[1].equals("EQU") || s[1].equals("TEC") || s[1].equals("PRO")) {
 					nz[e][xtopic] += 10;
 					ndz[m][xtopic] += 10;
 					nzsum[xtopic] += 10;
 					nzz[xtopic][etopic] += 10;
 					nzzsum[xtopic] += 10;
-
+				
 					// number of instances of word i assigned to topic j
 					ne[e][etopic] += 10;
 					// number of words in document i assigned to topic j
 					nde[m][etopic] += 10;
 					// total number of words assigned to topic j
 					nesum[etopic] += 10;
-				} else {
-					nz[e][xtopic] += 1;
-					ndz[m][xtopic] += 1;
-					nzsum[xtopic] += 1;
-					nzz[xtopic][etopic] += 1;
-					nzzsum[xtopic] += 1;
+				} else {*/
+				nz[e][xtopic] += 1;
+				ndz[m][xtopic] += 1;
+				nzsum[xtopic] += 1;
+				nzz[xtopic][etopic] += 1;
+				nzzsum[xtopic] += 1;
 
-					// number of instances of word i assigned to topic j
-					ne[e][etopic] += 1;
-					// number of words in document i assigned to topic j
-					nde[m][etopic] += 1;
-					// total number of words assigned to topic j
-					nesum[etopic] += 1;
-				}
+				// number of instances of word i assigned to topic j
+				ne[e][etopic] += 1;
+				// number of words in document i assigned to topic j
+				nde[m][etopic] += 1;
+				// total number of words assigned to topic j
+				nesum[etopic] += 1;
+				/*}*/
 
 			}
 			// total number of words in document i
