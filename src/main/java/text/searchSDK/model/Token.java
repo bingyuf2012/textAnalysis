@@ -1,4 +1,4 @@
-package text.thu.keyword.model;
+package text.searchSDK.model;
 
 public class Token implements Comparable {
 	public int id;

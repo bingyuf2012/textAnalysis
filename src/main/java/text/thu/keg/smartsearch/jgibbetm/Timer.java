@@ -1,4 +1,4 @@
-package text.thu.keg.smartsearch.timer;
+package text.thu.keg.smartsearch.jgibbetm;
 
 public class Timer {
 	public long startTime;

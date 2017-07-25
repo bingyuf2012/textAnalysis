@@ -1,4 +1,4 @@
-package text.thu.keyword;
+package text.thu.keyword.extract;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -19,10 +19,9 @@ import org.springframework.stereotype.Component;
 import text.analyse.etmutility.ETMCluster;
 import text.analyse.struct.lda.TopWords;
 import text.analysis.utils.SegUtil;
-import text.thu.keyword.extract.Extract;
-import text.thu.keyword.model.News;
-import text.thu.keyword.model.NewsSet;
-import text.thu.keyword.model.Token;
+import text.searchSDK.model.News;
+import text.searchSDK.model.NewsSet;
+import text.searchSDK.model.Token;
 
 @Component
 public class ExtFactory {

@@ -1,4 +1,4 @@
-package text.thu.keyword.model;
+package text.searchSDK.model;
 
 import java.util.Hashtable;
 import java.util.List;

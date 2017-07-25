@@ -43,8 +43,8 @@ import text.analyse.struct.lda.TopicSet;
 import text.analyse.struct.lda.WordStructSet;
 import text.analyse.utility.Utility;
 import text.analyse.utility.Word;
+import text.analysis.utils.CommonUtil;
 import text.analysis.utils.ConstantUtil;
-import text.searchSDK.util.CommonUtil;
 
 public class ETMUtility extends Utility {
 	private Logger LOG = LoggerFactory.getLogger(ETMUtility.class);

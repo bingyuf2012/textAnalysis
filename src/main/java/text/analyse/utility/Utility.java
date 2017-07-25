@@ -28,8 +28,8 @@ import text.analyse.struct.lda.RelationPerTE;
 import text.analyse.struct.lda.RelationTE;
 import text.analyse.struct.lda.RelationTT;
 import text.analyse.struct.lda.TopWords;
+import text.analysis.utils.CommonUtil;
 import text.analysis.utils.ConstantUtil;
-import text.searchSDK.util.CommonUtil;
 
 public class Utility {
 	private Logger LOG = LoggerFactory.getLogger(ETMCluster.class);

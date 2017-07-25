@@ -35,10 +35,10 @@ import text.analyse.struct.lda.TopicSet;
 import text.analyse.utility.Word;
 import text.analysis.utils.ConstantUtil;
 import text.analysis.utils.SegUtil;
+import text.searchSDK.model.NewsSet;
 import text.searchSDK.model.WebSearchResult;
 import text.thu.keg.smartsearch.jgibbetm.ETM;
-import text.thu.keyword.ExtFactory;
-import text.thu.keyword.model.NewsSet;
+import text.thu.keyword.extract.ExtFactory;
 
 @Component
 public class ETMCluster {

@@ -1,4 +1,4 @@
-package text.thu.keyword.dao;
+package text.thu.keyword.extract;
 
 import java.io.BufferedReader;
 import java.io.File;

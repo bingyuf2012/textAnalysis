@@ -33,9 +33,8 @@ import org.kohsuke.args4j.CmdLineParser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import text.analysis.utils.CommonUtil;
 import text.analysis.utils.ConstantUtil;
-import text.searchSDK.util.CommonUtil;
-import text.thu.keg.smartsearch.timer.Timer;
 
 @Component
 public class ETM {

@@ -1,6 +1,6 @@
 package text.thu.keyword.extract;
 
-import text.thu.keyword.model.News;
+import text.searchSDK.model.News;
 
 public class CountDF {
 	/**

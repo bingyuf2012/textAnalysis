@@ -14,10 +14,9 @@ import java.util.regex.Pattern;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import text.searchSDK.util.CommonUtil;
-import text.thu.keyword.dao.DAO;
-import text.thu.keyword.model.News;
-import text.thu.keyword.model.Token;
+import text.analysis.utils.CommonUtil;
+import text.searchSDK.model.News;
+import text.searchSDK.model.Token;
 
 @Component
 public class Extract {

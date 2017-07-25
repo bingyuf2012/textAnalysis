@@ -1,4 +1,4 @@
-package text.searchSDK.util;
+package text.analysis.utils;
 
 import org.apache.commons.validator.GenericValidator;
 import org.springframework.beans.factory.annotation.Autowired;
