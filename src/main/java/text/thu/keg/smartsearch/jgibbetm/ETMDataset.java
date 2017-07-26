@@ -151,18 +151,18 @@ public class ETMDataset {
 				// Matcher matcherw=pw.matcher(totalwords[i]);
 				if (matchere.find()) {
 					// System.out.println("entity");
-					String tempe = totalwords[i];
+					/*String tempe = totalwords[i];*/
 					// String [] tempe = totalwords[i].split("/");
-					entities.add(j, tempe);
+					entities.add(j, totalwords[i]);
 					// System.out.println(j);
 					// System.out.println(tempe[0]);
 					j++;
 				} else {
-					// System.out.println("word");
-					String[] tempw = totalwords[i].split("/");
-					// System.out.println(k);
-					words.add(k, tempw[0]);
-					// System.out.println(tempw[0]);
+					/*String[] tempw = totalwords[i].split("/");
+					words.add(k, tempw[0]);*/
+					
+					words.add(k, totalwords[i]);
+					
 					k++;
 				}
 

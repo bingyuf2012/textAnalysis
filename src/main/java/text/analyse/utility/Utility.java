@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TreeSet;
 import java.util.regex.Matcher;
@@ -30,6 +31,7 @@ import text.analyse.struct.lda.RelationTT;
 import text.analyse.struct.lda.TopWords;
 import text.analysis.utils.CommonUtil;
 import text.analysis.utils.ConstantUtil;
+import text.thu.keg.smartsearch.jgibbetm.ETMDataset;
 
 public class Utility {
 	private Logger LOG = LoggerFactory.getLogger(ETMCluster.class);
@@ -74,7 +76,7 @@ public class Utility {
 			int cnt = 0;
 			String lineRead = "";
 			while ((lineRead = reader.readLine()) != null) {
-			
+
 			}
 			cnt = reader.getLineNumber();
 			reader.close();
@@ -131,26 +133,39 @@ public class Utility {
 	 *            wordmap 文件名
 	 */
 	public void loadWord(String wordFile) {
+		Map<String, Integer> word2idMap = ETMDataset.localDict.getWordDic().word2id;
+		Iterator<Entry<String, Integer>> word2idIterator = word2idMap.entrySet().iterator();
+
+		while (word2idIterator.hasNext()) {
+			Entry<String, Integer> itemWordEntry = word2idIterator.next();
+			String[] wordInfo = itemWordEntry.getKey().split("/");
+			Word word = new Word(itemWordEntry.getValue(), wordInfo[0], wordInfo[1]);
+			wordset.addWord(word);
+		}
+
+		LOG.info("该专题的词条个数： {} ", wordset.wordTable.size());
+	}
+	/*public void loadWord(String wordFile) {
 		BufferedReader br = null;
 		try {
 			br = new BufferedReader(new InputStreamReader(new FileInputStream(wordFile), ConstantUtil.UTF8));
 			String line = "";
-
+	
 			// read word number
-			/*int num = Integer.valueOf((line = br.readLine()).trim()).intValue();
-			LOG.info("该专题的词条个数： {} ", num);*/
+			int num = Integer.valueOf((line = br.readLine()).trim()).intValue();
+			LOG.info("该专题的词条个数： {} ", num);
 			while ((line = br.readLine()) != null) {
 				String[] allWord = line.split(" ");
 				Word word = new Word();
 				word.id = Integer.valueOf(allWord[1]).intValue();
-
+	
 				word.key = allWord[0].substring(0, allWord[0].indexOf("/")).trim();
 				word.type = allWord[0].substring(allWord[0].indexOf("/") + 1, allWord[0].length()).trim();
 				wordset.addWord(word);
 				// PrintConsole.PrintLog("id :", word.id, "key :", word.key,
 				// "type :" + word.type);
 			}
-
+	
 			LOG.info("该专题的词条个数： {} ", wordset.wordTable.size());
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -163,7 +178,7 @@ public class Utility {
 				e.printStackTrace();
 			}
 		}
-	}
+	}*/
 
 	public ArrayList<RelationTT> topic_similarity() {
 		ArrayList<RelationTT> reltt = new ArrayList<RelationTT>();

@@ -1,21 +1,18 @@
 package text.analyse.etmutility;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
-import text.analysis.utils.ConstantUtil;
+import text.thu.keg.smartsearch.jgibbetm.Dictionary;
+import text.thu.keg.smartsearch.jgibbetm.ETMDataset;
 
 public class Entity {
 	private int id;
 	private String name;
 	private int totalNum;
-	private HashMap<Integer, String> id_name = new HashMap<Integer, String>();
+	private Map<Integer, String> id_name = new HashMap<Integer, String>();
 
 	public Entity(int id, int totalNum) {
 		this.id = id;
@@ -23,7 +20,10 @@ public class Entity {
 	}
 
 	public Entity(String ouputdir) {
-		try {
+		// TODO:
+		// Dictionary dict = new Dictionary();
+
+		/*try {
 			BufferedReader br = new BufferedReader(
 					new InputStreamReader(new FileInputStream(ouputdir + ConstantUtil.ENTITY_MAP), ConstantUtil.UTF8));
 			String line = "";
@@ -31,13 +31,17 @@ public class Entity {
 				String[] pairs = line.split(" ");
 				id_name.put(Integer.parseInt(pairs[1]), pairs[0]);
 			}
-
+		
 			totalNum = id_name.size();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
+		}*/
+
+		id_name = ETMDataset.localDict.getEntityDic().id2entity;
+		// id_name = dict.getEntityDic().id2entity;
+		totalNum = id_name.size();
 		id = -1;
 		name = null;
 
@@ -83,7 +87,7 @@ public class Entity {
 		this.totalNum = totalNum;
 	}
 
-	public HashMap<Integer, String> getId_name() {
+	public Map<Integer, String> getId_name() {
 		return id_name;
 	}
 

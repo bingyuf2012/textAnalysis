@@ -20,8 +20,6 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 import java.util.Vector;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.apache.commons.validator.GenericValidator;
 import org.slf4j.Logger;
@@ -45,6 +43,7 @@ import text.analyse.utility.Utility;
 import text.analyse.utility.Word;
 import text.analysis.utils.CommonUtil;
 import text.analysis.utils.ConstantUtil;
+import text.thu.keg.smartsearch.jgibbetm.ETMDataset;
 
 public class ETMUtility extends Utility {
 	private Logger LOG = LoggerFactory.getLogger(ETMUtility.class);
@@ -281,14 +280,30 @@ public class ETMUtility extends Utility {
 	 * @return
 	 */
 	public List<Word> getEntityList(String outputdir) {
+		Map<String, Integer> entity2idMap = ETMDataset.localDict.getEntityDic().entity2id;
+		Iterator<Entry<String, Integer>> entity2idIterator = entity2idMap.entrySet().iterator();
+
+		List<Word> entityslist = new ArrayList<Word>();
+		while (entity2idIterator.hasNext()) {
+			Entry<String, Integer> itemEntity = entity2idIterator.next();
+			String[] entityInfo = itemEntity.getKey().split("/");
+
+			Word word = new Word(itemEntity.getValue(), entityInfo[0], entityInfo[1]);
+			entityslist.add(word);
+		}
+
+		Collections.sort(entityslist, Word.comparator);
+		return entityslist;
+	}
+	/*public List<Word> getEntityList(String outputdir) {
 		List<Word> wordlist = new ArrayList<Word>();
 		BufferedReader br = null;
-
+	
 		try {
 			br = new BufferedReader(
 					new InputStreamReader(new FileInputStream(outputdir + filentityword), ConstantUtil.UTF8));
 			String line = "";
-
+	
 			while ((line = br.readLine()) != null) {
 				if (line.equals("") || line.split(" ").length != 2) {
 					continue;
@@ -297,12 +312,12 @@ public class ETMUtility extends Utility {
 				String type = wordinfo.split(" ")[0].split("/")[1].trim();
 				String keyword = wordinfo.split(" ")[0].split("/")[0].trim();
 				int id = Integer.parseInt(wordinfo.split(" ")[1].trim());
-
+	
 				String pattern = "[0-9]+(.[0-9]+)?";
 				Pattern p = Pattern.compile(pattern);
 				Matcher m = p.matcher(keyword);
 				boolean b = m.matches();
-
+	
 				if (b == false) {
 					Word word = new Word(id, keyword, type);
 					wordlist.add(word);
@@ -323,7 +338,7 @@ public class ETMUtility extends Utility {
 		}
 		Collections.sort(wordlist, Word.comparator);
 		return wordlist;
-	}
+	}*/
 
 	/**
 	 * 获取model-final.tEAssign 中每个topic对应实体信息

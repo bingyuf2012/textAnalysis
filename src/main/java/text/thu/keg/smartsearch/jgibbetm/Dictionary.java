@@ -36,6 +36,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class Dictionary {
+	private Logger LOG = LoggerFactory.getLogger(Dictionary.class);
+
 	public class WordDic {
 		public Map<String, Integer> word2id;
 		public Map<Integer, String> id2word;
@@ -67,12 +69,27 @@ public class Dictionary {
 	public Dictionary() {
 		wordDic = new WordDic();
 		entityDic = new EntityDic();
-
 	}
 
 	// ---------------------------------------------------
 	// get/set methods
 	// ---------------------------------------------------
+
+	public WordDic getWordDic() {
+		return wordDic;
+	}
+
+	public void setWordDic(WordDic wordDic) {
+		this.wordDic = wordDic;
+	}
+
+	public EntityDic getEntityDic() {
+		return entityDic;
+	}
+
+	public void setEntityDic(EntityDic entityDic) {
+		this.entityDic = entityDic;
+	}
 
 	public String getWord(int id) {
 		return wordDic.id2word.get(id);
