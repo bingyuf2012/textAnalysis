@@ -43,15 +43,17 @@ import text.analyse.utility.Utility;
 import text.analyse.utility.Word;
 import text.analysis.utils.CommonUtil;
 import text.analysis.utils.ConstantUtil;
+import text.searchSDK.model.WebSearchResult;
 import text.thu.keg.smartsearch.jgibbetm.ETMDataset;
+import text.thu.keg.smartsearch.jgibbetm.Model;
 
 public class ETMUtility extends Utility {
 	private Logger LOG = LoggerFactory.getLogger(ETMUtility.class);
 
 	CommonUtil commonUtil = SpringContextUtil.getBean(CommonUtil.class);
 
-	public ETMUtility(String filename) {
-		super(filename);
+	public ETMUtility(String filename, List<WebSearchResult> list) {
+		super(filename, list);
 	}
 
 	/*public String filexEAssignall = ConstantUtil.MODEL_NAME + ConstantUtil.SUFFIX_XEASSIGN;*/
@@ -348,14 +350,47 @@ public class ETMUtility extends Utility {
 	 * @return
 	 */
 	public Map<Integer, TECountModel> getTeCountMap(String filename) {
+		Map<Integer, TECountModel> maptecmodelMap = new HashMap<Integer, TECountModel>();
+		Map<String, Integer> allemap = new HashMap<String, Integer>();
+
+		for (int i = 0; i < Model.data.M; i++) {
+			for (int j = 0; j < Model.data.docs[i].entities.length; ++j) {
+				String mapKey = Model.data.docs[i].entities[j] + ":" + Model.zEntity[i].get(j);
+				allemap.put(mapKey, allemap.get(mapKey) == null ? 1 : allemap.get(mapKey) + 1);
+			}
+		}
+
+		Iterator<Entry<String, Integer>> teEntryIterator = allemap.entrySet().iterator();
+
+		while (teEntryIterator.hasNext()) {
+			Entry<String, Integer> itemteEntry = teEntryIterator.next();
+			String[] itemteInfo = itemteEntry.getKey().split(":");
+
+			int etid = Integer.valueOf(itemteInfo[1]);
+			int eid = Integer.valueOf(itemteInfo[0]);
+
+			Entity entity = new Entity(eid, itemteEntry.getValue());
+			int etcount = maptecmodelMap.containsKey(etid)
+					? maptecmodelMap.get(etid).getCount() + itemteEntry.getValue() : itemteEntry.getValue();
+			List<Entity> entityList = maptecmodelMap.containsKey(etid) ? maptecmodelMap.get(etid).getEntityList()
+					: new ArrayList<Entity>();
+			entityList.add(entity);
+
+			TECountModel teCountModel = new TECountModel(etid, entityList, etcount);
+			maptecmodelMap.put(etid, teCountModel);
+		}
+
+		return maptecmodelMap;
+	}
+	/*public Map<Integer, TECountModel> getTeCountMap(String filename) {
 		BufferedReader br = null;
 		Map<Integer, TECountModel> maptecmodelMap = new HashMap<Integer, TECountModel>();
 		try {
 			br = new BufferedReader(new InputStreamReader(new FileInputStream(filename), ConstantUtil.UTF8));
 			String line = "";
-
+	
 			Map<String, Integer> allemap = new HashMap<String, Integer>();
-
+	
 			while ((line = br.readLine()) != null) {
 				if (line.equals("")) {
 					continue;
@@ -371,13 +406,13 @@ public class ETMUtility extends Utility {
 					}
 				}
 			}
-
+	
 			Set<Map.Entry<String, Integer>> entry = allemap.entrySet();
 			for (Map.Entry<String, Integer> etm : entry) {
 				int etid = Integer.parseInt(etm.getKey().split(":")[1]);
 				int eid = Integer.parseInt(etm.getKey().split(":")[0]);
 				int ecount = etm.getValue();
-
+	
 				List<Entity> entityList = new ArrayList<Entity>();
 				int etcount = ecount;
 				if (maptecmodelMap.get(etid) != null) {
@@ -404,7 +439,7 @@ public class ETMUtility extends Utility {
 			}
 		}
 		return maptecmodelMap;
-	}
+	}*/
 
 	/**
 	 * 计算两个 et 之间的关系值

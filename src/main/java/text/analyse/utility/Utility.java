@@ -3,15 +3,14 @@ package text.analyse.utility;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.LineNumberReader;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TreeSet;
@@ -21,7 +20,6 @@ import java.util.regex.Pattern;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import text.analyse.etmutility.ETMCluster;
 import text.analyse.struct.lda.AllEntity;
 import text.analyse.struct.lda.RelationLocTE;
 import text.analyse.struct.lda.RelationOrgTE;
@@ -31,10 +29,11 @@ import text.analyse.struct.lda.RelationTT;
 import text.analyse.struct.lda.TopWords;
 import text.analysis.utils.CommonUtil;
 import text.analysis.utils.ConstantUtil;
+import text.searchSDK.model.WebSearchResult;
 import text.thu.keg.smartsearch.jgibbetm.ETMDataset;
 
 public class Utility {
-	private Logger LOG = LoggerFactory.getLogger(ETMCluster.class);
+	private Logger LOG = LoggerFactory.getLogger(Utility.class);
 
 	public int wordNum;
 	public double[][] topics;// 装有Phi矩阵
@@ -58,7 +57,7 @@ public class Utility {
 	/**
 	 * @param args
 	 */
-	public Utility(String filename) {
+	public Utility(String filename, List<WebSearchResult> list) {
 		wordset = new WordSet();
 
 		Entity_PER_Map = new HashMap<String, Integer>();
@@ -69,14 +68,18 @@ public class Utility {
 		Total_Entity_LOC_Map = new HashMap<String, Integer>();
 		Total_Entity_ORG_Map = new HashMap<String, Integer>();
 
+		topics = new double[list.size()][];
+		similarity = new double[list.size()][list.size()];
+		topicNum = list.size();
+
 		// 获取文件行数
-		LineNumberReader reader;
+		/*LineNumberReader reader;
 		try {
 			reader = new LineNumberReader(new FileReader(filename));
 			int cnt = 0;
 			String lineRead = "";
 			while ((lineRead = reader.readLine()) != null) {
-
+		
 			}
 			cnt = reader.getLineNumber();
 			reader.close();
@@ -87,7 +90,7 @@ public class Utility {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
+		}*/
 	}
 
 	/**

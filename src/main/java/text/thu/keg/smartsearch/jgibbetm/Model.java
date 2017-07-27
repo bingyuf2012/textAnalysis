@@ -80,7 +80,7 @@ public class Model {
 	public String dfile;
 	public String modelName;
 	public int modelStatus; // see ConstantUtils class for status of model
-	public ETMDataset data; // link to a dataset
+	public static ETMDataset data; // link to a dataset
 
 	public int M; // dataset size (i.e., number of docs)
 	public int VWords; // vocabulary size
@@ -108,7 +108,7 @@ public class Model {
 	// Temp variables while sampling
 	public Vector<Integer>[] z; // topic assignments for words, size M x
 	// doc.wordsize()
-	public Vector<Integer>[] zEntity;// entity assignments for entities,size M x
+	public static Vector<Integer>[] zEntity;// entity assignments for entities,size M x
 	// doc.entitysize()
 	public Vector<Integer>[] x;// size M x doc.entitysize()
 	protected int[][] nw; // nw[i][j]: number of instances of word/term i
@@ -733,9 +733,9 @@ public class Model {
 	 * Save model
 	 */
 	public boolean saveModel(String modelName) {
-		if (!saveModelTAssign(dir + File.separator + modelName + tassignSuffix)) {
+		/*if (!saveModelTAssign(dir + File.separator + modelName + tassignSuffix)) {
 			return false;
-		}
+		}*/
 
 		if (!saveModelTEAssign(dir + File.separator + modelName + tEAssignSuffix)) {
 			return false;

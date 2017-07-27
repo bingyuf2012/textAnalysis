@@ -79,12 +79,12 @@ public class ETMCluster {
 	 *            需要过滤的字符串
 	 * @return
 	 */
-	public String FilterData(String data) {
+	/*public String FilterData(String data) {
 		data = data.substring(data.indexOf("|") + 1, data.length());
 		data = data.replaceAll("[@.*?:]", "。");
 		data = data.replaceAll("\\pP|\\pS", "。");
 		return data.toUpperCase();
-	}
+	}*/
 
 	/**
 	 * 根据百度抓取的结果List集合进行 LDA分析
@@ -168,16 +168,16 @@ public class ETMCluster {
 
 		// 对文档进行模型处理
 		etm.est(ConstantUtil.DOC_TOKEN_FILENAME, m_outputPath, newsDetails.size());
-		return RunUtility(m_outputPath, keyword, tokendir);
+		return RunUtility(m_outputPath, keyword, tokendir, list);
 	}
 
 	@SuppressWarnings("unchecked")
-	public AllTopicsETM RunUtility(String outputdir, String keyword, String tokendir) {
+	public AllTopicsETM RunUtility(String outputdir, String keyword, String tokendir, List<WebSearchResult> list) {
 		// AllTopicsETM allTopics = new AllTopicsETM();
 		// String filename = outputdir + "model-final.tEAssign";
 		String filename = outputdir + ConstantUtil.MODEL_NAME + ConstantUtil.SUFFIX_TEASSIGN;
 		// String filename1 = outputdir + "model-final.xEAssign";
-		ETMUtility utility = new ETMUtility(filename);
+		ETMUtility utility = new ETMUtility(filename,list);
 		relee = utility.relEE(outputdir);
 		try {
 			ArrayList<TopicSet> topicsets = utility.getTopicSet(outputdir, newsDetails);
