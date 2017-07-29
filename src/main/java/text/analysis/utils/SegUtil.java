@@ -3,7 +3,9 @@ package text.analysis.utils;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -42,7 +44,7 @@ public class SegUtil {
 		if (GenericValidator.isBlankOrNull(text)) {
 			return new Result(new ArrayList<Term>());
 		}
-		
+
 		return nlpAnalysis.parseStr(text);
 	}
 
@@ -123,21 +125,30 @@ public class SegUtil {
 	 */
 	public String extraLOC(String text) {
 		Result result = parseText(text);
-		StringBuffer parseResult = new StringBuffer();
 		Iterator<Term> wordIterator = result.iterator();
+
+		Set<String> locSet = new HashSet<String>();
 
 		while (wordIterator.hasNext()) {
 			Term itemTerm = wordIterator.next();
 
 			if ("ns".equals(itemTerm.getNatureStr())) {
-				parseResult.append(wordIterator.next().getName());
-				parseResult.append(ConstantUtil.WORD_SPLIT);
+				locSet.add(itemTerm.getName());
 			}
+		}
+
+		StringBuffer parseResult = new StringBuffer();
+
+		Iterator<String> locIterator = locSet.iterator();
+		while (locIterator.hasNext()) {
+			String loc = locIterator.next();
+			parseResult.append(loc);
+			parseResult.append(ConstantUtil.WORD_SPLIT);
 		}
 
 		return parseResult.toString();
 	}
-	
+
 	/**
 	 * 对新闻内容进行分词并过滤掉单个词和停用词
 	 * 
@@ -149,7 +160,6 @@ public class SegUtil {
 		String[] allWords = m_content.trim().split(" ");
 
 		for (int j = 0; j < allWords.length; j++) {
-
 			int pos1 = allWords[j].lastIndexOf("/");
 
 			if (pos1 > 0) {

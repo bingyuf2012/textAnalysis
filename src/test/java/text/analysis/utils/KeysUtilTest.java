@@ -12,6 +12,11 @@ import org.junit.Test;
 
 public class KeysUtilTest {
 	@Test
+	public void testDir() {
+		System.out.println(System.getProperty("user.dir"));
+	}
+
+	@Test
 	public void testToUpperCase() {
 		String testStr = "uselabeling,usenoiseword,topicnum,topiclabelnum,byte,output,tinterval,noiseword,urltype,summarypages,gsummarypages,global,proxy,topentity,outputdata,#txtdata,txtdata,userAgent,timeout,baiduserchurl,blocksdiv,titlediv,newsurldiv,contentfontdiv,contentdiv,counting,news.ICTUniterm,news.ICTBiterm,news.ICTTriterm,news.stopword1,news.stopword2,news.stopword,news.singleword,news.weblogPath";
 

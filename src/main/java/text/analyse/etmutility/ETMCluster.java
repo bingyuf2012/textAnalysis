@@ -4,6 +4,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
@@ -16,6 +17,7 @@ import java.util.TreeSet;
 
 import javax.annotation.PostConstruct;
 
+import org.omg.Messaging.SYNC_WITH_TRANSPORT;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -145,6 +147,7 @@ public class ETMCluster {
 				String data = list.get(i).getTitle() + list.get(i).getContent();
 				fc = segUtil.segText(data.toUpperCase(), true);
 				allTokens = segUtil.getKeywords(fc);
+
 				if (allTokens.equals(""))
 					continue;
 
@@ -160,9 +163,7 @@ public class ETMCluster {
 			pw.close();
 			pwTokens.close();
 
-		} catch (UnsupportedEncodingException e) {
-			e.printStackTrace();
-		} catch (FileNotFoundException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
@@ -177,7 +178,7 @@ public class ETMCluster {
 		// String filename = outputdir + "model-final.tEAssign";
 		String filename = outputdir + ConstantUtil.MODEL_NAME + ConstantUtil.SUFFIX_TEASSIGN;
 		// String filename1 = outputdir + "model-final.xEAssign";
-		ETMUtility utility = new ETMUtility(filename,list);
+		ETMUtility utility = new ETMUtility(filename, list);
 		relee = utility.relEE(outputdir);
 		try {
 			ArrayList<TopicSet> topicsets = utility.getTopicSet(outputdir, newsDetails);
